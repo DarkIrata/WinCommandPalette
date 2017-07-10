@@ -16,10 +16,8 @@ namespace CommandPalette
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IntPtr handle;
         private MainWindowViewModel viewModel;
         private Config config;
-        private bool keyRegistered = false;
         private bool focusedListBoxItem = false;
 
         public MainWindow()
@@ -29,8 +27,7 @@ namespace CommandPalette
             {
                 this.config = Config.Load("config.xml");
             }
-
-            this.config.ConfigUpdated += this.Config_ConfigUpdated;
+            
             this.viewModel = new MainWindowViewModel(this.config);
             this.InitializeComponent();
             this.DataContext = this.viewModel;
@@ -43,12 +40,6 @@ namespace CommandPalette
             this.SearchBox.PreviewKeyDown += this.SearchBox_PreviewKeyDown;
             this.SearchBox.TextChanged += this.viewModel.SearchBox_TextChanged;
             this.SearchBox.LostKeyboardFocus += this.SearchBox_LostKeyboardFocus;
-        }
-
-        private void Config_ConfigUpdated(object sender, EventArgs e)
-        {
-            this.UnregisterHotKey();
-            this.RegisterHotKey();
         }
 
         private void SearchBox_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -119,7 +110,7 @@ namespace CommandPalette
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var rect = wf.Screen.FromHandle(this.handle).Bounds;
+            var rect = wf.Screen.FromHandle(Win32Helper.applicationHandle).Bounds;
             this.Top = rect.Height * 0.20;
 
             this.DisableContent();
@@ -128,36 +119,28 @@ namespace CommandPalette
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             this.config.Save("config.xml");
-            this.UnregisterHotKey();
+            Win32Helper.UnregisterHotKey();
         }
 
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
 
-            this.handle = new WindowInteropHelper(this).Handle;
+            Win32Helper.applicationHandle = new WindowInteropHelper(this).Handle;
+            if (Win32Helper.applicationHandle == IntPtr.Zero)
+            {
+                throw new Exception("Couldn't create Handle");
+            }
+
             var source = PresentationSource.FromVisual(this) as HwndSource;
             source?.AddHook(this.WndProc);
-        }
-
-        public bool RegisterHotKey()
-        {
-
-            this.keyRegistered = Win32Helper.RegisterHotKey(this.handle, 0, (uint)this.config.ModifierKey, this.config.KeyCode);
-            return this.keyRegistered;
-        }
-
-        public bool UnregisterHotKey()
-        {
-            this.keyRegistered = !Win32Helper.UnregisterHotKey(this.handle, 0);
-            return !this.keyRegistered;
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == Win32Helper.WM_HOTKEY)
             {
-                this.UnregisterHotKey();
+                Win32Helper.UnregisterHotKey();
 
                 this.Visibility = Visibility.Visible;
                 this.SizeToContent = SizeToContent.Height;
@@ -167,7 +150,7 @@ namespace CommandPalette
 
                 this.viewModel.SelectedIndex = 0;
                 this.focusedListBoxItem = false;
-                Win32Helper.SetForegroundWindow(this.handle);
+                Win32Helper.SetForegroundWindow(Win32Helper.applicationHandle);
             }
 
             return IntPtr.Zero;
@@ -175,9 +158,9 @@ namespace CommandPalette
 
         private void DisableContent()
         {
-            if (!this.keyRegistered)
+            if (!Win32Helper.keyRegistered)
             {
-                if (!this.RegisterHotKey())
+                if (!Win32Helper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode))
                 {
                     MessageBox.Show("Error register HotKey. Killing myself", "Command Pattern", MessageBoxButton.OK, MessageBoxImage.Error);
                     this.Close();

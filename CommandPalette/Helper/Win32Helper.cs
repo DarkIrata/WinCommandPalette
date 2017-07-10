@@ -30,5 +30,23 @@ namespace CommandPalette.Helper
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+
+        public static IntPtr applicationHandle = IntPtr.Zero;
+
+        public static bool keyRegistered = false;
+
+        public static bool RegisterHotKey(uint modifer, uint keycode)
+        {
+
+            keyRegistered = RegisterHotKey(applicationHandle, 0, modifer, keycode);
+            return keyRegistered;
+        }
+
+        public static bool UnregisterHotKey()
+        {
+            keyRegistered = !UnregisterHotKey(applicationHandle, 0);
+            return !keyRegistered;
+        }
     }
 }

@@ -6,13 +6,12 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using CommandPalette.Helper;
 
 namespace CommandPalette
 {
     public class Config : ICloneable
     {
-        public event EventHandler<EventArgs> ConfigUpdated;
-
         public ModifierKey ModifierKey { get; set; }
 
         public uint KeyCode { get; set; }
@@ -77,9 +76,7 @@ namespace CommandPalette
         {
             this.KeyCode = newConfig.KeyCode;
             this.ModifierKey = newConfig.ModifierKey;
-            this.Commands = newConfig.Commands;
-
-            this.ConfigUpdated?.Invoke(this, new EventArgs());
+            this.Commands = newConfig.Commands;;
         }
 
         public static Config Load(string path)

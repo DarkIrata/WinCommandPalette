@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using CommandPalette.Helper;
 
 namespace CommandPalette
 {
@@ -21,9 +22,17 @@ namespace CommandPalette
             this.InitializeComponent();
             this.DataContext = this.viewModel;
 
+            this.Closed += this.OptionsView_Closed;
             this.KeyBox.PreviewKeyDown += this.viewModel.KeyBox_PreviewKeyDown;
             this.btnSave.Click += this.BtnSave_Click;
             this.btnCancel.Click += this.BtnCancel_Click;
+
+            Win32Helper.UnregisterHotKey();
+        }
+
+        private void OptionsView_Closed(object sender, EventArgs e)
+        {
+            Win32Helper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode);
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
