@@ -4,9 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CommandPalette"
-        xmlns:behaviors="clr-namespace:CommandPalette.Behaviors"
         xmlns:converter="clr-namespace:CommandPalette.Converter"
-        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:ap="clr-namespace:CommandPalette.AttachedProperties"
         Title="WinCommand Palette"
         Width="450" ResizeMode="NoResize" 
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowStyle="None"
@@ -26,18 +25,14 @@
                 </TextBox>
             </Border>
         </StackPanel>
-        
-        <ListBox ItemsSource="{Binding FilteredCommandList}"
+
+        <ListBox ap:ScrollIntoView.Enabled="True"
+                 ItemsSource="{Binding FilteredCommandList}"
                  SelectedIndex="{Binding SelectedIndex}"
                  SelectedItem="{Binding Path=SelectedItem, Mode=OneWayToSource}"
                  SelectionMode="Single"
                  Background="Transparent" BorderThickness="0"
                  MaxHeight="300">
-
-            <i:Interaction.Behaviors>
-                <behaviors:ScrollIntoViewForListBox />
-            </i:Interaction.Behaviors>
-
             <ListBox.Resources>
                 <Style TargetType="Thumb">
                     <Setter Property="Template">
