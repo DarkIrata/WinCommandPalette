@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace CommandPalette
 {
@@ -11,14 +6,6 @@ namespace CommandPalette
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(string property)
-        {
-            if (this.PropertyChanged == null)
-            {
-                return;
-            }
-
-            this.PropertyChanged(this, new PropertyChangedEventArgs(property));
-        }
+        public void NotifyPropertyChanged(string property) => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
     }
 }

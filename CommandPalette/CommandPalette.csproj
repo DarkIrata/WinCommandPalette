@@ -65,7 +65,6 @@
     <Compile Include="Commands\OpenFileCommand.cs" />
     <Compile Include="Commands\ShowOptionsCommand.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="Helper\LevenshteinDistance.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Helper\Win32Helper.cs" />

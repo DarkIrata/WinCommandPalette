@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Windows;
+using System.Linq;
 using System.Windows.Input;
 using wf = System.Windows.Forms;
 
@@ -75,9 +75,9 @@ namespace CommandPalette
 
         private string GetHotkeyString()
         {
-            string hotkey = string.Empty;
+            var hotkey = string.Empty;
 
-            foreach (ModifierKey value in Enum.GetValues(typeof(ModifierKey)))
+            foreach (var value in Enum.GetValues(typeof(ModifierKey)).Cast<ModifierKey>())
             {
                 if (value == ModifierKey.None)
                 {
