@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Input;
+using CommandPalette.Attributes;
+using CommandPalette.Commands;
 using wf = System.Windows.Forms;
 
 namespace CommandPalette
@@ -11,14 +15,92 @@ namespace CommandPalette
         private Config newConfig;
         private wf.KeysConverter keyConverter = new wf.KeysConverter();
 
-        public string HotKey
+        public string HotKey => this.GetHotkeyString();
+
+        public List<Type> AvailableCommandTypes => this.GetAvailableCommandTypes();
+
+        public bool CanSave => this.IsValid();
+
+        private Type selectedItem;
+
+        public Type SelectedItem
         {
-            get => this.GetHotkeyString();
+            get
+            {
+                return this.selectedItem;
+            }
+
+            set
+            {
+                this.selectedItem = value;
+                this.CreateControl = this.GetControlFromSelectedType();
+                this.NotifyPropertyChanged(nameof(this.SelectedItem));
+            }
         }
 
-        public bool CanSave
+        private UserControl createControl;
+
+        public UserControl CreateControl
         {
-            get => this.IsValid();
+            get
+            {
+                return this.createControl;
+            }
+
+            set
+            {
+                this.createControl = value;
+                this.NotifyPropertyChanged(nameof(this.CreateControl));
+            }
+        }
+
+        public OptionsViewModel(Config config)
+        {
+            this.config = config ??
+                throw new ArgumentNullException(nameof(config));
+
+            this.newConfig = (Config)config.Clone();
+        }
+
+        private List<Type> GetAvailableCommandTypes()
+        {
+            var interfaceType = typeof(Commands.ICommand);
+            var commandTypes = interfaceType.Assembly.GetTypes()
+                .Where(p => interfaceType.IsAssignableFrom(p) && !p.IsInterface && p.CustomAttributes
+                    .Any(x => x.AttributeType == typeof(CreateCommandControl)))
+                .ToList();
+
+            if (commandTypes == null)
+            {
+                return new List<Type>();
+            }
+
+            return commandTypes;
+        }
+
+        private UserControl GetControlFromSelectedType()
+        {
+            var type = this.SelectedItem;
+            if (type == null)
+            {
+                return new UserControl();
+            }
+
+            var attributes = type.GetCustomAttributes(true);
+            var viewTypeAttribute = attributes.FirstOrDefault(a => a is CreateCommandControl);
+            if (viewTypeAttribute == null)
+            {
+                throw new ArgumentNullException(nameof(viewTypeAttribute));
+            }
+
+            var assembly = type.Assembly;
+            var viewType = assembly.GetType(((CreateCommandControl)viewTypeAttribute).ControlType.FullName);
+            if (viewType == null)
+            {
+                throw new ArgumentNullException(nameof(viewType));
+            }
+
+            return (UserControl)Activator.CreateInstance(viewType);
         }
 
         private bool IsValid()
@@ -101,14 +183,6 @@ namespace CommandPalette
             }
 
             return hotkey;
-        }
-
-        public OptionsViewModel(Config config)
-        {
-            this.config = config ??
-                throw new ArgumentNullException(nameof(config));
-
-            this.newConfig = (Config)config.Clone();
         }
     }
 }

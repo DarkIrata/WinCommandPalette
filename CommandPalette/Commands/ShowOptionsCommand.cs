@@ -1,8 +1,8 @@
 ﻿using System;
+using CommandPalette.Attributes;
 
 namespace CommandPalette.Commands
 {
-
     public class ShowOptionsCommand : ICommand
     {
         public string Name => "Options";

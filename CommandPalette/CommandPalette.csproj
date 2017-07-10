@@ -60,11 +60,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\ScrollIntoView.cs" />
+    <Compile Include="Attributes\CreateCommandControl.cs" />
     <Compile Include="Commands\QuitCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\OpenFileCommand.cs" />
     <Compile Include="Commands\ShowOptionsCommand.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="CreateCommandControls\CreateOpenFileCommand.xaml.cs">
+      <DependentUpon>CreateOpenFileCommand.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helper\LevenshteinDistance.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Helper\Win32Helper.cs" />
@@ -74,6 +78,10 @@
     </Compile>
     <Compile Include="OptionsViewModel.cs" />
     <Compile Include="ViewModelBase.cs" />
+    <Page Include="CreateCommandControls\CreateOpenFileCommand.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -123,6 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="CommandPalleteLogo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

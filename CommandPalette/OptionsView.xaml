@@ -4,28 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CommandPalette"
+        xmlns:ap="clr-namespace:CommandPalette.AttachedProperties"
         mc:Ignorable="d"
         Title="WinCommand Palette Options"
-        Width="420" Height="300" ResizeMode="NoResize" 
+        Width="600" Height="500" ResizeMode="NoResize" 
         WindowStartupLocation="CenterScreen" Topmost="True"
         Background="White">
 
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="Background" Value="White"/>
-            <Setter Property="FontSize" Value="12"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
         </Style>
     </Window.Resources>
-    
+
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5" Height="25">
-            <Button x:Name="btnSave" Content="Save" Width="65" Margin="0,0,5,0" IsEnabled="{Binding CanSave}"/>
-            <Button x:Name="btnCancel" Content="Cancel" Width="65" Margin="5,0,0,0"/>
+            <Button x:Name="btnSave" Content="Save" Width="65" Margin="0,0,5,0" IsEnabled="{Binding CanSave}" FontSize="12"/>
+            <Button x:Name="btnCancel" Content="Cancel" Width="65" Margin="5,0,0,0" FontSize="12"/>
         </StackPanel>
-        <Grid Margin="5">
+        <Grid Margin="5,5,5,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="*"/>
@@ -33,7 +33,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="20"/>
-                <RowDefinition Height="87*"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="#2B2B2B" BorderThickness="0 0 0 1" VerticalAlignment="Top">
                 <TextBlock Text="General" Foreground="Black" FontSize="20" FontFamily="Segoe UI" Margin="2,0,0,0"/>
@@ -41,6 +42,51 @@
 
             <TextBlock Text="Hotkey:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
             <TextBox x:Name="KeyBox" Text="{Binding HotKey, Mode=OneWay}" Grid.Row="1" Grid.Column="1" Width="200" HorizontalAlignment="Left"/>
+
+
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="#2B2B2B" BorderThickness="0 0 0 1" VerticalAlignment="Top">
+                <TextBlock Text="Commands" Foreground="Black" FontSize="20" FontFamily="Segoe UI" Margin="2,0,0,0"/>
+            </Border>
+
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="297*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="150"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock Text="Command Types" Grid.Row="0" Grid.Column="0" Margin="3" HorizontalAlignment="Stretch"/>
+                <ListBox ap:ScrollIntoView.Enabled="True" BorderBrush="#abadb3"
+                         Grid.Row="1" Grid.Column="0"
+                         ItemsSource="{Binding AvailableCommandTypes}"
+                         SelectedItem="{Binding Path=SelectedItem, Mode=OneWayToSource}"
+                         SelectionMode="Single">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                            <Setter Property="Height" Value="25" />
+                            <Setter Property="BorderThickness" Value="0" />
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="0" Padding="5 0 5 0" Text="{Binding Name}" 
+                               Background="Transparent" Foreground="Black"
+                               FontSize="12" FontFamily="Segoe UI Light">
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <TextBlock DataContext="{Binding SelectedItem}" Text="{Binding Name, StringFormat='Create new {0}'}" Grid.Row="0" Grid.Column="1" Margin="5,3,3,3" HorizontalAlignment="Stretch"/>
+                <Border Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Padding="1" BorderBrush="#abadb3" BorderThickness="1">
+                    <ContentPresenter Content="{Binding CreateControl}"/>
+                </Border>
+            </Grid>
         </Grid>
     </DockPanel>
 </Window>

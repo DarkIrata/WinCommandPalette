@@ -1,4 +1,6 @@
-﻿namespace CommandPalette.Commands
+﻿using System.Windows.Controls;
+
+namespace CommandPalette.Commands
 {
     public interface ICommand
     {
