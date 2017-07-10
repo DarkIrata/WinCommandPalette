@@ -1,5 +1,5 @@
-﻿using System;
-using CommandPalette.Helper;
+﻿using CommandPalette.Helper;
+using System;
 
 namespace CommandPalette
 {

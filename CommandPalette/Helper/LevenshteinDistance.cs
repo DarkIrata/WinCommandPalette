@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CommandPalette.Helper
 {
@@ -14,9 +10,9 @@ namespace CommandPalette.Helper
         /// </summary>
         public static int Compute(string s, string t)
         {
-            int n = s.Length;
-            int m = t.Length;
-            int[,] d = new int[n + 1, m + 1];
+            var n = s.Length;
+            var m = t.Length;
+            var d = new int[n + 1, m + 1];
 
             // Step 1
             if (n == 0)
@@ -30,22 +26,22 @@ namespace CommandPalette.Helper
             }
 
             // Step 2
-            for (int i = 0; i <= n; d[i, 0] = i++)
+            for (var i = 0; i <= n; d[i, 0] = i++)
             {
             }
 
-            for (int j = 0; j <= m; d[0, j] = j++)
+            for (var j = 0; j <= m; d[0, j] = j++)
             {
             }
 
             // Step 3
-            for (int i = 1; i <= n; i++)
+            for (var i = 1; i <= n; i++)
             {
                 //Step 4
-                for (int j = 1; j <= m; j++)
+                for (var j = 1; j <= m; j++)
                 {
                     // Step 5
-                    int cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
+                    var cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
 
                     // Step 6
                     d[i, j] = Math.Min(

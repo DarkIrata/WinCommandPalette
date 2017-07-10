@@ -41,7 +41,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -60,14 +59,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttachedProperties\ScrollIntoView.cs" />
     <Compile Include="Commands\QuitCommand.cs" />
     <Compile Include="Commands\ICommand.cs" />
     <Compile Include="Commands\OpenFileCommand.cs" />
     <Compile Include="Commands\ShowOptionsCommand.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="Helper\LevenshteinDistance.cs" />
-    <Compile Include="Behaviors\ScrollIntoViewForListBox.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Helper\Win32Helper.cs" />
     <Compile Include="ModifierKey.cs" />

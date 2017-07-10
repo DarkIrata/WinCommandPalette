@@ -1,12 +1,11 @@
-﻿using System;
+﻿using CommandPalette.Commands;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using CommandPalette.Commands;
 
 namespace CommandPalette
 {
@@ -107,10 +106,10 @@ namespace CommandPalette
                 return commands;
             }
 
-            Assembly assembly = typeof(ICommand).Assembly;
+            var assembly = typeof(ICommand).Assembly;
             foreach (var commandElement in commandsElement.Elements())
             {
-                Type type = assembly.GetType(commandElement.Attribute("Type").Value);
+                var type = assembly.GetType(commandElement.Attribute("Type").Value);
                 var cmdSerializer = new XmlSerializer(type);
                 using (var fs = new StringReader(commandElement.ToString()))
                 {
