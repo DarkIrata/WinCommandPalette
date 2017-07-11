@@ -78,7 +78,7 @@
       <DependentUpon>OptionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="OptionsViewModel.cs" />
-    <Compile Include="PluginSystem\IInstantCommand.cs" />
+    <Compile Include="PluginSystem\IInstantCommands.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Page Include="CreateCommandControls\CreateOpenFileCommand.xaml">
       <SubType>Designer</SubType>

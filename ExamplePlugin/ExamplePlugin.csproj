@@ -54,6 +54,7 @@
       <DependentUpon>CreateExampleCommand.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExampleCommand.cs" />
+    <Compile Include="ExamplePlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
