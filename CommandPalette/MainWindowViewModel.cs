@@ -12,7 +12,7 @@ namespace CommandPalette
     public class MainWindowViewModel : ViewModelBase
     {
         private Config config;
-        private List<ICommand> HardCodedCommands = new List<ICommand>();
+        private List<ICommand> InstantCommands = new List<ICommand>();
         private string lastSearchText = string.Empty;
 
         private ObservableCollection<ICommand> filteredCommandList;
@@ -68,13 +68,13 @@ namespace CommandPalette
                 throw new ArgumentNullException(nameof(config));
 
             this.FilteredCommandList = new ObservableCollection<ICommand>();
-            this.SetupHardCodedCommands();
+            this.SetupInstantCommands();
         }
 
         public void ShowAllCommands()
         {
             var commands = this.config.Commands.ToList();
-            commands.AddRange(this.HardCodedCommands);
+            commands.AddRange(this.InstantCommands);
             this.FilteredCommandList = new ObservableCollection<ICommand>(commands.OrderBy(k => k.Name).ToList());
             this.NotifyPropertyChanged(nameof(this.FilteredCommandList));
         }
@@ -112,7 +112,7 @@ namespace CommandPalette
                 diffedCommands.Add(command, dif);
             }
 
-            foreach (var command in this.HardCodedCommands)
+            foreach (var command in this.InstantCommands)
             {
                 var commandName = this.GetSearchString(command.Name);
                 var dif = LevenshteinDistance.Compute(searchText, commandName);
@@ -154,7 +154,7 @@ namespace CommandPalette
                 }
                 else
                 {
-                    // Fixes a dumbass bug where "OpenFileCommand" Commands with RunAsAdmin = true start 2 times..
+                    // Fixes a dumbass bug where (for example) "OpenFileCommand" Commands with RunAsAdmin = true start 2 times..
                     Task.Run(() => command.Execute());
                 }
 
@@ -164,12 +164,13 @@ namespace CommandPalette
             return false;
         }
 
-        private void SetupHardCodedCommands()
+        private void SetupInstantCommands()
         {
-            this.HardCodedCommands.Add(new ShowOptionsCommand(this.config));
-            this.HardCodedCommands.Add(new QuitCommand());
+            this.InstantCommands.Add(new ShowOptionsCommand(this.config));
+            this.InstantCommands.Add(new QuitCommand());
 
-            this.HardCodedCommands.Add(new OpenFileCommand()
+#if DEBUG
+            this.InstantCommands.Add(new OpenFileCommand()
             {
                 Name = "CMD Admin",
                 Description = "Kommandozeile",
@@ -177,6 +178,7 @@ namespace CommandPalette
                 RunAsAdmin = true,
                 RunInUIThread = false
             });
+#endif
         }
     }
 }
