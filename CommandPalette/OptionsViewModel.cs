@@ -141,8 +141,12 @@ namespace CommandPalette
 
         internal void BtnSaveNewCommand_Click(object sender, RoutedEventArgs e)
         {
-            this.newConfig.Commands.Add(this.SelectedItem.CreateCommand());
-            this.SelectedItem.ClearAll();
+            var command = this.SelectedItem.CreateCommand();
+            if (command != null)
+            {
+                this.newConfig.Commands.Add(this.SelectedItem.CreateCommand());
+                this.SelectedItem.ClearAll();
+            }
         }
 
         internal void Save()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using CommandPalette.Commands;
 
 namespace CommandPalette.CreateCommandControls
 {
@@ -15,9 +16,18 @@ namespace CommandPalette.CreateCommandControls
             this.InitializeComponent();
         }
 
-        public Commands.ICommand CreateCommand()
+        public ICommand CreateCommand()
         {
-            return null;
+            return new OpenFileCommand()
+            {
+                Name = "A",
+                Description = "Not used",
+                FileName = "",
+                WorkingDirectory = "",
+                Arguments = "",
+                RunAsAdmin = false,
+                RunInUIThread = true
+            };
         }
 
         public void ClearAll()
