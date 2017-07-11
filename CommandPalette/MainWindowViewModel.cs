@@ -68,11 +68,10 @@ namespace CommandPalette
                 throw new ArgumentNullException(nameof(config));
 
             this.FilteredCommandList = new ObservableCollection<ICommand>();
-            this.SetUpHardCodedCommands();
-            this.ShowAllCommands();
+            this.SetupHardCodedCommands();
         }
 
-        private void ShowAllCommands()
+        public void ShowAllCommands()
         {
             var commands = this.config.Commands.ToList();
             commands.AddRange(this.HardCodedCommands);
@@ -165,7 +164,7 @@ namespace CommandPalette
             return false;
         }
 
-        private void SetUpHardCodedCommands()
+        private void SetupHardCodedCommands()
         {
             this.HardCodedCommands.Add(new ShowOptionsCommand(this.config));
             this.HardCodedCommands.Add(new QuitCommand());

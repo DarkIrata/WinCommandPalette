@@ -150,6 +150,7 @@ namespace CommandPalette
                 var activeScreen = wf.Screen.FromPoint(wf.Control.MousePosition);
                 this.Left = (activeScreen.Bounds.Location.X + (activeScreen.WorkingArea.Width - this.Width) / 2);
 
+                this.viewModel.ShowAllCommands();
                 this.viewModel.SelectedIndex = 0;
                 this.focusedListBoxItem = false;
                 Win32Helper.SetForegroundWindow(Win32Helper.applicationHandle);
