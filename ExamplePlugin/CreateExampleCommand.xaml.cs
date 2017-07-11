@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using CommandPalette.CreateCommandControls;
+using CommandPalette.PluginSystem;
 
 namespace ExamplePlugin
 {
@@ -20,7 +20,7 @@ namespace ExamplePlugin
             this.tbText.Text = string.Empty;
         }
 
-        public CommandPalette.Commands.ICommand CreateCommand()
+        public ICommand GetCommand()
         {
             return new ExampleCommand()
             {

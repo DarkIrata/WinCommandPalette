@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using CommandPalette.PluginSystem;
 
 namespace CommandPalette.Commands
 {
@@ -9,10 +10,6 @@ namespace CommandPalette.Commands
         public string Description => "Quit WinCommand Palette";
 
         public bool RunInUIThread => true;
-
-        public QuitCommand()
-        {
-        }
 
         public void Execute()
         {

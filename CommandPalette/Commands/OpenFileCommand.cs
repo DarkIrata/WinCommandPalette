@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using CommandPalette.PluginSystem;
 
 namespace CommandPalette.Commands
 {

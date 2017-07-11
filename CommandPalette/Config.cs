@@ -7,6 +7,7 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using CommandPalette.Helper;
+using CommandPalette.PluginSystem;
 
 namespace CommandPalette
 {
@@ -127,14 +128,14 @@ namespace CommandPalette
                 var assemblyName = commandElement.Attribute("Plugin")?.Value;
                 if (!string.IsNullOrEmpty(assemblyName))
                 {
-                    if (!PluginLoader.PluginAssemblies.ContainsKey(assemblyName))
+                    if (!PluginHelper.PluginAssemblies.ContainsKey(assemblyName))
                     {
                         Console.WriteLine($"Plugin '{assemblyName}' is unkown");
                         config.UndeserializableCommands.Add(commandElement);
                         continue;
                     }
 
-                    assembly = PluginLoader.PluginAssemblies[assemblyName];
+                    assembly = PluginHelper.PluginAssemblies[assemblyName];
                 }
 
                 var type = assembly.GetType(commandElement.Attribute("Type").Value);

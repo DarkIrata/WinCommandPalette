@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace CommandPalette.Commands
+namespace CommandPalette.PluginSystem
 {
     public interface ICommand
     {

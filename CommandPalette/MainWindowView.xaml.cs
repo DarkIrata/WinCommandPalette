@@ -4,10 +4,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.IO;
-using System.Windows.Media.Imaging;
-using System.Drawing;
 using wf = System.Windows.Forms;
 using CommandPalette.Helper;
+using CommandPalette.PluginSystem;
 
 namespace CommandPalette
 {
@@ -22,7 +21,7 @@ namespace CommandPalette
 
         public MainWindow()
         {
-            PluginLoader.Load();
+            PluginHelper.Load();
 
             this.config = new Config();
             if (File.Exists("config.xml"))

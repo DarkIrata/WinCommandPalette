@@ -1,6 +1,6 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using CommandPalette.Commands;
+using CommandPalette.PluginSystem;
 
 namespace CommandPalette.CreateCommandControls
 {
@@ -16,7 +16,7 @@ namespace CommandPalette.CreateCommandControls
             this.InitializeComponent();
         }
 
-        public ICommand CreateCommand()
+        public ICommand GetCommand()
         {
             return new OpenFileCommand()
             {

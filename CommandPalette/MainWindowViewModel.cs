@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using CommandPalette.PluginSystem;
 
 namespace CommandPalette
 {

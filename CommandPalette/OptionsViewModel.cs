@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using CommandPalette.Commands;
-using CommandPalette.CreateCommandControls;
-using CommandPalette.Helper;
+using CommandPalette.PluginSystem;
 using wf = System.Windows.Forms;
 
 namespace CommandPalette
@@ -40,7 +37,7 @@ namespace CommandPalette
             }
         }
 
-        public int PluginsCount => PluginLoader.PluginAssemblies.Count;
+        public int PluginsCount => PluginHelper.PluginAssemblies.Count;
 
         public OptionsViewModel(Config config)
         {
@@ -60,7 +57,7 @@ namespace CommandPalette
                 commandCreators.AddRange(defaultCreateCommands);
             }
 
-            foreach (var pluginAssembly in PluginLoader.PluginAssemblies)
+            foreach (var pluginAssembly in PluginHelper.PluginAssemblies)
             {
                 var pluginCreateCommands = this.GetCommandCreatorFromAssembly(pluginAssembly.Value);
                 if (pluginCreateCommands != null)
@@ -141,10 +138,10 @@ namespace CommandPalette
 
         internal void BtnSaveNewCommand_Click(object sender, RoutedEventArgs e)
         {
-            var command = this.SelectedItem.CreateCommand();
+            var command = this.SelectedItem.GetCommand();
             if (command != null)
             {
-                this.newConfig.Commands.Add(this.SelectedItem.CreateCommand());
+                this.newConfig.Commands.Add(command);
                 this.SelectedItem.ClearAll();
             }
         }
