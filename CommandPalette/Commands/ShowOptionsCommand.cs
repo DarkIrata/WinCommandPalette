@@ -1,5 +1,4 @@
 ﻿using System;
-using CommandPalette.Attributes;
 
 namespace CommandPalette.Commands
 {

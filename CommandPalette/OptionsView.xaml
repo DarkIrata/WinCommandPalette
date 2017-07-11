@@ -61,7 +61,7 @@
                 <TextBlock Text="Command Types" Grid.Row="0" Grid.Column="0" Margin="3" HorizontalAlignment="Stretch"/>
                 <ListBox ap:ScrollIntoView.Enabled="True" BorderBrush="#abadb3"
                          Grid.Row="1" Grid.Column="0"
-                         ItemsSource="{Binding AvailableCommandTypes}"
+                         ItemsSource="{Binding AvailableCommandCreators}"
                          SelectedItem="{Binding Path=SelectedItem, Mode=OneWayToSource}"
                          SelectionMode="Single">
                     <ListBox.ItemContainerStyle>
@@ -74,7 +74,7 @@
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Margin="0" Padding="5 0 5 0" Text="{Binding Name}" 
+                            <TextBlock Margin="0" Padding="5 0 5 0" Text="{Binding CommandTypeName}" 
                                Background="Transparent" Foreground="Black"
                                FontSize="12" FontFamily="Segoe UI Light">
                             </TextBlock>
@@ -82,9 +82,9 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
 
-                <TextBlock DataContext="{Binding SelectedItem}" Text="{Binding Name, StringFormat='Create new {0}'}" Grid.Row="0" Grid.Column="1" Margin="5,3,3,3" HorizontalAlignment="Stretch"/>
+                <TextBlock DataContext="{Binding SelectedItem}" Text="{Binding CommandTypeName, StringFormat='Create new {0} command'}" Grid.Row="0" Grid.Column="1" Margin="5,3,3,3" HorizontalAlignment="Stretch"/>
                 <Border Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Padding="1" BorderBrush="#abadb3" BorderThickness="1">
-                    <ContentPresenter Content="{Binding CreateControl}"/>
+                    <ContentPresenter Content="{Binding SelectedItem}"/>
                 </Border>
             </Grid>
         </Grid>

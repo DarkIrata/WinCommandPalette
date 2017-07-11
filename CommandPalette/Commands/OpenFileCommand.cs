@@ -1,10 +1,7 @@
 ﻿using System.Diagnostics;
-using CommandPalette.Attributes;
-using CommandPalette.Controls.CreateCommand;
 
 namespace CommandPalette.Commands
 {
-    [CreateCommandControl(typeof(CreateOpenFileCommand))]
     public class OpenFileCommand : ICommand
     {
         public string Name { get; set; }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using CommandPalette.Attributes;
 using CommandPalette.Commands;
+using CommandPalette.CreateCommandControls;
 using wf = System.Windows.Forms;
 
 namespace CommandPalette
@@ -17,13 +17,13 @@ namespace CommandPalette
 
         public string HotKey => this.GetHotkeyString();
 
-        public List<Type> AvailableCommandTypes => this.GetAvailableCommandTypes();
+        public List<CreateCommandBase> AvailableCommandCreators => this.GetAvailableCommandCreators();
 
         public bool CanSave => this.IsValid();
 
-        private Type selectedItem;
+        private CreateCommandBase selectedItem;
 
-        public Type SelectedItem
+        public CreateCommandBase SelectedItem
         {
             get
             {
@@ -33,24 +33,7 @@ namespace CommandPalette
             set
             {
                 this.selectedItem = value;
-                this.CreateControl = this.GetControlFromSelectedType();
                 this.NotifyPropertyChanged(nameof(this.SelectedItem));
-            }
-        }
-
-        private UserControl createControl;
-
-        public UserControl CreateControl
-        {
-            get
-            {
-                return this.createControl;
-            }
-
-            set
-            {
-                this.createControl = value;
-                this.NotifyPropertyChanged(nameof(this.CreateControl));
             }
         }
 
@@ -62,45 +45,26 @@ namespace CommandPalette
             this.newConfig = (Config)config.Clone();
         }
 
-        private List<Type> GetAvailableCommandTypes()
+        private List<CreateCommandBase> GetAvailableCommandCreators()
         {
-            var interfaceType = typeof(Commands.ICommand);
-            var commandTypes = interfaceType.Assembly.GetTypes()
-                .Where(p => interfaceType.IsAssignableFrom(p) && !p.IsInterface && p.CustomAttributes
-                    .Any(x => x.AttributeType == typeof(CreateCommandControl)))
-                .ToList();
+            var commandCreators = new List<CreateCommandBase>();
 
-            if (commandTypes == null)
+            var baseType = typeof(CreateCommandBase);
+            var commandCreatorsTypes = baseType.Assembly.GetTypes()
+                .Where(p => baseType.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract & p != baseType)
+                ?.ToList();
+
+            if (commandCreatorsTypes == null)
             {
-                return new List<Type>();
+                return new List<CreateCommandBase>();
             }
 
-            return commandTypes;
-        }
-
-        private UserControl GetControlFromSelectedType()
-        {
-            var type = this.SelectedItem;
-            if (type == null)
+            foreach (var type in commandCreatorsTypes)
             {
-                return new UserControl();
+                commandCreators.Add((CreateCommandBase)Activator.CreateInstance(type));
             }
 
-            var attributes = type.GetCustomAttributes(true);
-            var viewTypeAttribute = attributes.FirstOrDefault(a => a is CreateCommandControl);
-            if (viewTypeAttribute == null)
-            {
-                throw new ArgumentNullException(nameof(viewTypeAttribute));
-            }
-
-            var assembly = type.Assembly;
-            var viewType = assembly.GetType(((CreateCommandControl)viewTypeAttribute).ControlType.FullName);
-            if (viewType == null)
-            {
-                throw new ArgumentNullException(nameof(viewType));
-            }
-
-            return (UserControl)Activator.CreateInstance(viewType);
+            return commandCreators;
         }
 
         private bool IsValid()

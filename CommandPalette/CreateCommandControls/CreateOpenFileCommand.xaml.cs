@@ -12,17 +12,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CommandPalette.Commands;
+using CommandPalette.CreateCommandControls;
 
-namespace CommandPalette.Controls.CreateCommand
+namespace CommandPalette.CreateCommandControls
 {
     /// <summary>
     /// Interaktionslogik für CreateOpenFileCommand.xaml
     /// </summary>
-    public partial class CreateOpenFileCommand : UserControl
+    public partial class CreateOpenFileCommand : CreateCommandBase
     {
+        public override string CommandTypeName => "OpenFile";
+
         public CreateOpenFileCommand()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+        }
+
+        public override Commands.ICommand CreateCommand()
+        {
+            return base.CreateCommand();
         }
     }
 }
