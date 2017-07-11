@@ -3,7 +3,7 @@ using CommandPalette.PluginSystem;
 
 namespace CommandPalette.Commands
 {
-    public class QuitCommand : ICommand
+    internal class QuitCommand : ICommand
     {
         public string Name => "Quit";
 

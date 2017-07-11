@@ -3,7 +3,7 @@ using CommandPalette.PluginSystem;
 
 namespace CommandPalette.Commands
 {
-    public class ShowOptionsCommand : ICommand
+    internal class ShowOptionsCommand : ICommand
     {
         public string Name => "Options";
 
