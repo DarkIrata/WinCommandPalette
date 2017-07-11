@@ -1,4 +1,4 @@
-﻿<local:CreateCommandBase x:Class="CommandPalette.CreateCommandControls.CreateOpenFileCommand"
+﻿<UserControl x:Class="CommandPalette.CreateCommandControls.CreateOpenFileCommand"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,4 +9,4 @@
     <Grid>
         <TextBlock>WORK IN PROGRESS</TextBlock> 
     </Grid>
-</local:CreateCommandBase>
+</UserControl>

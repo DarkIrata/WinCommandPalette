@@ -22,6 +22,8 @@ namespace CommandPalette
 
         public MainWindow()
         {
+            PluginLoader.Load();
+
             this.config = new Config();
             if (File.Exists("config.xml"))
             {

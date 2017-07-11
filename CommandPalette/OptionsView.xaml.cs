@@ -24,6 +24,9 @@ namespace CommandPalette
 
             this.Closed += this.OptionsView_Closed;
             this.KeyBox.PreviewKeyDown += this.viewModel.KeyBox_PreviewKeyDown;
+
+            this.btnSaveNewCommand.Click += this.viewModel.BtnSaveNewCommand_Click;
+
             this.btnSave.Click += this.BtnSave_Click;
             this.btnCancel.Click += this.BtnCancel_Click;
 

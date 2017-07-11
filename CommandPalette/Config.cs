@@ -19,6 +19,8 @@ namespace CommandPalette
         [XmlIgnore]
         public List<ICommand> Commands { get; set; }
 
+        private List<XElement> UndeserializableCommands = new List<XElement>();
+
         public Config()
         {
             this.ModifierKey = ModifierKey.LeftCTRL | ModifierKey.LeftShift;
@@ -45,6 +47,13 @@ namespace CommandPalette
 
             var configXML = XDocument.Parse(configSB.ToString());
             configXML.Root.Add(XElement.Parse($"<Commands>{this.SerializeCommands(ns, settings)}</Commands>"));
+            if (this.UndeserializableCommands.Count > 0)
+            {
+                foreach (var command in this.UndeserializableCommands)
+                {
+                    configXML.Root.Element("Commands").Add(command);
+                }
+            }
 
             File.WriteAllText(path, configXML.ToString());
         }
@@ -53,6 +62,7 @@ namespace CommandPalette
         {
             var commandsSB = new StringBuilder(4096);
 
+            var baseAssembly = typeof(ICommand).Assembly;
             foreach (var command in this.Commands)
             {
                 var sb = new StringBuilder(128);
@@ -65,9 +75,15 @@ namespace CommandPalette
 
                 var commandElement = XElement.Parse(sb.ToString());
                 commandElement.Add(new XAttribute("Type", command.GetType()));
+
+                var assembly = command.GetType().Assembly;
+                if (assembly != baseAssembly)
+                {
+                    commandElement.Add(new XAttribute("Plugin", assembly.GetName().Name));
+                }
+
                 commandsSB.AppendLine(commandElement.ToString());
             }
-
 
             return commandsSB.ToString();
         }
@@ -76,7 +92,8 @@ namespace CommandPalette
         {
             this.KeyCode = newConfig.KeyCode;
             this.ModifierKey = newConfig.ModifierKey;
-            this.Commands = newConfig.Commands;;
+            this.Commands = newConfig.Commands;
+            this.UndeserializableCommands = newConfig.UndeserializableCommands;
         }
 
         public static Config Load(string path)
@@ -91,31 +108,42 @@ namespace CommandPalette
             }
 
             var configXML = XDocument.Parse(configFile);
-            config.Commands = DeserializeCommands(configXML.Root.Element("Commands"));
+            DeserializeCommands(config, configXML.Root.Element("Commands"));
             return config;
         }
 
-        private static List<ICommand> DeserializeCommands(XElement commandsElement)
+        private static void DeserializeCommands(Config config, XElement commandsElement)
         {
-            var commands = new List<ICommand>();
+            config.Commands = new List<ICommand>();
             if (commandsElement == null)
             {
-                return commands;
+                return;
             }
 
-            var assembly = typeof(ICommand).Assembly;
+            var baseAssembly = typeof(ICommand).Assembly;
             foreach (var commandElement in commandsElement.Elements())
             {
+                var assembly = baseAssembly;
+                var assemblyName = commandElement.Attribute("Plugin")?.Value;
+                if (!string.IsNullOrEmpty(assemblyName))
+                {
+                    if (!PluginLoader.PluginAssemblies.ContainsKey(assemblyName))
+                    {
+                        Console.WriteLine($"Plugin '{assemblyName}' is unkown");
+                        config.UndeserializableCommands.Add(commandElement);
+                        continue;
+                    }
+
+                    assembly = PluginLoader.PluginAssemblies[assemblyName];
+                }
+
                 var type = assembly.GetType(commandElement.Attribute("Type").Value);
                 var cmdSerializer = new XmlSerializer(type);
                 using (var fs = new StringReader(commandElement.ToString()))
                 {
-                    commands.Add((ICommand)cmdSerializer.Deserialize(fs));
+                    config.Commands.Add((ICommand)cmdSerializer.Deserialize(fs));
                 }
-
             }
-
-            return commands;
         }
 
         public object Clone()

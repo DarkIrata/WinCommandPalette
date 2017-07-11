@@ -65,11 +65,12 @@
     <Compile Include="Commands\OpenFileCommand.cs" />
     <Compile Include="Commands\ShowOptionsCommand.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="CreateCommandControls\CreateCommandBase.cs" />
+    <Compile Include="CreateCommandControls\ICreateCommand.cs" />
     <Compile Include="CreateCommandControls\CreateOpenFileCommand.xaml.cs">
       <DependentUpon>CreateOpenFileCommand.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\LevenshteinDistance.cs" />
+    <Compile Include="Helper\PluginLoader.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Helper\Win32Helper.cs" />
     <Compile Include="ModifierKey.cs" />

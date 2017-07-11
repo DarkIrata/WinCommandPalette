@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CommandPalette.Commands;
 using CommandPalette.CreateCommandControls;
+using CommandPalette.Helper;
 using wf = System.Windows.Forms;
 
 namespace CommandPalette
@@ -17,13 +20,13 @@ namespace CommandPalette
 
         public string HotKey => this.GetHotkeyString();
 
-        public List<CreateCommandBase> AvailableCommandCreators => this.GetAvailableCommandCreators();
+        public List<ICreateCommand> AvailableCommandCreators => this.GetAvailableCommandCreators();
 
         public bool CanSave => this.IsValid();
 
-        private CreateCommandBase selectedItem;
+        private ICreateCommand selectedItem;
 
-        public CreateCommandBase SelectedItem
+        public ICreateCommand SelectedItem
         {
             get
             {
@@ -37,6 +40,8 @@ namespace CommandPalette
             }
         }
 
+        public int PluginsCount => PluginLoader.PluginAssemblies.Count;
+
         public OptionsViewModel(Config config)
         {
             this.config = config ??
@@ -45,23 +50,43 @@ namespace CommandPalette
             this.newConfig = (Config)config.Clone();
         }
 
-        private List<CreateCommandBase> GetAvailableCommandCreators()
+        private List<ICreateCommand> GetAvailableCommandCreators()
         {
-            var commandCreators = new List<CreateCommandBase>();
+            var commandCreators = new List<ICreateCommand>();
 
-            var baseType = typeof(CreateCommandBase);
-            var commandCreatorsTypes = baseType.Assembly.GetTypes()
-                .Where(p => baseType.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract & p != baseType)
-                ?.ToList();
+            var defaultCreateCommands = this.GetCommandCreatorFromAssembly(typeof(ICreateCommand).Assembly);
+            if (defaultCreateCommands != null)
+            {
+                commandCreators.AddRange(defaultCreateCommands);
+            }
+
+            foreach (var pluginAssembly in PluginLoader.PluginAssemblies)
+            {
+                var pluginCreateCommands = this.GetCommandCreatorFromAssembly(pluginAssembly.Value);
+                if (pluginCreateCommands != null)
+                {
+                    commandCreators.AddRange(pluginCreateCommands);
+                }
+            }
+            
+            return commandCreators;
+        }
+
+        private List<ICreateCommand> GetCommandCreatorFromAssembly(Assembly assembly)
+        {
+            var commandCreators = new List<ICreateCommand>();
+            var baseType = typeof(ICreateCommand);
+            var commandCreatorsTypes = assembly.GetTypes()
+                      ?.Where(p => baseType.IsAssignableFrom(p) && !p.IsInterface);
 
             if (commandCreatorsTypes == null)
             {
-                return new List<CreateCommandBase>();
+                return null;
             }
 
             foreach (var type in commandCreatorsTypes)
             {
-                commandCreators.Add((CreateCommandBase)Activator.CreateInstance(type));
+                commandCreators.Add((ICreateCommand)Activator.CreateInstance(type));
             }
 
             return commandCreators;
@@ -112,6 +137,12 @@ namespace CommandPalette
 
             this.NotifyPropertyChanged(nameof(this.HotKey));
             e.Handled = true;
+        }
+
+        internal void BtnSaveNewCommand_Click(object sender, RoutedEventArgs e)
+        {
+            this.newConfig.Commands.Add(this.SelectedItem.CreateCommand());
+            this.SelectedItem.ClearAll();
         }
 
         internal void Save()
