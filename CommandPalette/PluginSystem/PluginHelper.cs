@@ -21,21 +21,17 @@ namespace CommandPalette.PluginSystem
                 Directory.CreateDirectory(PluginDirectoryPath);
             }
 
-            var pluginFolders = Directory.GetDirectories(PluginDirectoryPath);
-            foreach (var pluginFolder in pluginFolders)
+            var pluginFiles = Directory.GetFiles(PluginDirectoryPath, $"*{PluginFileType}", SearchOption.TopDirectoryOnly);
+            foreach (var pluginFile in pluginFiles)
             {
-                var pluginFiles = Directory.GetFiles(Path.Combine(PluginDirectoryPath, pluginFolder), $"*{PluginFileType}", SearchOption.TopDirectoryOnly);
-                foreach (var pluginFile in pluginFiles)
+                try
                 {
-                    try
-                    {
-                        var pluginAssembly = Assembly.LoadFrom(pluginFile);
-                        PluginAssemblies.Add(pluginAssembly.GetName().Name, pluginAssembly);
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show($"Error loading Plugin '{Path.GetFileName(pluginFile)}'.");
-                    }
+                    var pluginAssembly = Assembly.LoadFrom(pluginFile);
+                    PluginAssemblies.Add(pluginAssembly.GetName().Name, pluginAssembly);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show($"Error loading Plugin '{Path.GetFileName(pluginFile)}'.");
                 }
             }
 
