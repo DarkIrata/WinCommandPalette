@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandPalette", "CommandPa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamplePlugin", "ExamplePlugin\ExamplePlugin.csproj", "{552E2CCC-B0A6-4E18-9DF5-83D7DBB1C514}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpScriptCommandsPlugin", "CSharpScriptCommandsPlugin\CSharpScriptCommandsPlugin.csproj", "{75DA29B3-5C47-47F0-94AB-7EB473445396}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{552E2CCC-B0A6-4E18-9DF5-83D7DBB1C514}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{552E2CCC-B0A6-4E18-9DF5-83D7DBB1C514}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{552E2CCC-B0A6-4E18-9DF5-83D7DBB1C514}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75DA29B3-5C47-47F0-94AB-7EB473445396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75DA29B3-5C47-47F0-94AB-7EB473445396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75DA29B3-5C47-47F0-94AB-7EB473445396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75DA29B3-5C47-47F0-94AB-7EB473445396}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
