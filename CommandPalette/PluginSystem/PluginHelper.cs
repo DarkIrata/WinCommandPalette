@@ -14,6 +14,23 @@ namespace CommandPalette.PluginSystem
 
         public static Dictionary<string, Assembly> PluginAssemblies = new Dictionary<string, Assembly>();
 
+        static PluginHelper()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += (o, args) =>
+            {
+                if (args.RequestingAssembly != null)
+                {
+                    var path = Path.Combine(Path.GetDirectoryName(args.RequestingAssembly.Location), args.Name.Split(',')[0] + ".dll");
+                    if (File.Exists(path))
+                    {
+                        return Assembly.LoadFile(path);
+                    }
+                }
+
+                return null;
+            };
+        }
+
         public static int Load()
         {
             if (!Directory.Exists(PluginDirectoryPath))
@@ -24,12 +41,12 @@ namespace CommandPalette.PluginSystem
             var pluginFolders = Directory.GetDirectories(PluginDirectoryPath);
             foreach (var pluginFolder in pluginFolders)
             {
-                var pluginFiles = Directory.GetFiles(Path.Combine(PluginDirectoryPath, pluginFolder), $"*{PluginFileType}", SearchOption.TopDirectoryOnly);
-                foreach (var pluginFile in pluginFiles)
+                var pluginFile = Path.Combine(pluginFolder, Path.GetFileName(pluginFolder) + PluginFileType);
+                if (File.Exists(pluginFile))
                 {
                     try
                     {
-                        var pluginAssembly = Assembly.LoadFrom(pluginFile);
+                        var pluginAssembly = Assembly.LoadFile(pluginFile);
                         PluginAssemblies.Add(pluginAssembly.GetName().Name, pluginAssembly);
                     }
                     catch (Exception)
