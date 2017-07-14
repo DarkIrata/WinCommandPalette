@@ -8,9 +8,7 @@ namespace CSharpScriptCommandsPlugin
     /// </summary>
     public partial class CreateCShartScriptCommand : UserControl, ICreateCommand
     {
-        private const string DefaultCode = @"using System.Windows.Forms;
-
-MessageBox.Show(""Hello World!"");";
+        private const string DefaultCode = @"$""The current time is: {System.DateTime.Now}""";
 
         public CreateCShartScriptCommand()
         {
