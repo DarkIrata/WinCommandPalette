@@ -14,6 +14,23 @@ namespace CommandPalette.PluginSystem
 
         public static Dictionary<string, Assembly> PluginAssemblies = new Dictionary<string, Assembly>();
 
+        static PluginHelper()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += (o, args) =>
+            {
+                if (args.RequestingAssembly != null)
+                {
+                    var path = Path.Combine(Path.GetDirectoryName(args.RequestingAssembly.Location), args.Name.Split(',')[0] + ".dll");
+                    if (File.Exists(path))
+                    {
+                        return Assembly.LoadFile(path);
+                    }
+                }
+
+                return null;
+            };
+        }
+
         public static int Load()
         {
             if (!Directory.Exists(PluginDirectoryPath))
@@ -21,17 +38,21 @@ namespace CommandPalette.PluginSystem
                 Directory.CreateDirectory(PluginDirectoryPath);
             }
 
-            var pluginFiles = Directory.GetFiles(PluginDirectoryPath, $"*{PluginFileType}", SearchOption.TopDirectoryOnly);
-            foreach (var pluginFile in pluginFiles)
+            var pluginFolders = Directory.GetDirectories(PluginDirectoryPath);
+            foreach (var pluginFolder in pluginFolders)
             {
-                try
+                var pluginFile = Path.Combine(pluginFolder, Path.GetFileName(pluginFolder) + PluginFileType);
+                if (File.Exists(pluginFile))
                 {
-                    var pluginAssembly = Assembly.LoadFrom(pluginFile);
-                    PluginAssemblies.Add(pluginAssembly.GetName().Name, pluginAssembly);
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show($"Error loading Plugin '{Path.GetFileName(pluginFile)}'.");
+                    try
+                    {
+                        var pluginAssembly = Assembly.LoadFile(pluginFile);
+                        PluginAssemblies.Add(pluginAssembly.GetName().Name, pluginAssembly);
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show($"Error loading Plugin '{Path.GetFileName(pluginFile)}'.");
+                    }
                 }
             }
 
