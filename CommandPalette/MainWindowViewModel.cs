@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace CommandPalette
 {
@@ -152,18 +153,30 @@ namespace CommandPalette
             {
                 if (command.RunInUIThread)
                 {
-                    command.Execute();
+                    this.ExecuteCommand(command);
                 }
                 else
                 {
                     // Fixs a dumbass bug where (for example) "OpenFileCommand" Commands with RunAsAdmin = true start its given path 2 times..
-                    Task.Run(() => command.Execute());
+                    Task.Run(() => this.ExecuteCommand(command));
                 }
 
                 return true;
             }
 
             return false;
+        }
+
+        private void ExecuteCommand(ICommand command)
+        {
+            try
+            {
+                command.Execute();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Unkown error while executing command '{command.Name}'", "WinCommand Palette", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void SetupInstantCommands()
@@ -174,7 +187,11 @@ namespace CommandPalette
             var pluginInstantCommands = PluginHelper.GetAll<IInstantCommands>();
             foreach (var pluginInstantCommand in pluginInstantCommands)
             {
-                this.InstantCommands.AddRange(pluginInstantCommand.GetCommands());
+                var commands = pluginInstantCommand.GetCommands();
+                if (commands != null)
+                {
+                    this.InstantCommands.AddRange(commands);
+                }
             }
         }
     }
