@@ -13,6 +13,10 @@ namespace CommandPalette
 {
     public class Config : ICloneable
     {
+        private const string COMMANDS_TAG_NAME = "Commands";
+        private const string PLUGIN_TYPE_ATTRIBUTE_NAME = "Type";
+        private const string PLUGIN_ASSEMBLY_ATTRIBUTE_NAME = "Plugin";
+
         public ModifierKey ModifierKey { get; set; }
 
         public uint KeyCode { get; set; }
@@ -47,12 +51,12 @@ namespace CommandPalette
             }
 
             var configXML = XDocument.Parse(configSB.ToString());
-            configXML.Root.Add(XElement.Parse($"<Commands>{this.SerializeCommands(ns, settings)}</Commands>"));
+            configXML.Root.Add(XElement.Parse($"<{COMMANDS_TAG_NAME}>{this.SerializeCommands(ns, settings)}</{COMMANDS_TAG_NAME}>"));
             if (this.UndeserializableCommands.Count > 0)
             {
                 foreach (var command in this.UndeserializableCommands)
                 {
-                    configXML.Root.Element("Commands").Add(command);
+                    configXML.Root.Element(COMMANDS_TAG_NAME).Add(command);
                 }
             }
 
@@ -75,12 +79,12 @@ namespace CommandPalette
                 }
 
                 var commandElement = XElement.Parse(sb.ToString());
-                commandElement.Add(new XAttribute("Type", command.GetType()));
+                commandElement.Add(new XAttribute(PLUGIN_TYPE_ATTRIBUTE_NAME, command.GetType()));
 
                 var assembly = command.GetType().Assembly;
                 if (assembly != baseAssembly)
                 {
-                    commandElement.Add(new XAttribute("Plugin", assembly.GetName().Name));
+                    commandElement.Add(new XAttribute(PLUGIN_ASSEMBLY_ATTRIBUTE_NAME, assembly.GetName().Name));
                 }
 
                 commandsSB.AppendLine(commandElement.ToString());
@@ -109,7 +113,7 @@ namespace CommandPalette
             }
 
             var configXML = XDocument.Parse(configFile);
-            DeserializeCommands(config, configXML.Root.Element("Commands"));
+            DeserializeCommands(config, configXML.Root.Element(COMMANDS_TAG_NAME));
             return config;
         }
 
@@ -125,7 +129,7 @@ namespace CommandPalette
             foreach (var commandElement in commandsElement.Elements())
             {
                 var assembly = baseAssembly;
-                var assemblyName = commandElement.Attribute("Plugin")?.Value;
+                var assemblyName = commandElement.Attribute(PLUGIN_ASSEMBLY_ATTRIBUTE_NAME)?.Value;
                 if (!string.IsNullOrEmpty(assemblyName))
                 {
                     if (!PluginHelper.PluginAssemblies.ContainsKey(assemblyName))
@@ -138,7 +142,7 @@ namespace CommandPalette
                     assembly = PluginHelper.PluginAssemblies[assemblyName];
                 }
 
-                var type = assembly.GetType(commandElement.Attribute("Type").Value);
+                var type = assembly.GetType(commandElement.Attribute(PLUGIN_TYPE_ATTRIBUTE_NAME).Value);
                 var cmdSerializer = new XmlSerializer(type);
                 using (var fs = new StringReader(commandElement.ToString()))
                 {
