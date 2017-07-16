@@ -139,6 +139,7 @@
       <DependentUpon>CreateCShartScriptCommand.xaml</DependentUpon>
     </Compile>
     <Compile Include="CSharpScriptCommand.cs" />
+    <Compile Include="CSharpScriptCommandsPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
