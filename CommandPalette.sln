@@ -1,13 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandPalette", "CommandPalette\CommandPalette.csproj", "{F8079C4B-68EF-4256-8E64-3319E1318265}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamplePlugin", "ExamplePlugin\ExamplePlugin.csproj", "{552E2CCC-B0A6-4E18-9DF5-83D7DBB1C514}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamplePlugin", "Plugins\ExamplePlugin\ExamplePlugin.csproj", "{552E2CCC-B0A6-4E18-9DF5-83D7DBB1C514}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpScriptCommandsPlugin", "CSharpScriptCommandsPlugin\CSharpScriptCommandsPlugin.csproj", "{75DA29B3-5C47-47F0-94AB-7EB473445396}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpScriptCommandsPlugin", "Plugins\CSharpScriptCommandsPlugin\CSharpScriptCommandsPlugin.csproj", "{75DA29B3-5C47-47F0-94AB-7EB473445396}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{96D35A21-2342-4BAC-8FAC-169F1DCA105E}"
+	ProjectSection(SolutionItems) = preProject
+		Build\CopyPlugin.targets = Build\CopyPlugin.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{4A8F3CEC-9A14-41C5-BFA3-0D9E23FC4254}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +37,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{552E2CCC-B0A6-4E18-9DF5-83D7DBB1C514} = {4A8F3CEC-9A14-41C5-BFA3-0D9E23FC4254}
+		{75DA29B3-5C47-47F0-94AB-7EB473445396} = {4A8F3CEC-9A14-41C5-BFA3-0D9E23FC4254}
 	EndGlobalSection
 EndGlobal
