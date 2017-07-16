@@ -143,6 +143,12 @@ namespace WinCommandPalette
                 }
 
                 var type = assembly.GetType(commandElement.Attribute(PLUGIN_TYPE_ATTRIBUTE_NAME).Value);
+                if (type == null)
+                {
+                    Console.WriteLine($"Plugin '{assemblyName}' given type is null");
+                    config.UndeserializableCommands.Add(commandElement);
+                    continue;
+                }
                 var cmdSerializer = new XmlSerializer(type);
                 using (var fs = new StringReader(commandElement.ToString()))
                 {
