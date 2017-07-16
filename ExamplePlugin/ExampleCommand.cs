@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using CommandPalette.PluginSystem;
 
 namespace ExamplePlugin
@@ -12,6 +13,8 @@ namespace ExamplePlugin
         public bool RunInUIThread => false;
 
         public string Text { get; set; }
+
+        public bool RunAsAdmin => false;
 
         public ExampleCommand()
         {

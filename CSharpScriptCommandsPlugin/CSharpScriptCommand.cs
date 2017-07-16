@@ -17,6 +17,8 @@ namespace CSharpScriptCommandsPlugin
 
         public bool RunInUIThread => false;
 
+        public bool RunAsAdmin { get; set; }
+
         public string Code { get; set; }
 
         public void Execute()
