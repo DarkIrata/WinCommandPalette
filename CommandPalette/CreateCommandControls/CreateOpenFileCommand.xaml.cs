@@ -1,8 +1,8 @@
 ﻿using System.Windows.Controls;
-using CommandPalette.Commands;
-using CommandPalette.PluginSystem;
+using WinCommandPalette.Commands;
+using WinCommandPalette.PluginSystem;
 
-namespace CommandPalette.CreateCommandControls
+namespace WinCommandPalette.CreateCommandControls
 {
     /// <summary>
     /// Interaktionslogik für CreateOpenFileCommand.xaml

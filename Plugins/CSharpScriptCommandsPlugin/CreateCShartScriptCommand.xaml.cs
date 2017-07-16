@@ -1,4 +1,4 @@
-﻿using CommandPalette.PluginSystem;
+﻿using WinCommandPalette.PluginSystem;
 using System.Windows.Controls;
 
 namespace CSharpScriptCommandsPlugin

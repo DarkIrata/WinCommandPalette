@@ -5,10 +5,10 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.IO;
 using wf = System.Windows.Forms;
-using CommandPalette.Helper;
-using CommandPalette.PluginSystem;
+using WinCommandPalette.Helper;
+using WinCommandPalette.PluginSystem;
 
-namespace CommandPalette
+namespace WinCommandPalette
 {
     public partial class MainWindow : Window
     {

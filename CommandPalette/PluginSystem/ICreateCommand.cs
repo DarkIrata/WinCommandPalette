@@ -1,4 +1,4 @@
-﻿namespace CommandPalette.PluginSystem
+﻿namespace WinCommandPalette.PluginSystem
 {
     public interface ICreateCommand
     {

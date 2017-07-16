@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace CommandPalette
+namespace WinCommandPalette
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CommandPalette.PluginSystem
+namespace WinCommandPalette.PluginSystem
 {
     public interface IInstantCommands
     {

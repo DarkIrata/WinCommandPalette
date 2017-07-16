@@ -1,7 +1,7 @@
-﻿using CommandPalette.Helper;
+﻿using WinCommandPalette.Helper;
 using System;
 
-namespace CommandPalette
+namespace WinCommandPalette
 {
     [Flags]
     public enum ModifierKey

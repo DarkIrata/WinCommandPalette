@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 
-namespace CommandPalette.PluginSystem
+namespace WinCommandPalette.PluginSystem
 {
     public static class PluginHelper
     {

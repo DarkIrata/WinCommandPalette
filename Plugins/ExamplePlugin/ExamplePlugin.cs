@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CommandPalette.PluginSystem;
+using WinCommandPalette.PluginSystem;
 
 namespace ExamplePlugin
 {

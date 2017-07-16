@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CommandPalette.Helper
+namespace WinCommandPalette.Helper
 {
     public static class ScreenHelper
     {

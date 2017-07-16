@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace CommandPalette.Helper
+namespace WinCommandPalette.Helper
 {
     internal static class Win32Helper
     {

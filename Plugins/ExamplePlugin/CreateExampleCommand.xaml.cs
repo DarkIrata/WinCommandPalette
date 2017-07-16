@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using CommandPalette.PluginSystem;
+using WinCommandPalette.PluginSystem;
 
 namespace ExamplePlugin
 {

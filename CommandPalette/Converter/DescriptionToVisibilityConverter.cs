@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace CommandPalette.Converter
+namespace WinCommandPalette.Converter
 {
     public class DescriptionToVisibilityConverter : IValueConverter
     {

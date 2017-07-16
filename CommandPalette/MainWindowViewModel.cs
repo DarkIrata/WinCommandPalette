@@ -1,6 +1,6 @@
-﻿using CommandPalette.Commands;
-using CommandPalette.Helper;
-using CommandPalette.PluginSystem;
+﻿using WinCommandPalette.Commands;
+using WinCommandPalette.Helper;
+using WinCommandPalette.PluginSystem;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 
-namespace CommandPalette
+namespace WinCommandPalette
 {
     public class MainWindowViewModel : ViewModelBase
     {

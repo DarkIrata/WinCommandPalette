@@ -1,7 +1,7 @@
 ﻿using System;
-using CommandPalette.PluginSystem;
+using WinCommandPalette.PluginSystem;
 
-namespace CommandPalette.Commands
+namespace WinCommandPalette.Commands
 {
     internal class ShowOptionsCommand : ICommand
     {

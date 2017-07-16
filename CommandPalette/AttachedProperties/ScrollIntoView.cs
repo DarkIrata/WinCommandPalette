@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace CommandPalette.AttachedProperties
+namespace WinCommandPalette.AttachedProperties
 {
     public static class ScrollIntoView
     {

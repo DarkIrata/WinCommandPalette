@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
-using CommandPalette.PluginSystem;
+using WinCommandPalette.PluginSystem;
 
-namespace CommandPalette.Commands
+namespace WinCommandPalette.Commands
 {
     public class OpenFileCommand : ICommand
     {

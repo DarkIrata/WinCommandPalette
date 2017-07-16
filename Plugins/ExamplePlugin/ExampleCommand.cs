@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using CommandPalette.PluginSystem;
+using WinCommandPalette.PluginSystem;
 
 namespace ExamplePlugin
 {

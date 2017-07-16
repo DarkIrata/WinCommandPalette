@@ -1,4 +1,4 @@
-﻿using CommandPalette.Commands;
+﻿using WinCommandPalette.Commands;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,10 +6,10 @@ using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using CommandPalette.Helper;
-using CommandPalette.PluginSystem;
+using WinCommandPalette.Helper;
+using WinCommandPalette.PluginSystem;
 
-namespace CommandPalette
+namespace WinCommandPalette
 {
     public class Config : ICloneable
     {

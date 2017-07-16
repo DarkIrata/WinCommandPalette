@@ -7,10 +7,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
-using CommandPalette.Helper;
-using CommandPalette.PluginSystem;
+using WinCommandPalette.Helper;
+using WinCommandPalette.PluginSystem;
 
-namespace CommandPalette
+namespace WinCommandPalette
 {
     /// <summary>
     /// Interaktionslogik für "App.xaml"

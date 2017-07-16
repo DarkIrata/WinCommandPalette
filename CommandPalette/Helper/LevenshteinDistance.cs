@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CommandPalette.Helper
+namespace WinCommandPalette.Helper
 {
     // https://www.dotnetperls.com/levenshtein - 02.07.2017
     public static class LevenshteinDistance

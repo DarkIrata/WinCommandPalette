@@ -4,10 +4,10 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-using CommandPalette.PluginSystem;
+using WinCommandPalette.PluginSystem;
 using wf = System.Windows.Forms;
 
-namespace CommandPalette
+namespace WinCommandPalette
 {
     public class OptionsViewModel : ViewModelBase
     {
