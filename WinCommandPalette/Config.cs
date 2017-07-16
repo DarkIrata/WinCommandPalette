@@ -149,6 +149,7 @@ namespace WinCommandPalette
                     config.UndeserializableCommands.Add(commandElement);
                     continue;
                 }
+
                 var cmdSerializer = new XmlSerializer(type);
                 using (var fs = new StringReader(commandElement.ToString()))
                 {

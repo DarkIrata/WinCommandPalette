@@ -4,7 +4,7 @@
 		<ItemGroup>
 			<PluginFiles Include="$(TargetDir)*"/>
 		</ItemGroup>
-		<Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(SolutionDir)CommandPalette\bin\$(Configuration)\Plugins\$(ProjectName)\">
+		<Copy SourceFiles="@(PluginFiles)" DestinationFolder="$(SolutionDir)WinCommandPalette\bin\$(Configuration)\Plugins\$(ProjectName)\">
 			<Output TaskParameter="CopiedFiles" ItemName="Changed"/>
 		</Copy>
 		<Message Text="@(Changed->'%(Filename)%(Extension)', '%0a')" Importance="high"/> 

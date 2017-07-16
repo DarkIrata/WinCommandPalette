@@ -143,9 +143,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CommandPalette\CommandPalette.csproj">
+    <ProjectReference Include="..\..\WinCommandPalette\WinCommandPalette.csproj">
       <Project>{F8079C4B-68EF-4256-8E64-3319E1318265}</Project>
-      <Name>CommandPalette</Name>
+      <Name>WinCommandPalette</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
