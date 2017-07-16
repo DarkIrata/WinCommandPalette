@@ -78,6 +78,7 @@
     <Compile Include="AttachedProperties\ScrollIntoView.cs" />
     <Compile Include="Commands\QuitCommand.cs" />
     <Compile Include="Converter\DescriptionToVisibilityConverter.cs" />
+    <Compile Include="Converter\InvertBoolToVisibilityConverter.cs" />
     <Compile Include="Helper\ScreenHelper.cs" />
     <Compile Include="PluginSystem\ICommand.cs" />
     <Compile Include="Commands\OpenFileCommand.cs" />
