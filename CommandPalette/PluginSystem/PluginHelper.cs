@@ -10,9 +10,7 @@ namespace CommandPalette.PluginSystem
     public static class PluginHelper
     {
         public readonly static string PluginDirectoryPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Plugins");
-
         public static string PluginFileType = ".dll";
-
         public static Dictionary<string, Assembly> PluginAssemblies = new Dictionary<string, Assembly>();
 
         static PluginHelper()
