@@ -62,6 +62,7 @@
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\ScrollIntoView.cs" />
     <Compile Include="Commands\QuitCommand.cs" />
+    <Compile Include="Converter\DescriptionToVisibilityConverter.cs" />
     <Compile Include="Helper\ScreenHelper.cs" />
     <Compile Include="PluginSystem\ICommand.cs" />
     <Compile Include="Commands\OpenFileCommand.cs" />
@@ -137,5 +138,9 @@
     <Resource Include="CommandPalleteLogo.ico" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Threading.png" />
+    <Resource Include="Resources\UAC.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
