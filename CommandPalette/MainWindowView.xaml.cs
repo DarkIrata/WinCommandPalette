@@ -10,37 +10,33 @@ using CommandPalette.PluginSystem;
 
 namespace CommandPalette
 {
-    /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private MainWindowViewModel viewModel;
         private Config config;
         private bool focusedListBoxItem = false;
 
-        public MainWindow()
+        private MainWindow()
         {
-            PluginHelper.Load();
-
-            this.config = new Config();
-            if (File.Exists("config.xml"))
-            {
-                this.config = Config.Load("config.xml");
-            }
-            
-            this.viewModel = new MainWindowViewModel(this.config);
             this.InitializeComponent();
-            this.DataContext = this.viewModel;
 
-            this.Loaded += this.MainWindow_Loaded;
-            this.Closing += this.MainWindow_Closing;
+            this.Loaded += this.HideWindow;
             this.GotKeyboardFocus += this.MainWindow_GotKeyboardFocus;
-            this.Deactivated += this.MainWindow_Deactivated;
+            this.Deactivated += this.HideWindow;
 
             this.SearchBox.PreviewKeyDown += this.SearchBox_PreviewKeyDown;
+            this.SearchBox.LostKeyboardFocus += this.HideWindow;
+        }
+
+        public MainWindow(Config config)
+            : this()
+        {
+            this.config = config ??
+                throw new ArgumentNullException(nameof(config));
+
+            this.viewModel = new MainWindowViewModel(this.config);
+            this.DataContext = this.viewModel;
             this.SearchBox.TextChanged += this.viewModel.SearchBox_TextChanged;
-            this.SearchBox.LostKeyboardFocus += this.SearchBox_LostKeyboardFocus;
         }
 
         private void SearchBox_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -48,7 +44,6 @@ namespace CommandPalette
             if (e.Key == Key.Escape)
             {
                 this.DisableContent();
-                this.SearchBox.Text = string.Empty;
             }
             else if (e.Key == Key.Up)
             {
@@ -90,17 +85,14 @@ namespace CommandPalette
             }
         }
 
-        private void MainWindow_Deactivated(object sender, EventArgs e)
+        private void HideWindow(object sender, EventArgs e)
         {
-            this.DisableContent();
-        }
-
-        private void SearchBox_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            if (!this.focusedListBoxItem)
+            if (sender == this.SearchBox && this.focusedListBoxItem)
             {
-                this.DisableContent();
+                return;
             }
+
+            this.DisableContent();
         }
 
         private void MainWindow_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
@@ -109,18 +101,43 @@ namespace CommandPalette
             Keyboard.Focus(this.SearchBox);
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void ActivateContent()
         {
-            var rect = wf.Screen.FromHandle(Win32Helper.applicationHandle).Bounds;
-            this.Top = rect.Height * 0.20;
+            Win32Helper.UnregisterHotKey();
+            this.viewModel.ShowAllCommands();
 
-            this.DisableContent();
+            this.Left = ScreenHelper.GetAppCenterScreenWidth(this.Width);
+            this.Visibility = Visibility.Visible;
+            this.SizeToContent = SizeToContent.Height;
+
+            Win32Helper.SetForegroundWindow(Win32Helper.applicationHandle);
         }
 
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void DisableContent()
         {
-            this.config.Save("config.xml");
-            Win32Helper.UnregisterHotKey();
+            if (!Win32Helper.keyRegistered)
+            {
+                if (!Win32Helper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode))
+                {
+                    MessageBox.Show("Couldn't register configured HotKey. Closing myself.", this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    this.Close();
+                }
+            }
+            
+            this.focusedListBoxItem = false;
+            this.SearchBox.Text = string.Empty;
+            this.viewModel.SelectedIndex = 0;
+
+            this.Visibility = Visibility.Collapsed;
+            this.SizeToContent = SizeToContent.Manual;
+        }
+        
+        private void ExecuteSelectedCommand()
+        {
+            if (this.viewModel.Execute())
+            {
+                this.DisableContent();
+            }
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -141,45 +158,10 @@ namespace CommandPalette
         {
             if (msg == Win32Helper.WM_HOTKEY)
             {
-                Win32Helper.UnregisterHotKey();
-
-                this.Visibility = Visibility.Visible;
-                this.SizeToContent = SizeToContent.Height;
-
-                var activeScreen = wf.Screen.FromPoint(wf.Control.MousePosition);
-                this.Left = (activeScreen.Bounds.Location.X + (activeScreen.WorkingArea.Width - this.Width) / 2);
-
-                this.viewModel.ShowAllCommands();
-                this.viewModel.SelectedIndex = 0;
-                this.focusedListBoxItem = false;
-                Win32Helper.SetForegroundWindow(Win32Helper.applicationHandle);
+                this.ActivateContent();
             }
 
             return IntPtr.Zero;
-        }
-
-        private void DisableContent()
-        {
-            if (!Win32Helper.keyRegistered)
-            {
-                if (!Win32Helper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode))
-                {
-                    MessageBox.Show("Error register HotKey. Killing myself", "Command Pattern", MessageBoxButton.OK, MessageBoxImage.Error);
-                    this.Close();
-                }
-            }
-
-            this.Visibility = Visibility.Collapsed;
-            this.SizeToContent = SizeToContent.Manual;
-        }
-        
-        private void ExecuteSelectedCommand()
-        {
-            if (this.viewModel.Execute())
-            {
-                this.SearchBox.Text = string.Empty;
-                this.DisableContent();
-            }
         }
     }
 }

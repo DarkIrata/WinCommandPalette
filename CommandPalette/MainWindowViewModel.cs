@@ -131,6 +131,7 @@ namespace CommandPalette
                 this.FilteredCommandList.Add(item.Key);
             }
 
+            // Setting SelectedIndex only one time doesn't execute probably, that's why it gets set 2 times
             this.SelectedIndex = -1;
             if (this.FilteredCommandList.Count != 0)
             {
@@ -155,7 +156,7 @@ namespace CommandPalette
                 }
                 else
                 {
-                    // Fixes a dumbass bug where (for example) "OpenFileCommand" Commands with RunAsAdmin = true start 2 times..
+                    // Fixs a dumbass bug where (for example) "OpenFileCommand" Commands with RunAsAdmin = true start its given path 2 times..
                     Task.Run(() => command.Execute());
                 }
 
@@ -175,17 +176,6 @@ namespace CommandPalette
             {
                 this.InstantCommands.AddRange(pluginInstantCommand.GetCommands());
             }
-
-#if DEBUG
-            this.InstantCommands.Add(new OpenFileCommand()
-            {
-                Name = "CMD Admin",
-                Description = "Kommandozeile",
-                FileName = "cmd.exe",
-                RunAsAdmin = true,
-                RunInUIThread = false
-            });
-#endif
         }
     }
 }
