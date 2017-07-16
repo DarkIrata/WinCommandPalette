@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows;
 using CommandPalette.PluginSystem;
 
 namespace CommandPalette.Commands
@@ -46,7 +49,14 @@ namespace CommandPalette.Commands
                 StartInfo = processStartInfo
             };
 
-            process.Start();
+            try
+            {
+                process.Start();
+            }
+            catch (InvalidOperationException invalidOperationEx)
+            {
+                MessageBox.Show($"Couldn't open path '{this.FileName}'\r\nError: {invalidOperationEx.Message}", "WinCommand Palette", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
