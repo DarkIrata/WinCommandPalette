@@ -63,6 +63,7 @@
     <ProjectReference Include="..\CommandPalette\CommandPalette.csproj">
       <Project>{f8079c4b-68ef-4256-8e64-3319e1318265}</Project>
       <Name>CommandPalette</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

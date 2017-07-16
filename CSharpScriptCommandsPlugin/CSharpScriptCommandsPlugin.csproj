@@ -145,6 +145,7 @@
     <ProjectReference Include="..\CommandPalette\CommandPalette.csproj">
       <Project>{F8079C4B-68EF-4256-8E64-3319E1318265}</Project>
       <Name>CommandPalette</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
