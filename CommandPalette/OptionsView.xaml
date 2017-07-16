@@ -41,7 +41,7 @@
             </Border>
 
             <TextBlock Text="Hotkey:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
-            <TextBox x:Name="KeyBox" Text="{Binding HotKey, Mode=OneWay}" Grid.Row="1" Grid.Column="1" Width="200" HorizontalAlignment="Left"/>
+            <TextBox x:Name="KeyBox" Text="{Binding HotKey, Mode=OneWay}" Grid.Row="1" Grid.Column="1" Width="200" HorizontalAlignment="Left" CaretBrush="Transparent"/>
 
 
             <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" BorderBrush="#2B2B2B" BorderThickness="0 0 0 1" VerticalAlignment="Top">
