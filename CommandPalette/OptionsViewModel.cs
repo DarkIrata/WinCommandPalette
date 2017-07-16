@@ -50,41 +50,8 @@ namespace CommandPalette
         private List<ICreateCommand> GetAvailableCommandCreators()
         {
             var commandCreators = new List<ICreateCommand>();
-
-            var defaultCreateCommands = this.GetCommandCreatorFromAssembly(typeof(ICreateCommand).Assembly);
-            if (defaultCreateCommands != null)
-            {
-                commandCreators.AddRange(defaultCreateCommands);
-            }
-
-            foreach (var pluginAssembly in PluginHelper.PluginAssemblies)
-            {
-                var pluginCreateCommands = this.GetCommandCreatorFromAssembly(pluginAssembly.Value);
-                if (pluginCreateCommands != null)
-                {
-                    commandCreators.AddRange(pluginCreateCommands);
-                }
-            }
-            
-            return commandCreators;
-        }
-
-        private List<ICreateCommand> GetCommandCreatorFromAssembly(Assembly assembly)
-        {
-            var commandCreators = new List<ICreateCommand>();
-            var baseType = typeof(ICreateCommand);
-            var commandCreatorsTypes = assembly.GetTypes()
-                      ?.Where(p => baseType.IsAssignableFrom(p) && !p.IsInterface);
-
-            if (commandCreatorsTypes == null)
-            {
-                return null;
-            }
-
-            foreach (var type in commandCreatorsTypes)
-            {
-                commandCreators.Add((ICreateCommand)Activator.CreateInstance(type));
-            }
+            commandCreators.AddRange(PluginHelper.GetFromAssembly<ICreateCommand>(typeof(ICreateCommand).Assembly)); // Myself
+            commandCreators.AddRange(PluginHelper.GetAll<ICreateCommand>()); // Plugins
 
             return commandCreators;
         }

@@ -170,23 +170,11 @@ namespace CommandPalette
             this.InstantCommands.Add(new ShowOptionsCommand(this.config));
             this.InstantCommands.Add(new QuitCommand());
 
-            foreach (var pluginAssembly in PluginHelper.PluginAssemblies)
+            var pluginInstantCommands = PluginHelper.GetAll<IInstantCommands>();
+            foreach (var pluginInstantCommand in pluginInstantCommands)
             {
-                var baseType = typeof(IInstantCommands);
-                var markedInstantCommandTypes = pluginAssembly.Value.GetTypes()
-                          ?.Where(p => baseType.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract);
-
-                if (markedInstantCommandTypes == null)
-                {
-                    continue;
-                }
-
-                foreach (var type in markedInstantCommandTypes)
-                {
-                    this.InstantCommands.AddRange(((IInstantCommands)Activator.CreateInstance(type)).GetCommands());
-                }
+                this.InstantCommands.AddRange(pluginInstantCommand.GetCommands());
             }
-
 
 #if DEBUG
             this.InstantCommands.Add(new OpenFileCommand()

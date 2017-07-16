@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 
@@ -57,6 +58,41 @@ namespace CommandPalette.PluginSystem
             }
 
             return PluginAssemblies.Count;
+        }
+
+        public static List<T> GetAll<T>()
+        {
+            var list = new List<T>();
+            foreach (var pluginAssembly in PluginAssemblies)
+            {
+                var resultFromAssembly = GetFromAssembly<T>(pluginAssembly.Value);
+                if (resultFromAssembly != null && resultFromAssembly.Count > 0)
+                {
+                    list.AddRange(resultFromAssembly);
+                }
+            }
+
+            return list;
+        }
+
+        public static List<T> GetFromAssembly<T>(Assembly assembly)
+        {
+            var list = new List<T>();
+            var baseType = typeof(T);
+            var types = assembly.GetTypes()
+                      ?.Where(p => baseType.IsAssignableFrom(p) && !p.IsInterface);
+
+            if (types == null)
+            {
+                return null;
+            }
+
+            foreach (var type in types)
+            {
+                list.Add((T)Activator.CreateInstance(type));
+            }
+
+            return list;
         }
     }
 }
