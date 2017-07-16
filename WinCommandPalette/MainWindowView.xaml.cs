@@ -15,6 +15,7 @@ namespace WinCommandPalette
         private MainWindowViewModel viewModel;
         private Config config;
         private bool focusedListBoxItem = false;
+        private bool calledClosing = false;
 
         private MainWindow()
         {
@@ -115,11 +116,17 @@ namespace WinCommandPalette
 
         private void DisableContent()
         {
+            if (this.calledClosing)
+            {
+                return;
+            }
+
             if (!Win32Helper.keyRegistered)
             {
                 if (!Win32Helper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode))
                 {
-                    MessageBox.Show("Couldn't register configured HotKey. Closing myself.", this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Couldn't register configured HotKey. Maybe i am already running?\r\nClosing myself.", this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    this.calledClosing = true;
                     this.Close();
                 }
             }

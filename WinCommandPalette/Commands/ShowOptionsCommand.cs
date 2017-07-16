@@ -9,7 +9,6 @@ namespace WinCommandPalette.Commands
 
         public string Description => "Show WinCommand Palette options";
 
-
         private Config config;
 
         public bool RunInUIThread => true;
