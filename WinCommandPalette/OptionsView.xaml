@@ -7,7 +7,7 @@
         xmlns:ap="clr-namespace:WinCommandPalette.AttachedProperties"
         mc:Ignorable="d"
         Title="WinCommand Palette Options"
-        MinWidth="500" MinHeight="450"
+        MinWidth="650" MinHeight="550"
         WindowStartupLocation="CenterScreen" Topmost="True"
         Background="White">
 
@@ -22,8 +22,11 @@
         </Style>
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <Style TargetType="TextBox">
+            <Setter Property="MinHeight" Value="25"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
         </Style>
     </Window.Resources>
@@ -31,7 +34,7 @@
     <DockPanel LastChildFill="True">
         <StackPanel DockPanel.Dock="Bottom">
             <Border BorderBrush="Silver" BorderThickness="0 1 0 0" VerticalAlignment="Top" Margin="2,0,2,0"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5" Height="25">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25">
                 <Button x:Name="btnSave" Content="Save" Width="65" Margin="0,0,5,0" IsEnabled="{Binding CanSave}" FontSize="12"/>
                 <Button x:Name="btnCancel" Content="Cancel" Width="65" Margin="5,0,0,0" FontSize="12"/>
             </StackPanel>
@@ -65,7 +68,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Set HotKey:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
-                <TextBox x:Name="KeyBox" Text="{Binding HotKey, Mode=OneWay}" Grid.Row="0" Grid.Column="1" Width="250" Height="20" HorizontalAlignment="Left" CaretBrush="Transparent"/>
+                <TextBox x:Name="KeyBox" Text="{Binding HotKey, Mode=OneWay}" Grid.Row="0" Grid.Column="1" Width="250" HorizontalAlignment="Left" CaretBrush="Transparent"/>
             </Grid>
 
             <StackPanel Grid.Row="2" Margin="0,10,0,0">
@@ -120,7 +123,7 @@
                                 <Button x:Name="btnReset" Content="Reset" Width="70" Margin="5" FontSize="12"/>
                             </StackPanel>
                         </StackPanel>
-                        <ContentPresenter Content="{Binding SelectedItem}"/>
+                        <ContentPresenter Content="{Binding SelectedItem}" Margin="5"/>
                     </DockPanel>
                 </Border>
             </Grid>

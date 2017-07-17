@@ -105,12 +105,17 @@ namespace WinCommandPalette
 
         internal void BtnSaveNewCommand_Click(object sender, RoutedEventArgs e)
         {
-            var command = this.SelectedItem.GetCommand();
+            var command = this.SelectedItem?.GetCommand();
             if (command != null)
             {
                 this.newConfig.Commands.Add(command);
                 this.SelectedItem.ClearAll();
             }
+        }
+
+        internal void BtnReset_Click(object sender, RoutedEventArgs e)
+        {
+            this.selectedItem?.ClearAll();
         }
 
         internal void Save()

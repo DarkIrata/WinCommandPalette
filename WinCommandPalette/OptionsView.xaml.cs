@@ -26,6 +26,7 @@ namespace WinCommandPalette
             this.KeyBox.PreviewKeyDown += this.viewModel.KeyBox_PreviewKeyDown;
 
             this.btnSaveNewCommand.Click += this.viewModel.BtnSaveNewCommand_Click;
+            this.btnReset.Click += this.viewModel.BtnReset_Click;
 
             this.btnSave.Click += this.BtnSave_Click;
             this.btnCancel.Click += this.BtnCancel_Click;
