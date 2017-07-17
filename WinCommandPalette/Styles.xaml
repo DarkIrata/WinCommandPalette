@@ -45,4 +45,74 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!-- Based on sampath Daluwak Godage [https://sampathdr.wordpress.com/2014/12/04/create-a-wpf-switch-control-using-a-check-box/] - 17.07.2017 -->
+    <Style TargetType="CheckBox">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#FF2A343F"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="OnChecking">
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" 
+                                                           Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.1500000" Value="26"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Key="OnUnchecking">
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="slider" 
+                                                           Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                <SplineDoubleKeyFrame KeyTime="00:00:00.1500000" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+
+                    <DockPanel x:Name="dockPanel">
+                        <ContentPresenter HorizontalAlignment="Right" VerticalAlignment="Center"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          Content="{TemplateBinding Content}"
+                                          ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          RecognizesAccessKey="True" />
+                        <Grid Width="44" Height="16">
+                            <Border Margin="0" BorderThickness="1" BorderBrush="Gray">
+                                <Grid Width="40">
+                                    <Border Margin="0,1,0,1" x:Name="baseRectangle" BorderThickness="0" Background="#FFb81b1b"/>
+                                    <TextBlock Margin="11,0,0,0" Text="I" FontFamily="Segoe UI Light" FontSize="8" HorizontalAlignment="Left"/>
+                                    <TextBlock Margin="0,0,9,0" Text="O" FontFamily="Segoe UI Light" FontSize="8" HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Border>
+                            
+                            <Border x:Name="slider" HorizontalAlignment="Left" Margin="1" Width="16" BorderThickness="0" RenderTransformOrigin="0.5,0.5" >
+                                <Border.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                        <SkewTransform AngleX="0" AngleY="0"/>
+                                        <RotateTransform Angle="0"/>
+                                        <TranslateTransform X="0" Y="0"/>
+                                    </TransformGroup>
+                                </Border.RenderTransform>
+                                <Border.Background>
+                                    <SolidColorBrush>White</SolidColorBrush>
+                                </Border.Background>
+                            </Border>
+                        </Grid>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource OnUnchecking}" x:Name="OnUnchecking_BeginStoryboard"/>
+                            </Trigger.ExitActions>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource OnChecking}" x:Name="OnChecking_BeginStoryboard"/>
+                            </Trigger.EnterActions>
+                            <Setter Property="Background" TargetName="baseRectangle" Value="#FF10853c"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
 </ResourceDictionary>
