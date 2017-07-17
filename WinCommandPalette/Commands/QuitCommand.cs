@@ -12,8 +12,6 @@ namespace WinCommandPalette.Commands
 
         public bool RunInUIThread => true;
 
-        public bool RunAsAdmin => false;
-
         public void Execute()
         {
             Application.Current.Shutdown(0);
