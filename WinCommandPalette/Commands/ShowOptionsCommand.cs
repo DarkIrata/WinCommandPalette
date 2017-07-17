@@ -13,8 +13,6 @@ namespace WinCommandPalette.Commands
 
         public bool RunInUIThread => true;
 
-        public bool RunAsAdmin => false;
-
         public ShowOptionsCommand(Config config)
         {
             this.config = config ??
