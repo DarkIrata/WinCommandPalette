@@ -10,8 +10,6 @@ namespace WinCommandPalette.PluginSystem
 
         bool RunInUIThread { get; }
 
-        bool RunAsAdmin { get; }
-
         void Execute();
     }
 }
