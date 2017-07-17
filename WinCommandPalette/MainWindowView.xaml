@@ -80,7 +80,7 @@
                         </DockPanel.ToolTip>
 
                         <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                            <Image Source="pack://application:,,,/WinCommandPalette;component/Resources/UAC.png" Width="12" Height="12" Margin="2 0 2 0" Visibility="{Binding RunAsAdmin, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Image Source="pack://application:,,,/WinCommandPalette;component/Resources/UAC.png" Width="12" Height="12" Margin="2 0 2 0" Visibility="{Binding RunAsAdmin, FallbackValue=Collapsed, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Image.ToolTip>
                                     <ToolTip Style="{StaticResource ToolTipStyle}">
                                         <TextBlock Text="Running with Admin rights" Margin="5" Foreground="Snow" FontSize="12" FontFamily="Segoe UI" MaxWidth="300" TextWrapping="Wrap"/>
