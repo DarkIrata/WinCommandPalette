@@ -3,9 +3,9 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows;
-using WinCommandPalette.PluginSystem;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
+using WinCommandPalette.PluginSystem;
 
 namespace CSharpScriptCommandsPlugin
 {
@@ -29,7 +29,7 @@ namespace CSharpScriptCommandsPlugin
 
             try
             {
-                var result = CSharpScript.EvaluateAsync<string>(this.Code)?.Result;
+                var result = CSharpScript.EvaluateAsync<string>(this.Code, ScriptOptions.Default.WithReferences("System"))?.Result;
                 if (!string.IsNullOrEmpty(result))
                 {
                     MessageBox.Show(result);
