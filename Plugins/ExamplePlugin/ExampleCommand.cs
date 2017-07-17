@@ -14,8 +14,6 @@ namespace ExamplePlugin
 
         public string Text { get; set; }
 
-        public bool RunAsAdmin => false;
-
         public ExampleCommand()
         {
             this.Name = "[Example] Name isn't set";
