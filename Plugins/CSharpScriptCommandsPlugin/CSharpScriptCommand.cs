@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.Scripting;
 using WinCommandPalette.PluginSystem;
 
 namespace CSharpScriptCommandsPlugin
@@ -41,9 +41,10 @@ namespace CSharpScriptCommandsPlugin
                 var logPath = Path.Combine(path, $"CompileError_{DateTime.Now.ToString("dd-MM-yy__HH_mm")}.log");
 
                 Directory.CreateDirectory(path);
-                File.WriteAllText(logPath, this.FormatCompileError(compilerError.Message));
+                var message = this.FormatCompileError(compilerError.Message);
+                File.WriteAllText(logPath, message);
 
-                MessageBox.Show($"Error while compiling the code.\r\nLOG: {logPath}", "WinCommand Palette", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error while compiling the code.\r\nLOG: {logPath}{Environment.NewLine}{Environment.NewLine}{message}", "WinCommand Palette", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

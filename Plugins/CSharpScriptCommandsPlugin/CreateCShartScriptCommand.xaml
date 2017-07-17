@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CSharpScriptCommandsPlugin"
+             xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
              mc:Ignorable="d">
     <Grid>
         <Grid.Resources>
@@ -30,6 +31,6 @@
         <TextBox Name="tbDescription" Grid.Column="1" Grid.Row="1"/>
 
         <TextBlock Text="Code" Grid.Column="0" Grid.Row="2"/>
-        <TextBox Name="tbCode" Grid.Column="1" Grid.Row="2" AcceptsReturn="True"/>
+        <avalonEdit:TextEditor Name="tbCode" Grid.Column="1" Grid.Row="2" SyntaxHighlighting="C#"/>
     </Grid>
 </UserControl>
