@@ -79,8 +79,8 @@
                             <Border Margin="0" BorderThickness="1" BorderBrush="Gray">
                                 <Grid Width="40">
                                     <Border Margin="0,1,0,1" x:Name="baseRectangle" BorderThickness="0" Background="#FFb81b1b"/>
-                                    <TextBlock Margin="11,0,0,0" Text="I" FontFamily="Segoe UI Light" FontSize="8" HorizontalAlignment="Left"/>
-                                    <TextBlock Margin="0,0,9,0" Text="O" FontFamily="Segoe UI Light" FontSize="8" HorizontalAlignment="Right"/>
+                                    <TextBlock Margin="11,0,0,0" Text="I" FontFamily="Segoe UI Light" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                                    <TextBlock Margin="0,0,9,0" Text="O" FontFamily="Segoe UI Light" FontSize="8" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                                 </Grid>
                             </Border>
                             
