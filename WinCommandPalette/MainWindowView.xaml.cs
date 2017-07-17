@@ -3,10 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.IO;
-using wf = System.Windows.Forms;
 using WinCommandPalette.Helper;
-using WinCommandPalette.PluginSystem;
 
 namespace WinCommandPalette
 {
@@ -125,7 +122,7 @@ namespace WinCommandPalette
             {
                 if (!Win32Helper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode))
                 {
-                    MessageBox.Show("Couldn't register configured HotKey. Maybe i am already running?\r\nClosing myself.", this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Couldn't register configured HotKey. Maybe something is already registered on this combination.\r\nClosing myself.", this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                     this.calledClosing = true;
                     this.Close();
                 }

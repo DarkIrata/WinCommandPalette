@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +22,13 @@ namespace WinCommandPalette
 
         public App()
         {
+
+            if (Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
+            {
+                MessageBox.Show("An instance of WinCommand Palette is already running.", "WinCommand Palette", MessageBoxButton.OK, MessageBoxImage.Information);
+                Current.Shutdown(1);
+            }
+
             PluginHelper.Load();
 
             this.config = new Config();
