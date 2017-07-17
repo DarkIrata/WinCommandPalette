@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Interop;
 using WinCommandPalette.Helper;
 using WinCommandPalette.PluginSystem;
 
@@ -44,8 +37,10 @@ namespace WinCommandPalette
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var mainWindow = new MainWindow(this.config);
-            mainWindow.Top = ScreenHelper.GetPrimaryScreen().Bounds.Height * 0.40;
+            var mainWindow = new MainWindow(this.config)
+            {
+                Top = ScreenHelper.GetPrimaryScreen().Bounds.Height * 0.40
+            };
 
             mainWindow.Show();
         }
