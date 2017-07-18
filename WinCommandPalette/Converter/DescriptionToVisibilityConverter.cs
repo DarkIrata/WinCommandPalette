@@ -13,7 +13,7 @@ namespace WinCommandPalette.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var description = value.ToString();
+            var description = value?.ToString();
             return string.IsNullOrEmpty(description) ? Visibility.Collapsed : Visibility.Visible;
         }
 

@@ -104,6 +104,7 @@ namespace WinCommandPalette
             Win32Helper.UnregisterHotKey();
             this.viewModel.ShowAllCommands();
 
+            this.Top = ScreenHelper.GetPrimaryScreen().Bounds.Height * 0.20;
             this.Left = ScreenHelper.GetAppCenterScreenWidth(this.Width);
             this.Visibility = Visibility.Visible;
             this.SizeToContent = SizeToContent.Height;

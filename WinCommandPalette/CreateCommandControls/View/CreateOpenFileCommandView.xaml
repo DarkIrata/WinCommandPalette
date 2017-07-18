@@ -8,16 +8,12 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.Resources>
-            <Style TargetType="{x:Type TextBlock}">
+            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
                 <Setter Property="Margin" Value="0,5,0,5"/>
-                <Setter Property="FontFamily" Value="Segoe UI"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
             </Style>
-            <Style TargetType="{x:Type TextBox}">
+            
+            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                 <Setter Property="Margin" Value="0,5,0,5"/>
-                <Setter Property="MinHeight" Value="25"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="FontFamily" Value="Segoe UI"/>
             </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>

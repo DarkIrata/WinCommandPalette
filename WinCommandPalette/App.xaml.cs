@@ -37,11 +37,7 @@ namespace WinCommandPalette
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            var mainWindow = new MainWindow(this.config)
-            {
-                Top = ScreenHelper.GetPrimaryScreen().Bounds.Height * 0.40
-            };
-
+            var mainWindow = new MainWindow(this.config);
             mainWindow.Show();
         }
 
