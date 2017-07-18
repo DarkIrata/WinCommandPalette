@@ -84,7 +84,6 @@ namespace WinCommandPalette
         internal void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var tb = (TextBox)sender;
-            tb.CaretIndex++;
             var searchText = tb.Text.Trim();
             
             if (searchText == this.lastSearchText)
