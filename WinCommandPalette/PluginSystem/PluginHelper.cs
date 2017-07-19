@@ -4,14 +4,17 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows;
+using WinCommandPalette.Plugin;
+using WinCommandPalette.Plugin.CommandBase;
+using WinCommandPalette.Plugin.CreateCommand;
 
 namespace WinCommandPalette.PluginSystem
 {
-    public static class PluginHelper
+    internal static class PluginHelper
     {
-        public readonly static string PluginDirectoryPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Plugins");
-        public static string PluginFileType = ".dll";
-        public static Dictionary<string, Assembly> PluginAssemblies = new Dictionary<string, Assembly>();
+        internal readonly static string PluginDirectoryPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Plugins");
+        internal static string PluginFileType = ".dll";
+        private static Dictionary<string, Plugin> Plugins = new Dictionary<string, Plugin>();
 
         static PluginHelper()
         {
@@ -30,55 +33,165 @@ namespace WinCommandPalette.PluginSystem
             };
         }
 
-        public static int Load()
+        internal static int Load()
         {
-            if (!Directory.Exists(PluginDirectoryPath))
+            Directory.CreateDirectory(PluginDirectoryPath);
+
+            var pluginFiles = GetPluginFilePaths();
+            foreach (var pluginFile in pluginFiles)
             {
-                Directory.CreateDirectory(PluginDirectoryPath);
+                var pluginName = Path.GetFileNameWithoutExtension(pluginFile);
+
+                if (Plugins.ContainsKey(pluginName))
+                {
+                    ShowErrorLoadingPluginMessage(pluginName, "A plugin with this name is already registered.");
+                    continue;
+                }
+
+                try
+                {
+                    var pluginAssembly = Assembly.LoadFile(pluginFile);
+                    var wcpPlugin = GetPluginInstance(pluginAssembly);
+                    if (wcpPlugin == null)
+                    {
+                        ShowErrorLoadingPluginMessage(pluginName, "Plugin is missing a WCPPlugin instance.");
+                        continue;
+                    }
+
+                    var commands = GetPluginCommands(pluginAssembly);
+                    if (commands == null ||
+                        commands.Count == 0)
+                    {
+                        ShowErrorLoadingPluginMessage(pluginName, "Plugin doesn't have any commands to load");
+                        continue;
+                    }
+
+                    Plugins.Add(pluginName, new Plugin(pluginAssembly, wcpPlugin, commands));
+                }
+                catch (Exception ex)
+                {
+                    ShowErrorLoadingPluginMessage(pluginName, ex.Message);
+                }
             }
 
-            var pluginFolders = Directory.GetDirectories(PluginDirectoryPath);
-            foreach (var pluginFolder in pluginFolders)
+            return Plugins.Count;
+        }
+
+        internal static List<ICommandBase> GetAllAutoRegisterCommands()
+        {
+            var autoRegisterCommands = new List<ICommandBase>();
+
+            foreach (var plugin in Plugins)
             {
-                var pluginFile = Path.Combine(pluginFolder, Path.GetFileName(pluginFolder) + PluginFileType);
+                if (plugin.Value.WCPPlugin.AutoRegisterCommands != null)
+                {
+                    autoRegisterCommands.AddRange(plugin.Value.WCPPlugin.AutoRegisterCommands);
+                }
+            }
+
+            return autoRegisterCommands;
+        }
+        
+        internal static List<ICreateCommand> GetAllCreateCommandViews()
+        {
+            var createCommandViews = new List<ICreateCommand>();
+
+            foreach (var plugin in Plugins)
+            {
+                if (plugin.Value.Commands?.Values != null)
+                {
+                    createCommandViews.AddRange(plugin.Value.Commands.Values.Where(v => v != null));
+                }
+            }
+
+            return createCommandViews;
+        }
+
+        internal static Plugin GetPlugin(string pluginName)
+        {
+            if (Plugins.ContainsKey(pluginName))
+            {
+                return Plugins[pluginName];
+            }
+
+            return null;
+        }
+
+        private static void ShowErrorLoadingPluginMessage(string pluginName, string reason)
+        {
+            MessageBox.Show($"Error loading plugin '{pluginName}'.\r\n\r\nReason: {reason}", "WinCommand Palette PluginLoader", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private static List<string> GetPluginFilePaths()
+        {
+            var pluginFiles = new List<string>();
+            var pluginDirectories = Directory.GetDirectories(PluginDirectoryPath);
+
+            foreach (var pluginDirectory in pluginDirectories)
+            {
+                var pluginFile = Path.Combine(pluginDirectory, Path.GetFileName(pluginDirectory) + PluginFileType);
                 if (File.Exists(pluginFile))
                 {
-                    try
-                    {
-                        var pluginAssembly = Assembly.LoadFile(pluginFile);
-                        PluginAssemblies.Add(pluginAssembly.GetName().Name, pluginAssembly);
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show($"Error loading Plugin '{Path.GetFileName(pluginFile)}'.");
-                    }
+                    pluginFiles.Add(pluginFile);
                 }
             }
 
-            return PluginAssemblies.Count;
+            return pluginFiles;
         }
 
-        public static List<T> GetAll<T>()
+        private static WCPPlugin GetPluginInstance(Assembly assembly)
         {
-            var list = new List<T>();
-            foreach (var pluginAssembly in PluginAssemblies)
+            var baseType = typeof(WCPPlugin);
+            var type = assembly.GetTypes()?.FirstOrDefault(t => baseType.IsAssignableFrom(t) && !t.IsAbstract && !t.IsInterface);
+            if (type == null)
             {
-                var resultFromAssembly = GetFromAssembly<T>(pluginAssembly.Value);
-                if (resultFromAssembly != null && resultFromAssembly.Count > 0)
-                {
-                    list.AddRange(resultFromAssembly);
-                }
+                return null;
             }
 
-            return list;
+            return (WCPPlugin)Activator.CreateInstance(type);
         }
 
-        public static List<T> GetFromAssembly<T>(Assembly assembly)
+        private static Dictionary<string, ICreateCommand> GetPluginCommands(Assembly assembly)
+        {
+
+            var wpcCommands = new Dictionary<string, ICreateCommand>();
+            var commandBaseType = typeof(ICommandBase);;
+
+            var commandTypes = assembly.GetTypes()?.Where(p => commandBaseType.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract);
+            if (commandTypes == null)
+            {
+                return wpcCommands;
+            }
+
+            foreach (var commandType in commandTypes)
+            {
+                var createCommandInstance = GetCreateCommandInstance(assembly, commandType.Name);
+                wpcCommands.Add(commandType.FullName, createCommandInstance);
+            }
+
+            return wpcCommands;
+        }
+
+        private static ICreateCommand GetCreateCommandInstance(Assembly assembly, string commandName)
+        {
+            var createCommandType = typeof(ICreateCommand);
+            var assemblyCreateCommandType = assembly.GetTypes()?.FirstOrDefault(p => createCommandType.IsAssignableFrom(p) &&
+                                                                !p.IsInterface && !p.IsAbstract &&
+                                                                p.Name == "Create" + commandName);
+            if (assemblyCreateCommandType == null)
+            {
+                return null;
+            }
+
+            return (ICreateCommand)Activator.CreateInstance(assemblyCreateCommandType);
+        }
+
+        private static List<T> GetFromAssembly<T>(Assembly assembly, string namePart = "")
         {
             var list = new List<T>();
             var baseType = typeof(T);
             var types = assembly.GetTypes()
-                      ?.Where(p => baseType.IsAssignableFrom(p) && !p.IsInterface);
+                      ?.Where(p => baseType.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract);
 
             if (types == null)
             {

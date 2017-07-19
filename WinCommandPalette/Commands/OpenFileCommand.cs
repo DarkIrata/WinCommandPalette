@@ -1,12 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows;
+using WinCommandPalette.Plugin.CommandBase;
 using WinCommandPalette.PluginSystem;
 
 namespace WinCommandPalette.Commands
 {
-    public class OpenFileCommand : ICommand
+    public class OpenFileCommand : ICommandBase
     {
         public string Name { get; set; }
 
@@ -21,6 +23,8 @@ namespace WinCommandPalette.Commands
         public bool RunAsAdmin { get; set; }
 
         public bool RunInUIThread { get; set; }
+
+        public Image Icon { get; set; }
 
         public OpenFileCommand()
         {

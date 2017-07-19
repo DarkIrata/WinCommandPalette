@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using WinCommandPalette.Helper;
 using WinCommandPalette.PluginSystem;
+using WinCommandPalette.Plugin.CommandBase;
 
 namespace WinCommandPalette
 {
@@ -22,7 +23,7 @@ namespace WinCommandPalette
         public uint KeyCode { get; set; }
 
         [XmlIgnore]
-        public List<ICommand> Commands { get; set; }
+        public List<ICommandBase> Commands { get; set; }
 
         private List<XElement> UndeserializableCommands = new List<XElement>();
 
@@ -30,7 +31,7 @@ namespace WinCommandPalette
         {
             this.ModifierKey = ModifierKey.LeftCTRL | ModifierKey.LeftShift;
             this.KeyCode = 80; // P
-            this.Commands = new List<ICommand>();
+            this.Commands = new List<ICommandBase>();
         }
 
         internal void Save(string path)
@@ -67,7 +68,7 @@ namespace WinCommandPalette
         {
             var commandsSB = new StringBuilder(4096);
 
-            var baseAssembly = typeof(ICommand).Assembly;
+            var baseAssembly = typeof(ICommandBase).Assembly;
             foreach (var command in this.Commands)
             {
                 var sb = new StringBuilder(128);
@@ -119,33 +120,36 @@ namespace WinCommandPalette
 
         private static void DeserializeCommands(Config config, XElement commandsElement)
         {
-            config.Commands = new List<ICommand>();
+            config.Commands = new List<ICommandBase>();
+
             if (commandsElement == null)
             {
                 return;
             }
 
-            var baseAssembly = typeof(ICommand).Assembly;
+            var baseAssembly = typeof(Config).Assembly;
             foreach (var commandElement in commandsElement.Elements())
             {
                 var assembly = baseAssembly;
-                var assemblyName = commandElement.Attribute(PLUGIN_ASSEMBLY_ATTRIBUTE_NAME)?.Value;
-                if (!string.IsNullOrEmpty(assemblyName))
+                var pluginName = commandElement.Attribute(PLUGIN_ASSEMBLY_ATTRIBUTE_NAME)?.Value;
+
+                if (!string.IsNullOrEmpty(pluginName))
                 {
-                    if (!PluginHelper.PluginAssemblies.ContainsKey(assemblyName))
+                    var plugin = PluginHelper.GetPlugin(pluginName);
+                    if (plugin == null)
                     {
-                        Console.WriteLine($"Plugin '{assemblyName}' is unkown");
+                        Console.WriteLine($"Plugin '{pluginName}' is unkown");
                         config.UndeserializableCommands.Add(commandElement);
                         continue;
                     }
 
-                    assembly = PluginHelper.PluginAssemblies[assemblyName];
+                    assembly = plugin.Assembly;
                 }
 
-                var type = assembly.GetType(commandElement.Attribute(PLUGIN_TYPE_ATTRIBUTE_NAME).Value);
+                var type = assembly.GetType(commandElement.Attribute(PLUGIN_TYPE_ATTRIBUTE_NAME)?.Value);
                 if (type == null)
                 {
-                    Console.WriteLine($"Plugin '{assemblyName}' given type is null");
+                    Console.WriteLine($"Plugin '{pluginName}' doesn't contain command type '{type}'");
                     config.UndeserializableCommands.Add(commandElement);
                     continue;
                 }
@@ -153,7 +157,7 @@ namespace WinCommandPalette
                 var cmdSerializer = new XmlSerializer(type);
                 using (var fs = new StringReader(commandElement.ToString()))
                 {
-                    config.Commands.Add((ICommand)cmdSerializer.Deserialize(fs));
+                    config.Commands.Add((ICommandBase)cmdSerializer.Deserialize(fs));
                 }
             }
         }

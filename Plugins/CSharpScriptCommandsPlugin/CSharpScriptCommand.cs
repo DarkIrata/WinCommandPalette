@@ -5,11 +5,12 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows;
-using WinCommandPalette.PluginSystem;
+using WinCommandPalette.Plugin.CommandBase;
+using System.Drawing;
 
 namespace CSharpScriptCommandsPlugin
 {
-    public class CSharpScriptCommand : ICommand
+    public class CSharpScriptCommand : ICommandBase
     {
         public string Name { get; set; }
 
@@ -18,6 +19,8 @@ namespace CSharpScriptCommandsPlugin
         public bool RunInUIThread => false;
 
         public string Code { get; set; }
+
+        public Image Icon => null;
 
         public void Execute()
         {
@@ -52,7 +55,7 @@ namespace CSharpScriptCommandsPlugin
         {
             var sb = new StringBuilder(2048);
             sb.AppendLine("==============[ Info ]==============");
-            sb.AppendLine($"Command: '{this.Name ?? ">>InstantCommand-Call<<"}'");
+            sb.AppendLine($"Command: '{this.Name ?? ">>AutoRegister Command<<"}'");
             sb.AppendLine(string.Empty);
             sb.AppendLine("==============[ C# Code ]==============");
             sb.AppendLine(this.Code);

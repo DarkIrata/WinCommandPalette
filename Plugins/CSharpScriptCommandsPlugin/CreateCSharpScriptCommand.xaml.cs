@@ -5,14 +5,15 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using WinCommandPalette.PluginSystem;
+using WinCommandPalette.Plugin.CreateCommand;
+using WinCommandPalette.Plugin.CommandBase;
 
 namespace CSharpScriptCommandsPlugin
 {
     /// <summary>
-    /// Interaction logic for CreateCShartScriptCommand.xaml
+    /// Interaction logic for CreateCSharpScriptCommand.xaml
     /// </summary>
-    public partial class CreateCShartScriptCommand : UserControl, ICreateCommand
+    public partial class CreateCSharpScriptCommand : UserControl, ICreateCommand
     {
         private const string DefaultCode = @"$""The current time is: {System.DateTime.Now}""";
 
@@ -20,7 +21,7 @@ namespace CSharpScriptCommandsPlugin
 
         private ToolTip editorToolTip;
 
-        public CreateCShartScriptCommand()
+        public CreateCSharpScriptCommand()
         {
             this.InitializeComponent();
 
@@ -122,7 +123,7 @@ namespace CSharpScriptCommandsPlugin
             this.tbCode.Text = DefaultCode;
         }
 
-        public WinCommandPalette.PluginSystem.ICommand GetCommand()
+        public ICommandBase GetCommand()
         {
             return new CSharpScriptCommand()
             {

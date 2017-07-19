@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using WinCommandPalette.PluginSystem;
+using WinCommandPalette.Plugin;
+using WinCommandPalette.Plugin.CommandBase;
 
 namespace ExamplePlugin
 {
-    public class ExamplePlugin : IInstantCommands
+    public class ExamplePlugin : WCPPlugin
     {
-        public List<ICommand> GetCommands()
+        public override PluginMeta PluginMeta => new PluginMeta()
         {
-            return new List<ICommand>()
+            Author = "DarkIrata",
+            Description = "A simple example how to create a plugin"
+        };
+
+        public override List<ICommandBase> AutoRegisterCommands => new List<ICommandBase>()
+        {
+            new ExampleCommand()
             {
-                new ExampleCommand()
-                {
-                    Name = "[Example] Add by InstantCommand",
-                    Text = "Hardcoded Command. Not saved in the Config"
-                }
-            };
-        }
+                Name = "[Example] Add by GetAutoRegisterCommands",
+                Text = "Hardcoded Commands are not saved in the Config"
+            }
+        };
     }
 }

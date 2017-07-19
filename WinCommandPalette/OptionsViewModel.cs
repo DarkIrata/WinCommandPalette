@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
+using WinCommandPalette.CreateCommandControls.View;
+using WinCommandPalette.Plugin.CreateCommand;
 using WinCommandPalette.PluginSystem;
 using wf = System.Windows.Forms;
 
@@ -37,8 +39,6 @@ namespace WinCommandPalette
             }
         }
 
-        public int PluginsCount => PluginHelper.PluginAssemblies.Count;
-
         public OptionsViewModel(Config config)
         {
             this.config = config ??
@@ -50,8 +50,11 @@ namespace WinCommandPalette
         private List<ICreateCommand> GetAvailableCommandCreators()
         {
             var commandCreators = new List<ICreateCommand>();
-            commandCreators.AddRange(PluginHelper.GetFromAssembly<ICreateCommand>(typeof(ICreateCommand).Assembly)); // Myself
-            commandCreators.AddRange(PluginHelper.GetAll<ICreateCommand>()); // Plugins
+            // Internal
+            commandCreators.Add(new CreateOpenFileCommandView());
+
+            // Plugins
+            commandCreators.AddRange(PluginHelper.GetAllCreateCommandViews());
 
             return commandCreators;
         }

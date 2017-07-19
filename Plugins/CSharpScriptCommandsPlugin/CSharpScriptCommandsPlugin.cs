@@ -1,20 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using WinCommandPalette.PluginSystem;
+using WinCommandPalette.Plugin;
 
 namespace CSharpScriptCommandsPlugin
 {
-    public class CSharpScriptCommandsPlugin : IInstantCommands
+    public class CSharpScriptCommandsPlugin : WCPPlugin
     {
-        public List<ICommand> GetCommands()
-        {
-            return null;
-        }
+        public override PluginMeta PluginMeta => throw new NotImplementedException();
 
-        public CSharpScriptCommandsPlugin()
+        public override void OnCreation()
         {
             Task.Run(() =>
             {
@@ -26,6 +21,7 @@ namespace CSharpScriptCommandsPlugin
 
                 cmd.Execute();
             });
+            base.OnCreation();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
-using WinCommandPalette.PluginSystem;
+using WinCommandPalette.Plugin.CommandBase;
+using WinCommandPalette.Plugin.CreateCommand;
 
 namespace ExamplePlugin
 {
@@ -8,19 +9,19 @@ namespace ExamplePlugin
     /// </summary>
     public partial class CreateExampleCommand : UserControl, ICreateCommand
     {
+        public string CommandTypeName => "Example Plugin";
+
         public CreateExampleCommand()
         {
             this.InitializeComponent();
         }
-
-        public string CommandTypeName => "Example Plugin";
 
         public void ClearAll()
         {
             this.tbText.Text = string.Empty;
         }
 
-        public ICommand GetCommand()
+        public ICommandBase GetCommand()
         {
             return new ExampleCommand()
             {

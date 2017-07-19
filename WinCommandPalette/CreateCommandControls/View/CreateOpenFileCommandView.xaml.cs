@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using WinCommandPalette.Commands;
 using WinCommandPalette.CreateCommandControls.ViewModel;
+using WinCommandPalette.Plugin.CommandBase;
+using WinCommandPalette.Plugin.CreateCommand;
 using WinCommandPalette.PluginSystem;
 
 namespace WinCommandPalette.CreateCommandControls.View
@@ -23,7 +25,7 @@ namespace WinCommandPalette.CreateCommandControls.View
             this.DataContext = this.viewModel;
         }
 
-        public ICommand GetCommand()
+        public ICommandBase GetCommand()
         {
             return this.viewModel.GetCommand();
         }

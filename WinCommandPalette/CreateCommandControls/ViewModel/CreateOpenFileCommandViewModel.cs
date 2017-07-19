@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WinCommandPalette.Commands;
+using WinCommandPalette.Plugin.CommandBase;
 using WinCommandPalette.PluginSystem;
 
 namespace WinCommandPalette.CreateCommandControls.ViewModel
@@ -23,7 +24,7 @@ namespace WinCommandPalette.CreateCommandControls.ViewModel
             }
         }
 
-        internal ICommand GetCommand()
+        internal ICommandBase GetCommand()
         {
             return this.OpenFileCommand;
         }

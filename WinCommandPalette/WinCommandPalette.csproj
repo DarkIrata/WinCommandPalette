@@ -84,12 +84,11 @@
       <DependentUpon>CreateOpenFileCommandView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\ScreenHelper.cs" />
-    <Compile Include="PluginSystem\ICommand.cs" />
     <Compile Include="Commands\OpenFileCommand.cs" />
     <Compile Include="Commands\ShowOptionsCommand.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="PluginSystem\ICreateCommand.cs" />
     <Compile Include="Helper\LevenshteinDistance.cs" />
+    <Compile Include="PluginSystem\Plugin.cs" />
     <Compile Include="PluginSystem\PluginHelper.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Helper\Win32Helper.cs" />
@@ -98,7 +97,6 @@
       <DependentUpon>OptionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="OptionsViewModel.cs" />
-    <Compile Include="PluginSystem\IInstantCommands.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Page Include="CreateCommandControls\View\CreateOpenFileCommandView.xaml">
       <SubType>Designer</SubType>
@@ -173,6 +171,12 @@
   <ItemGroup>
     <Resource Include="Resources\Options\Commands.png" />
     <Resource Include="Resources\Options\Gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WinCommandPalette.Plugin\WinCommandPalette.Plugin.csproj">
+      <Project>{A53238F7-DC6E-464E-BAAA-296BB8984373}</Project>
+      <Name>WinCommandPalette.Plugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

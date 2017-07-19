@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Drawing;
+using WinCommandPalette.Plugin.CommandBase;
 using WinCommandPalette.PluginSystem;
 
 namespace WinCommandPalette.Commands
 {
-    internal class ShowOptionsCommand : ICommand
+    internal class ShowOptionsCommand : ICommandBase
     {
         public string Name => "Options";
 
@@ -12,6 +14,8 @@ namespace WinCommandPalette.Commands
         private Config config;
 
         public bool RunInUIThread => true;
+
+        public Image Icon => null;
 
         public ShowOptionsCommand(Config config)
         {

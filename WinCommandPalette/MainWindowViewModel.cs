@@ -8,18 +8,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
+using WinCommandPalette.Plugin.CommandBase;
 
 namespace WinCommandPalette
 {
     public class MainWindowViewModel : ViewModelBase
     {
         private Config config;
-        private List<ICommand> InstantCommands = new List<ICommand>();
+        private List<ICommandBase> AutoRegisterCommands = new List<ICommandBase>();
         private string lastSearchText = string.Empty;
 
-        private ObservableCollection<ICommand> filteredCommandList;
+        private ObservableCollection<ICommandBase> filteredCommandList;
 
-        public ObservableCollection<ICommand> FilteredCommandList
+        public ObservableCollection<ICommandBase> FilteredCommandList
         {
             get
             {
@@ -69,15 +70,15 @@ namespace WinCommandPalette
             this.config = config ??
                 throw new ArgumentNullException(nameof(config));
 
-            this.FilteredCommandList = new ObservableCollection<ICommand>();
-            this.SetupInstantCommands();
+            this.FilteredCommandList = new ObservableCollection<ICommandBase>();
+            this.RegisterAutoRegisterCommands();
         }
 
         public void ShowAllCommands()
         {
             var commands = this.config.Commands.ToList();
-            commands.AddRange(this.InstantCommands);
-            this.FilteredCommandList = new ObservableCollection<ICommand>(commands.OrderBy(k => k.Name).ToList());
+            commands.AddRange(this.AutoRegisterCommands);
+            this.FilteredCommandList = new ObservableCollection<ICommandBase>(commands.OrderBy(k => k.Name).ToList());
             this.NotifyPropertyChanged(nameof(this.FilteredCommandList));
         }
 
@@ -101,7 +102,7 @@ namespace WinCommandPalette
             searchText = this.GetSearchString(searchText);
             this.FilteredCommandList.Clear();
 
-            var diffedCommands = new Dictionary<ICommand, int>();
+            var diffedCommands = new Dictionary<ICommandBase, int>();
             foreach (var command in this.config.Commands)
             {
                 var commandName = this.GetSearchString(command.Name);
@@ -114,7 +115,7 @@ namespace WinCommandPalette
                 diffedCommands.Add(command, dif);
             }
 
-            foreach (var command in this.InstantCommands)
+            foreach (var command in this.AutoRegisterCommands)
             {
                 var commandName = this.GetSearchString(command.Name);
                 var dif = LevenshteinDistance.Compute(searchText, commandName);
@@ -149,7 +150,7 @@ namespace WinCommandPalette
 
         internal bool Execute()
         {
-            if (this.SelectedItem is ICommand command)
+            if (this.SelectedItem is ICommandBase command)
             {
                 if (command.RunInUIThread)
                 {
@@ -167,7 +168,7 @@ namespace WinCommandPalette
             return false;
         }
 
-        private void ExecuteCommand(ICommand command)
+        private void ExecuteCommand(ICommandBase command)
         {
             try
             {
@@ -179,20 +180,14 @@ namespace WinCommandPalette
             }
         }
 
-        private void SetupInstantCommands()
+        private void RegisterAutoRegisterCommands()
         {
-            this.InstantCommands.Add(new ShowOptionsCommand(this.config));
-            this.InstantCommands.Add(new QuitCommand());
+            // Internal
+            this.AutoRegisterCommands.Add(new ShowOptionsCommand(this.config));
+            this.AutoRegisterCommands.Add(new QuitCommand());
 
-            var pluginInstantCommands = PluginHelper.GetAll<IInstantCommands>();
-            foreach (var pluginInstantCommand in pluginInstantCommands)
-            {
-                var commands = pluginInstantCommand.GetCommands();
-                if (commands != null)
-                {
-                    this.InstantCommands.AddRange(commands);
-                }
-            }
+            // Plugins
+            this.AutoRegisterCommands.AddRange(PluginHelper.GetAllAutoRegisterCommands());
         }
     }
 }

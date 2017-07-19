@@ -1,12 +1,14 @@
-﻿using System.Windows.Controls;
+﻿using System.Drawing;
 
-namespace WinCommandPalette.PluginSystem
+namespace WinCommandPalette.Plugin.CommandBase
 {
-    public interface ICommand
+    public interface ICommandBase
     {
         string Name { get; }
 
         string Description { get; }
+
+        Image Icon { get; }
 
         bool RunInUIThread { get; }
 

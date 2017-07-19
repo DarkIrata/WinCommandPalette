@@ -67,6 +67,7 @@
     <Reference Include="System.Diagnostics.StackTrace, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Diagnostics.StackTrace.4.3.0\lib\net46\System.Diagnostics.StackTrace.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
     </Reference>
@@ -138,8 +139,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateCShartScriptCommand.xaml.cs">
-      <DependentUpon>CreateCShartScriptCommand.xaml</DependentUpon>
+    <Compile Include="CreateCSharpScriptCommand.xaml.cs">
+      <DependentUpon>CreateCSharpScriptCommand.xaml</DependentUpon>
     </Compile>
     <Compile Include="CSharpScriptCommand.cs" />
     <Compile Include="CSharpScriptCommandsPlugin.cs" />
@@ -148,14 +149,13 @@
     <Compile Include="TextMarkerService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\WinCommandPalette\WinCommandPalette.csproj">
-      <Project>{F8079C4B-68EF-4256-8E64-3319E1318265}</Project>
-      <Name>WinCommandPalette</Name>
-      <Private>False</Private>
+    <ProjectReference Include="..\..\WinCommandPalette.Plugin\WinCommandPalette.Plugin.csproj">
+      <Project>{A53238F7-DC6E-464E-BAAA-296BB8984373}</Project>
+      <Name>WinCommandPalette.Plugin</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="CreateCShartScriptCommand.xaml">
+    <Page Include="CreateCSharpScriptCommand.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Windows.Forms;
-using WinCommandPalette.PluginSystem;
+using System.Drawing;
+using WinCommandPalette.Plugin.CommandBase;
 
 namespace ExamplePlugin
 {
-    public class ExampleCommand : ICommand
+    public class ExampleCommand : ICommandBase
     {
         public string Name { get; set; }
 
-        public string Description => "Anyone there?";
+        public string Description => "What a suprising Description";
 
         public bool RunInUIThread => false;
 
         public string Text { get; set; }
+
+        public Image Icon => null;
 
         public ExampleCommand()
         {
