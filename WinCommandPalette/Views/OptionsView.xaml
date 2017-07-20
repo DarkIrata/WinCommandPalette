@@ -11,122 +11,29 @@
         WindowStartupLocation="CenterScreen" Topmost="True"
         Background="White">
 
+
     <Window.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="LightGray"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="MinHeight" Value="25"/>
-            <Setter Property="MinWidth" Value="50"/>
-        </Style>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-        <Style TargetType="TextBox">
-            <Setter Property="MinHeight" Value="25"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Style x:Key="MenuTextButton" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="0 2 0 2"/>
+            <Setter Property="Background" Value="Red"/>
         </Style>
     </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="190"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-    <DockPanel LastChildFill="True">
-        <StackPanel DockPanel.Dock="Bottom">
-            <Border BorderBrush="Silver" BorderThickness="0 1 0 0" VerticalAlignment="Top" Margin="2,0,2,0"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="10" Height="25">
-                <Button x:Name="btnSave" Content="Save" Width="65" Margin="0,0,5,0" IsEnabled="{Binding CanSave}" FontSize="12"/>
-                <Button x:Name="btnCancel" Content="Cancel" Width="65" Margin="5,0,0,0" FontSize="12"/>
-            </StackPanel>
-        </StackPanel>
-        
-        <Grid Margin="5,5,5,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
+        <DockPanel Background="#FF2a2a2a" VerticalAlignment="Stretch" LastChildFill="False">
 
-            <StackPanel Grid.Row="0">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="pack://application:,,,/WinCommandPalette;component/Resources/Options/Gear.png" Width="26" Height="26" Margin="2 0 4 0"/>
-                    <TextBlock Text="General" Foreground="#2B2B2B" FontSize="20"/>
-                </StackPanel>
-                <Border BorderBrush="Silver" BorderThickness="0 1 0 0" VerticalAlignment="Top"/>
-            </StackPanel>
-
-            <Grid Grid.Row="1" Margin="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="150"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Set HotKey:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
-                <TextBox x:Name="KeyBox" Text="{Binding HotKey, Mode=OneWay}" Grid.Row="0" Grid.Column="1" Width="250" HorizontalAlignment="Left" CaretBrush="Transparent"/>
-            </Grid>
-
-            <StackPanel Grid.Row="2" Margin="0,10,0,0">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="pack://application:,,,/WinCommandPalette;component/Resources/Options/Commands.png" Width="26" Height="26" Margin="2 0 4 0"/>
-                    <TextBlock Text="Commands" Foreground="#2B2B2B" FontSize="20" Margin="2,0,0,0"/>
-                </StackPanel>
-                <Border BorderBrush="Silver" BorderThickness="0 1 0 0" VerticalAlignment="Top"/>
-            </StackPanel>
-
-            <Grid Grid.Row="3" Margin="5">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="297*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" MinWidth="150"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Text="Commands" Grid.Row="0" Grid.Column="0" Margin="3" HorizontalAlignment="Left"/>
-                <ListBox ap:ScrollIntoView.Enabled="True" BorderBrush="#abadb3"
-                         Grid.Row="1" Grid.Column="0"
-                         ItemsSource="{Binding AvailableCommandCreators}"
-                         SelectedItem="{Binding Path=SelectedItem, Mode=OneWayToSource}"
-                         SelectionMode="Single">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                            <Setter Property="Height" Value="25" />
-                            <Setter Property="BorderThickness" Value="0" />
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Margin="0" Padding="5 0 5 0" Text="{Binding CommandTypeName}" 
-                               Background="Transparent" Foreground="Black"
-                               FontSize="12" FontFamily="Segoe UI Light">
-                            </TextBlock>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-
-                <TextBlock DataContext="{Binding SelectedItem}" Text="{Binding CommandTypeName, StringFormat='Create new {0} command'}" Grid.Row="0" Grid.Column="1" Margin="5,3,3,3" HorizontalAlignment="Stretch"/>
-                <Border Grid.Row="1" Grid.Column="1" Margin="5,0,0,0" Padding="1" BorderBrush="#abadb3" BorderThickness="1">
-                    <DockPanel LastChildFill="True">
-                        <StackPanel DockPanel.Dock="Bottom">
-                            <Border BorderBrush="Silver" BorderThickness="0 1 0 0" VerticalAlignment="Top" Margin="2,0,2,0"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <Button x:Name="btnSaveNewCommand" Content="Add Command" Width="100" Margin="5" FontSize="12"/>
-                                <Button x:Name="btnReset" Content="Reset" Width="70" Margin="5" FontSize="12"/>
-                            </StackPanel>
-                        </StackPanel>
-                        <ContentPresenter Content="{Binding SelectedItem}" Margin="5"/>
-                    </DockPanel>
-                </Border>
-            </Grid>
-        </Grid>
-    </DockPanel>
+            <TextBlock Text="GENERAL" VerticalAlignment="Center" HorizontalAlignment="Center" DockPanel.Dock="Top"
+                    Background="Transparent" Foreground="White"
+                    FontSize="12" Height="20" TextTrimming="CharacterEllipsis"/>
+        </DockPanel>
+    </Grid>
 </Window>
