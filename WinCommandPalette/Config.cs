@@ -68,7 +68,7 @@ namespace WinCommandPalette
         {
             var commandsSB = new StringBuilder(4096);
 
-            var baseAssembly = typeof(ICommandBase).Assembly;
+            var baseAssembly = typeof(Config).Assembly;
             foreach (var command in this.Commands)
             {
                 var sb = new StringBuilder(128);
@@ -128,12 +128,14 @@ namespace WinCommandPalette
             }
 
             var baseAssembly = typeof(Config).Assembly;
+            var baseAssemblyName = baseAssembly.GetName().Name;
             foreach (var commandElement in commandsElement.Elements())
             {
                 var assembly = baseAssembly;
                 var pluginName = commandElement.Attribute(PLUGIN_ASSEMBLY_ATTRIBUTE_NAME)?.Value;
 
-                if (!string.IsNullOrEmpty(pluginName))
+                if (!string.IsNullOrEmpty(pluginName) &&
+                    pluginName != baseAssemblyName)
                 {
                     var plugin = PluginHelper.GetPlugin(pluginName);
                     if (plugin == null)
