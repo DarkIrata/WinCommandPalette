@@ -4,8 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ExamplePlugin">
-    <StackPanel Orientation="Horizontal">
-        <TextBlock Text="Text:" Margin="3" Height="20"/>
-        <TextBox x:Name="tbText" Width="120" Height="20" Margin="3"/>
+    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Stretch">
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Name:" Margin="3 3 6 3" Width="80" Height="20"/>
+            <TextBox x:Name="tbName" Width="120" Height="20" Margin="3"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Text:" Margin="3 3 6 3" Width="80" Height="20"/>
+            <TextBox x:Name="tbText" Width="120" Height="20" Margin="3"/>
+        </StackPanel>
     </StackPanel>
 </UserControl>

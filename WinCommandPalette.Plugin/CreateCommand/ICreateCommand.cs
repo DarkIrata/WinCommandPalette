@@ -8,6 +8,8 @@ namespace WinCommandPalette.Plugin.CreateCommand
 
         ICommandBase GetCommand();
 
+        void ShowCommand(ICommandBase command);
+
         void ClearAll();
     }
 }

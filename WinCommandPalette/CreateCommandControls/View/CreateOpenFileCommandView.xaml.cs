@@ -30,6 +30,14 @@ namespace WinCommandPalette.CreateCommandControls.View
             return this.viewModel.GetCommand();
         }
 
+        public void ShowCommand(ICommandBase command)
+        {
+            if (command is OpenFileCommand ofcommand)
+            {
+                this.viewModel.ShowCommand(ofcommand);
+            }
+        }
+
         public void ClearAll()
         {
             this.viewModel.ClearAll();

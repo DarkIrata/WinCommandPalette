@@ -25,8 +25,18 @@ namespace ExamplePlugin
         {
             return new ExampleCommand()
             {
-                Text = this.tbText.Text
+                Text = this.tbText.Text,
+                Name = this.tbName.Text
             };
+        }
+
+        public void ShowCommand(ICommandBase command)
+        {
+            if (command is ExampleCommand ecommand)
+            {
+                this.tbName.Text = ecommand.Name;
+                this.tbText.Text = ecommand.Text;
+            }
         }
     }
 }

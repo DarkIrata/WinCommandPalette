@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using WinCommandPalette.Plugin.CreateCommand;
 using WinCommandPalette.Plugin.CommandBase;
+using System;
 
 namespace CSharpScriptCommandsPlugin
 {
@@ -131,6 +132,16 @@ namespace CSharpScriptCommandsPlugin
                 Description = this.tbDescription.Text,
                 Code = this.tbCode.Text
             };
+        }
+
+        public void ShowCommand(ICommandBase command)
+        {
+            if (command is CSharpScriptCommand csscommand)
+            {
+                this.tbName.Text = csscommand.Name;
+                this.tbDescription.Text = csscommand.Description;
+                this.tbCode.Text = csscommand.Code;
+            }
         }
     }
 }

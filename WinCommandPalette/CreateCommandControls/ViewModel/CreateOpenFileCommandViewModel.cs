@@ -33,5 +33,10 @@ namespace WinCommandPalette.CreateCommandControls.ViewModel
         {
             this.OpenFileCommand = new OpenFileCommand();
         }
+
+        internal void ShowCommand(OpenFileCommand ofcommand)
+        {
+            this.OpenFileCommand = ofcommand;
+        }
     }
 }
