@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using WinCommandPalette.Plugin.CommandBase;
-using WinCommandPalette.PluginSystem;
+using WinCommandPalette.Views;
 
 namespace WinCommandPalette.Commands
 {

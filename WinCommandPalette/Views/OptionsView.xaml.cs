@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Windows;
 using WinCommandPalette.Helper;
+using WinCommandPalette.ViewModels;
 
-namespace WinCommandPalette
+namespace WinCommandPalette.Views
 {
     /// <summary>
     /// Interaktionslogik für OptionsView.xaml

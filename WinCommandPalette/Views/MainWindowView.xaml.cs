@@ -4,8 +4,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using WinCommandPalette.Helper;
+using WinCommandPalette.ViewModels;
 
-namespace WinCommandPalette
+namespace WinCommandPalette.Views
 {
     public partial class MainWindow : Window
     {

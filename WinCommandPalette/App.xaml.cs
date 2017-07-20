@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using WinCommandPalette.Helper;
 using WinCommandPalette.PluginSystem;
+using WinCommandPalette.Views;
 
 namespace WinCommandPalette
 {

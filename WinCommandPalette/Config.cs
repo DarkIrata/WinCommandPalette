@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using WinCommandPalette.Helper;
 using WinCommandPalette.PluginSystem;
 using WinCommandPalette.Plugin.CommandBase;
+using WinCommandPalette.Enums;
 
 namespace WinCommandPalette
 {

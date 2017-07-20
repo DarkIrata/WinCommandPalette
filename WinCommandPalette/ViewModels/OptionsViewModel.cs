@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using WinCommandPalette.CreateCommandControls.View;
+using WinCommandPalette.Enums;
 using WinCommandPalette.Plugin.CreateCommand;
 using WinCommandPalette.PluginSystem;
 using wf = System.Windows.Forms;
 
-namespace WinCommandPalette
+namespace WinCommandPalette.ViewModels
 {
     public class OptionsViewModel : ViewModelBase
     {

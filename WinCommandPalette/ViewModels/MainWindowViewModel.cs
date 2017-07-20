@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using System.Windows;
 using WinCommandPalette.Plugin.CommandBase;
 
-namespace WinCommandPalette
+namespace WinCommandPalette.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {

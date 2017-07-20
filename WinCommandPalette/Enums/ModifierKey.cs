@@ -1,7 +1,7 @@
 ﻿using WinCommandPalette.Helper;
 using System;
 
-namespace WinCommandPalette
+namespace WinCommandPalette.Enums
 {
     [Flags]
     public enum ModifierKey

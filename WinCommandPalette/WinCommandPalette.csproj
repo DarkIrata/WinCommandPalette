@@ -90,19 +90,19 @@
     <Compile Include="Helper\LevenshteinDistance.cs" />
     <Compile Include="PluginSystem\Plugin.cs" />
     <Compile Include="PluginSystem\PluginHelper.cs" />
-    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Helper\Win32Helper.cs" />
-    <Compile Include="ModifierKey.cs" />
-    <Compile Include="OptionsView.xaml.cs">
+    <Compile Include="Enums\ModifierKey.cs" />
+    <Compile Include="Views\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OptionsViewModel.cs" />
+    <Compile Include="ViewModels\OptionsViewModel.cs" />
     <Compile Include="ViewModelBase.cs" />
     <Page Include="CreateCommandControls\View\CreateOpenFileCommandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindowView.xaml">
+    <Page Include="Views\MainWindowView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -110,11 +110,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindowView.xaml.cs">
+    <Compile Include="Views\MainWindowView.xaml.cs">
       <DependentUpon>MainWindowView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="OptionsView.xaml">
+    <Page Include="Views\OptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
