@@ -77,6 +77,9 @@
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\ScrollIntoView.cs" />
     <Compile Include="Commands\QuitCommand.cs" />
+    <Compile Include="Controls\MenuItem.xaml.cs">
+      <DependentUpon>MenuItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converter\DescriptionToVisibilityConverter.cs" />
     <Compile Include="Converter\InvertBoolToVisibilityConverter.cs" />
     <Compile Include="CreateCommandControls\ViewModel\CreateOpenFileCommandViewModel.cs" />
@@ -98,6 +101,10 @@
     </Compile>
     <Compile Include="ViewModels\OptionsViewModel.cs" />
     <Compile Include="ViewModelBase.cs" />
+    <Page Include="Controls\MenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateCommandControls\View\CreateOpenFileCommandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

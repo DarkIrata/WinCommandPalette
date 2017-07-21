@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="WinCommandPalette.Controls.MenuItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WinCommandPalette.Controls"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    
+    <UserControl.Resources>
+        <Style x:Key="MenuTextBorder" TargetType="Border">
+            <Setter Property="BorderThickness" Value="0 0 0 2"/>
+            <Setter Property="BorderBrush" Value="#FF007ACC"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+        </Style>
+
+
+        <Style x:Key="MenuTextButton" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
+    
+    <StackPanel HorizontalAlignment="Stretch">
+        <Border Style="{StaticResource MenuTextBorder}">
+            <TextBlock Text="{Binding Text}" Style="{StaticResource MenuTextButton}"/>
+        </Border>
+    </StackPanel>
+</UserControl>
