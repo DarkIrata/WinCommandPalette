@@ -14,6 +14,16 @@
             <Style TargetType="{x:Type TextBox}">
                 <Setter Property="Margin" Value="2"/>
             </Style>
+            <Style TargetType="{x:Type avalonEdit:TextEditor}">
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="SyntaxHighlighting" Value="C#"/>
+                <Setter Property="ShowLineNumbers" Value="True"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="{x:Static SystemColors.ActiveBorderBrush}"/>
+            </Style>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Margin" Value="2"/>
+            </Style>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -31,6 +41,32 @@
         <TextBox Name="tbDescription" Grid.Column="1" Grid.Row="1"/>
 
         <TextBlock Text="Code" Grid.Column="0" Grid.Row="2"/>
-        <avalonEdit:TextEditor Name="tbCode" Grid.Column="1" Grid.Row="2" SyntaxHighlighting="C#"/>
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="3"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <avalonEdit:TextEditor Name="tbCode" Grid.Column="0" />
+            <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1"/>
+            
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Text="References" Grid.ColumnSpan="2"/>
+                <ListBox Name="lbReferences" Grid.Row="1" Margin="2" Grid.ColumnSpan="2"/>
+
+                <TextBox Name="tbReference" Grid.Row="2"/>
+                <Button Content="Add Reference" Grid.Row="2" Click="BtnAddReference_Click" Grid.Column="1"/>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>
