@@ -9,7 +9,7 @@ namespace CSharpScriptCommandsPlugin
     {
         public override PluginMeta PluginMeta => throw new NotImplementedException();
 
-        public override void OnCreation()
+        public override void OnLoad()
         {
             Task.Run(() =>
             {
@@ -21,7 +21,7 @@ namespace CSharpScriptCommandsPlugin
 
                 cmd.Execute();
             });
-            base.OnCreation();
+            base.OnLoad();
         }
     }
 }

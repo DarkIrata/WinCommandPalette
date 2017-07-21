@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
 using WinCommandPalette.Plugin;
 using WinCommandPalette.Plugin.CommandBase;
 
@@ -12,6 +13,10 @@ namespace ExamplePlugin
             Author = "DarkIrata",
             Description = "A simple example how to create a plugin"
         };
+
+        public override void OnLoad()
+        {
+        }
 
         public override List<ICommandBase> AutoRegisterCommands => new List<ICommandBase>()
         {

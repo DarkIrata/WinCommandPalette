@@ -1,12 +1,14 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.Scripting;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows;
+using System.Xml.Serialization;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 using WinCommandPalette.Plugin.CommandBase;
-using System.Drawing;
 
 namespace CSharpScriptCommandsPlugin
 {
@@ -21,6 +23,12 @@ namespace CSharpScriptCommandsPlugin
         public string Code { get; set; }
 
         public Image Icon => null;
+        
+        [XmlArrayItem("Reference")]
+        public List<string> References { get; set; } = new List<string>()
+        {
+            "System"
+        };
 
         public void Execute()
         {
@@ -32,7 +40,7 @@ namespace CSharpScriptCommandsPlugin
 
             try
             {
-                var result = CSharpScript.EvaluateAsync<string>(this.Code, ScriptOptions.Default.WithReferences("System"))?.Result;
+                var result = CSharpScript.EvaluateAsync<string>(this.Code, ScriptOptions.Default.WithReferences(this.References))?.Result;
                 if (!string.IsNullOrEmpty(result))
                 {
                     MessageBox.Show(result);

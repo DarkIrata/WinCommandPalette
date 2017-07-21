@@ -1,13 +1,16 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using WinCommandPalette.Plugin.CreateCommand;
+using System.Windows.Threading;
 using WinCommandPalette.Plugin.CommandBase;
-using System;
+using WinCommandPalette.Plugin.CreateCommand;
 
 namespace CSharpScriptCommandsPlugin
 {
@@ -16,9 +19,10 @@ namespace CSharpScriptCommandsPlugin
     /// </summary>
     public partial class CreateCSharpScriptCommand : UserControl, ICreateCommand
     {
-        private const string DefaultCode = @"$""The current time is: {System.DateTime.Now}""";
+        private const string DefaultCode = @"return $""The current time is: {System.DateTime.Now}"";";
 
         private readonly ITextMarkerService textMarkerService;
+        private readonly ObservableCollection<string> references = new ObservableCollection<string>();
 
         private ToolTip editorToolTip;
 
@@ -40,6 +44,7 @@ namespace CSharpScriptCommandsPlugin
             this.tbCode.Document.TextChanged += this.Document_TextChanged;
             this.tbCode.TextArea.TextView.MouseHover += this.TextView_MouseHover;
             this.tbCode.TextArea.TextView.MouseHoverStopped += this.TextView_MouseHoverStopped;
+            this.lbReferences.ItemsSource = this.references;
 
             this.ClearAll();
         }
@@ -51,7 +56,7 @@ namespace CSharpScriptCommandsPlugin
                 this.editorToolTip.IsOpen = false;
             }
 
-            var script = CSharpScript.Create<string>(this.tbCode.Text);
+            var script = CSharpScript.Create<string>(this.tbCode.Text, ScriptOptions.Default.WithReferences(this.references));
             var diagnostics = script.Compile();
 
             this.textMarkerService.RemoveAll(m => true);
@@ -122,6 +127,8 @@ namespace CSharpScriptCommandsPlugin
             this.tbName.Text = "New C#-Script command";
             this.tbDescription.Text = "This is a new C#-Script command with the default description";
             this.tbCode.Text = DefaultCode;
+            this.references.Clear();
+            this.references.Add("System");
         }
 
         public ICommandBase GetCommand()
@@ -130,7 +137,8 @@ namespace CSharpScriptCommandsPlugin
             {
                 Name = this.tbName.Text,
                 Description = this.tbDescription.Text,
-                Code = this.tbCode.Text
+                Code = this.tbCode.Text,
+                References = this.references.ToList()
             };
         }
 
@@ -138,9 +146,52 @@ namespace CSharpScriptCommandsPlugin
         {
             if (command is CSharpScriptCommand csscommand)
             {
+                this.references.Clear();
+                foreach (var item in csscommand.References)
+                {
+                    this.references.Add(item);
+                }
+                this.SortReferences();
+
                 this.tbName.Text = csscommand.Name;
                 this.tbDescription.Text = csscommand.Description;
                 this.tbCode.Text = csscommand.Code;
+            }
+        }
+
+        private void BtnAddReference_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(this.tbReference.Text) && !this.references.Contains(this.tbReference.Text))
+            {
+                this.references.Add(this.tbReference.Text);
+
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Background, (Action)this.SortReferences);
+
+                this.tbReference.Clear();
+            }
+        }
+
+        private void SortReferences()
+        {
+            var unsorted = this.references.ToList();
+
+            this.references.Clear();
+            unsorted.Sort();
+
+            foreach (var reference in unsorted)
+            {
+                this.references.Add(reference);
+            }
+        }
+
+        private void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement fe)
+            {
+                if (fe.DataContext is string reference)
+                {
+                    this.references.Remove(reference);
+                }
             }
         }
     }

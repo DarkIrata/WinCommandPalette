@@ -146,7 +146,7 @@ namespace WinCommandPalette
                         continue;
                     }
 
-                    assembly = plugin.Assembly;
+                    assembly = ((PluginSystem.Plugin)plugin).Assembly;
                 }
 
                 var type = assembly.GetType(commandElement.Attribute(PLUGIN_TYPE_ATTRIBUTE_NAME)?.Value);

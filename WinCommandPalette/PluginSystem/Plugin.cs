@@ -6,7 +6,7 @@ using WinCommandPalette.Plugin.CreateCommand;
 
 namespace WinCommandPalette.PluginSystem
 {
-    internal class Plugin
+    internal struct Plugin
     {
         internal Assembly Assembly { get; }
 

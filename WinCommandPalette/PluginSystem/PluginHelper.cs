@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using WinCommandPalette.Plugin;
 using WinCommandPalette.Plugin.CommandBase;
@@ -35,6 +36,8 @@ namespace WinCommandPalette.PluginSystem
 
         internal static int Load()
         {
+            // TODO: Add Logging
+            // TODO: Add Stopwatch to lookup plugin load time
             Directory.CreateDirectory(PluginDirectoryPath);
 
             var pluginFiles = GetPluginFilePaths();
@@ -57,6 +60,7 @@ namespace WinCommandPalette.PluginSystem
                         ShowErrorLoadingPluginMessage(pluginName, "Plugin is missing a WCPPlugin instance.");
                         continue;
                     }
+                    Task.Run(() => CallPluginOnLoad(wcpPlugin));
 
                     var commands = GetPluginCommands(pluginAssembly);
                     if (commands == null ||
@@ -75,6 +79,18 @@ namespace WinCommandPalette.PluginSystem
             }
 
             return Plugins.Count;
+        }
+
+        private static void CallPluginOnLoad(WCPPlugin wcpPlugin)
+        {
+            try
+            {
+                wcpPlugin.OnLoad();
+            }
+            catch
+            {
+                // TODO: Should Log
+            }
         }
 
         internal static List<ICommandBase> GetAllAutoRegisterCommands()
@@ -107,7 +123,7 @@ namespace WinCommandPalette.PluginSystem
             return createCommandViews;
         }
 
-        internal static Plugin GetPlugin(string pluginName)
+        internal static Plugin? GetPlugin(string pluginName)
         {
             if (Plugins.ContainsKey(pluginName))
             {
@@ -155,7 +171,7 @@ namespace WinCommandPalette.PluginSystem
         {
 
             var wpcCommands = new Dictionary<string, ICreateCommand>();
-            var commandBaseType = typeof(ICommandBase);;
+            var commandBaseType = typeof(ICommandBase);
 
             var commandTypes = assembly.GetTypes()?.Where(p => commandBaseType.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract);
             if (commandTypes == null)
