@@ -7,7 +7,7 @@ namespace WinCommandPalette.Plugin
     {
         public abstract PluginMeta PluginMeta { get; }
 
-        public virtual void OnCreation()
+        public virtual void OnLoad()
         {
         }
 

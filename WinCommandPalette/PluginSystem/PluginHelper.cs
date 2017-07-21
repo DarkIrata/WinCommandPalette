@@ -35,6 +35,8 @@ namespace WinCommandPalette.PluginSystem
 
         internal static int Load()
         {
+            // TODO: Add Logging
+            // TODO: Add Stopwatch to lookup plugin load time
             Directory.CreateDirectory(PluginDirectoryPath);
 
             var pluginFiles = GetPluginFilePaths();
@@ -57,6 +59,7 @@ namespace WinCommandPalette.PluginSystem
                         ShowErrorLoadingPluginMessage(pluginName, "Plugin is missing a WCPPlugin instance.");
                         continue;
                     }
+                    wcpPlugin.OnLoad();
 
                     var commands = GetPluginCommands(pluginAssembly);
                     if (commands == null ||
@@ -155,7 +158,7 @@ namespace WinCommandPalette.PluginSystem
         {
 
             var wpcCommands = new Dictionary<string, ICreateCommand>();
-            var commandBaseType = typeof(ICommandBase);;
+            var commandBaseType = typeof(ICommandBase);
 
             var commandTypes = assembly.GetTypes()?.Where(p => commandBaseType.IsAssignableFrom(p) && !p.IsInterface && !p.IsAbstract);
             if (commandTypes == null)
