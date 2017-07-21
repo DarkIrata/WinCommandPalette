@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using WinCommandPalette.Plugin;
 using WinCommandPalette.Plugin.CommandBase;
@@ -59,7 +60,7 @@ namespace WinCommandPalette.PluginSystem
                         ShowErrorLoadingPluginMessage(pluginName, "Plugin is missing a WCPPlugin instance.");
                         continue;
                     }
-                    wcpPlugin.OnLoad();
+                    Task.Run(() => CallPluginOnLoad(wcpPlugin));
 
                     var commands = GetPluginCommands(pluginAssembly);
                     if (commands == null ||
@@ -78,6 +79,18 @@ namespace WinCommandPalette.PluginSystem
             }
 
             return Plugins.Count;
+        }
+
+        private static void CallPluginOnLoad(WCPPlugin wcpPlugin)
+        {
+            try
+            {
+                wcpPlugin.OnLoad();
+            }
+            catch
+            {
+                // TODO: Should Log
+            }
         }
 
         internal static List<ICommandBase> GetAllAutoRegisterCommands()

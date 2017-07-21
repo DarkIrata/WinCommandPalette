@@ -16,7 +16,6 @@ namespace ExamplePlugin
 
         public override void OnLoad()
         {
-            MessageBox.Show("CREATED X");
         }
 
         public override List<ICommandBase> AutoRegisterCommands => new List<ICommandBase>()
