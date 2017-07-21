@@ -1,12 +1,14 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
-using Microsoft.CodeAnalysis.Scripting;
+using System.Windows.Threading;
 using WinCommandPalette.Plugin.CommandBase;
 using WinCommandPalette.Plugin.CreateCommand;
 
@@ -17,7 +19,7 @@ namespace CSharpScriptCommandsPlugin
     /// </summary>
     public partial class CreateCSharpScriptCommand : UserControl, ICreateCommand
     {
-        private const string DefaultCode = @"$""The current time is: {System.DateTime.Now}""";
+        private const string DefaultCode = @"return $""The current time is: {System.DateTime.Now}"";";
 
         private readonly ITextMarkerService textMarkerService;
         private readonly ObservableCollection<string> references = new ObservableCollection<string>();
@@ -159,10 +161,11 @@ namespace CSharpScriptCommandsPlugin
 
         private void BtnAddReference_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(this.tbReference.Text))
+            if (!string.IsNullOrEmpty(this.tbReference.Text) && !this.references.Contains(this.tbReference.Text))
             {
                 this.references.Add(this.tbReference.Text);
-                this.SortReferences();
+
+                this.Dispatcher.BeginInvoke(DispatcherPriority.Background, (Action)this.SortReferences);
 
                 this.tbReference.Clear();
             }
@@ -178,6 +181,17 @@ namespace CSharpScriptCommandsPlugin
             foreach (var reference in unsorted)
             {
                 this.references.Add(reference);
+            }
+        }
+
+        private void DeleteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement fe)
+            {
+                if (fe.DataContext is string reference)
+                {
+                    this.references.Remove(reference);
+                }
             }
         }
     }

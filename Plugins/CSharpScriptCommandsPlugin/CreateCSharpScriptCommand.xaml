@@ -22,6 +22,11 @@
                 <Setter Property="BorderBrush" Value="{x:Static SystemColors.ActiveBorderBrush}"/>
             </Style>
             <Style TargetType="{x:Type Button}">
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="MinHeight" Value="25"/>
                 <Setter Property="Margin" Value="2"/>
             </Style>
         </Grid.Resources>
@@ -49,7 +54,7 @@
             </Grid.ColumnDefinitions>
             <avalonEdit:TextEditor Name="tbCode" Grid.Column="0" />
             <GridSplitter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1"/>
-            
+
             <Grid Grid.Column="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -62,7 +67,16 @@
                 </Grid.RowDefinitions>
                 
                 <TextBlock Text="References" Grid.ColumnSpan="2"/>
-                <ListBox Name="lbReferences" Grid.Row="1" Margin="2" Grid.ColumnSpan="2"/>
+                <ListBox Name="lbReferences" Grid.Row="1" Margin="2" Grid.ColumnSpan="2">
+                    <ListBox.Resources>
+                        <ContextMenu x:Key="ReferenceContextMenu">
+                            <MenuItem Header="Delete" Click="DeleteMenuItem_Click"/>
+                        </ContextMenu>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="ContextMenu" Value="{StaticResource ReferenceContextMenu}"/>
+                        </Style>
+                    </ListBox.Resources>
+                </ListBox>
 
                 <TextBox Name="tbReference" Grid.Row="2"/>
                 <Button Content="Add Reference" Grid.Row="2" Click="BtnAddReference_Click" Grid.Column="1"/>
