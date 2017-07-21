@@ -123,7 +123,7 @@ namespace WinCommandPalette.PluginSystem
             return createCommandViews;
         }
 
-        internal static Plugin GetPlugin(string pluginName)
+        internal static Plugin? GetPlugin(string pluginName)
         {
             if (Plugins.ContainsKey(pluginName))
             {
