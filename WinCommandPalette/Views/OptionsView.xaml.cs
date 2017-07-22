@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
+using WinCommandPalette.Controls;
 using WinCommandPalette.Helper;
 using WinCommandPalette.ViewModels;
 
@@ -25,13 +27,6 @@ namespace WinCommandPalette.Views
 
             this.Closed += this.OptionsView_Closed;
             //this.KeyBox.PreviewKeyDown += this.viewModel.KeyBox_PreviewKeyDown;
-
-            //this.btnSaveNewCommand.Click += this.viewModel.BtnSaveNewCommand_Click;
-            //this.btnReset.Click += this.viewModel.BtnReset_Click;
-
-            //this.btnSave.Click += this.BtnSave_Click;
-            //this.btnCancel.Click += this.BtnCancel_Click;
-
             Win32Helper.UnregisterHotKey();
         }
 
@@ -49,6 +44,14 @@ namespace WinCommandPalette.Views
         {
             this.viewModel.Save();
             this.Close();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuItem menuItem)
+            {
+                this.viewModel.SelectedMenuItem = menuItem;
+            }
         }
     }
 }

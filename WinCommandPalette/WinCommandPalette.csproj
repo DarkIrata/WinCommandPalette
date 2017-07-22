@@ -101,6 +101,12 @@
     </Compile>
     <Compile Include="ViewModels\OptionsViewModel.cs" />
     <Compile Include="ViewModelBase.cs" />
+    <Compile Include="Views\Options\CreateNewCommandView.xaml.cs">
+      <DependentUpon>CreateNewCommandView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Options\GeneralView.xaml.cs">
+      <DependentUpon>GeneralView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Controls\MenuItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,6 +132,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Options\CreateNewCommandView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Options\GeneralView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -11,15 +11,14 @@
         MinWidth="850" MinHeight="550"
         WindowStartupLocation="CenterScreen" Topmost="True"
         Background="White">
+    
     <Window.Resources>
-        <Style TargetType="{x:Type ListBoxItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        <Style TargetType="{x:Type controls:MenuItem}">
+            <Setter Property="Margin" Value="0 10 0 10"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <EventSetter Event="Click" Handler="MenuItem_Click"/>
         </Style>
     </Window.Resources>
 
@@ -29,21 +28,13 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox Background="#FF2a2a2a">
-            <ListBox.Resources>
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
-                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
-            </ListBox.Resources>
+        <StackPanel Background="#FF2a2a2a">
+            <ItemsControl ItemsSource="{Binding MenuItems}"
+                          Margin="0 20 0 20"/>
+        </StackPanel>
 
-            <ListBoxItem>
-                <controls:MenuItem Text="G E N E R A L"/>
-            </ListBoxItem>
-
-            <ListBoxItem>
-                <controls:MenuItem Text="C O M M A N D S"/>
-            </ListBoxItem>
-        </ListBox>
+        <StackPanel Grid.Column="1">
+            <ContentPresenter Content="{Binding SelectedMenuItem.Page}" Margin="5"
+        </StackPanel>
     </Grid>
 </Window>

@@ -8,24 +8,40 @@
     
     <UserControl.Resources>
         <Style x:Key="MenuTextBorder" TargetType="Border">
-            <Setter Property="BorderThickness" Value="0 0 0 2"/>
-            <Setter Property="BorderBrush" Value="#FF007ACC"/>
+            <Setter Property="BorderThickness" Value="0 0 0 0"/>
+            <Setter Property="BorderBrush" Value="#2faff1"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsActive}" Value="True">
+                    <Setter Property="Margin" Value="0 0 0 -2"/>
+                    <Setter Property="BorderThickness" Value="0 0 0 2"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
 
         <Style x:Key="MenuTextButton" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Calibri"/>
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsActive}" Value="True">
+                    <Setter Property="Foreground" Value="#2faff1"/>
+                </DataTrigger>
+                <Trigger Property ="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#2faff1"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
+        
+        
     </UserControl.Resources>
     
     <StackPanel HorizontalAlignment="Stretch">
-        <Border Style="{StaticResource MenuTextBorder}">
+        <Border x:Name="TextBorder" Style="{StaticResource MenuTextBorder}">
             <TextBlock Text="{Binding Text}" Style="{StaticResource MenuTextButton}"/>
         </Border>
     </StackPanel>
