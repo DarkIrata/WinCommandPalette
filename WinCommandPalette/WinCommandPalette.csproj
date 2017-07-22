@@ -80,6 +80,9 @@
     <Compile Include="Controls\MenuItem.xaml.cs">
       <DependentUpon>MenuItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SubMenuItem.xaml.cs">
+      <DependentUpon>SubMenuItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converter\DescriptionToVisibilityConverter.cs" />
     <Compile Include="Converter\InvertBoolToVisibilityConverter.cs" />
     <Compile Include="CreateCommandControls\ViewModel\CreateOpenFileCommandViewModel.cs" />
@@ -108,6 +111,10 @@
       <DependentUpon>GeneralView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\MenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SubMenuItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

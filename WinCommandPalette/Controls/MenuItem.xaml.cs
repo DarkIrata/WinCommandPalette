@@ -10,7 +10,7 @@ namespace WinCommandPalette.Controls
     public partial class MenuItem : UserControl
     {
         public static readonly RoutedEvent ClickEvent = EventManager.RegisterRoutedEvent(
-            "Click", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(MenuItem));
+            "Click", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MenuItem));
 
         public event RoutedEventHandler Click
         {
@@ -27,7 +27,6 @@ namespace WinCommandPalette.Controls
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(MenuItem), new PropertyMetadata(string.Empty));
 
-
         public bool IsActive
         {
             get => (bool)GetValue(IsActiveProperty);
@@ -37,15 +36,21 @@ namespace WinCommandPalette.Controls
         public static readonly DependencyProperty IsActiveProperty =
             DependencyProperty.Register("IsActive", typeof(bool), typeof(MenuItem), new PropertyMetadata(false));
 
+        public bool HasSubMenuItems => this.SubMenuItems?.Count > 0;
+
+        private List<SubMenuItem> subMenuItems = new List<SubMenuItem>();
+        public List<SubMenuItem> SubMenuItems
+        {
+            get => this.subMenuItems;
+            set => this.subMenuItems = value;
+        }
+        
         public UserControl Page { get; set; }
 
-        public List<MenuItem> SubMenuItems { get; set; }
-
-        public MenuItem()
+        private MenuItem()
         {
             this.InitializeComponent();
-            this.SubMenuItems = new List<MenuItem>();
-            this.MouseUp += (s, e) => RaiseEvent(new RoutedEventArgs(ClickEvent));
+            this.MenuText.MouseUp += (s, e) => RaiseEvent(new RoutedEventArgs(ClickEvent));
         }
 
         public MenuItem(string text)
@@ -53,16 +58,16 @@ namespace WinCommandPalette.Controls
         {
         }
 
-        public MenuItem(string text, UserControl page, params MenuItem[] menuItems)
+        public MenuItem(string text, UserControl page, params SubMenuItem[] subMenuItems)
             : this()
         {
             this.Text = text;
             this.Page = page;
 
-            foreach (var menuItem in menuItems)
+            foreach (var subMenuItem in subMenuItems)
             {
-                menuItem.Click += (s, e) => RaiseEvent(new RoutedEventArgs(ClickEvent));
-                this.SubMenuItems.Add(menuItem);
+                subMenuItem.MenuItem = this;
+                this.SubMenuItems.Add(subMenuItem);
             }
         }
     }

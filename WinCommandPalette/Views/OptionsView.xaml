@@ -9,8 +9,9 @@
         mc:Ignorable="d"
         Title="WinCommand Palette Options"
         MinWidth="850" MinHeight="550"
-        WindowStartupLocation="CenterScreen" Topmost="True"
-        Background="White">
+        WindowStartupLocation="CenterScreen"
+        Background="White"
+        controls:SubMenuItem.Click="MenuItem_Click">
     
     <Window.Resources>
         <Style TargetType="{x:Type controls:MenuItem}">
@@ -28,13 +29,13 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Background="#FF2a2a2a">
+        <Grid Background="#FF2a2a2a">
             <ItemsControl ItemsSource="{Binding MenuItems}"
                           Margin="0 20 0 20"/>
-        </StackPanel>
+        </Grid>
 
         <StackPanel Grid.Column="1">
-            <ContentPresenter Content="{Binding SelectedMenuItem.Page}" Margin="5"/>
+            <ContentPresenter Content="{Binding ActivePage}" Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>

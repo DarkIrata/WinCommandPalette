@@ -48,9 +48,13 @@ namespace WinCommandPalette.Views
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is MenuItem menuItem)
+            if (e.OriginalSource is MenuItem menuItem)
             {
                 this.viewModel.SelectedMenuItem = menuItem;
+            }
+            else if (e.OriginalSource is SubMenuItem subMenuItem)
+            {
+                this.viewModel.SelectedSubMenuItem = subMenuItem;
             }
         }
     }

@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
-using System.Windows.Input;
 using WinCommandPalette.Controls;
-using WinCommandPalette.CreateCommandControls.View;
-using WinCommandPalette.Enums;
-using WinCommandPalette.Plugin.CreateCommand;
-using WinCommandPalette.PluginSystem;
 using wf = System.Windows.Forms;
 using WinCommandPalette.Views.Options;
 
@@ -21,31 +15,97 @@ namespace WinCommandPalette.ViewModels
 
         private List<MenuItem> menuItems = new List<MenuItem>()
         {
-            { new MenuItem("G E N E R A L", new GeneralView())},
-            { new MenuItem("C O M M A N D S", new CreateNewCommandView()) },
+            new MenuItem("G E N E R A L", new GeneralView()),
+            new MenuItem("C O M M A N D S", null,
+                new SubMenuItem("CREATE NEW", new CreateNewCommandView()),
+                new SubMenuItem("MANAGE", new GeneralView())
+                ),
+            new MenuItem("D E B U G", null),
         };
 
         public List<MenuItem> MenuItems => this.menuItems;
+
+        private System.Windows.Controls.UserControl activePage;
+
+        public System.Windows.Controls.UserControl ActivePage
+        {
+            get => this.activePage;
+            set
+            {
+                this.activePage = value;
+                this.NotifyPropertyChanged(nameof(this.ActivePage));
+            }
+        }
 
         private MenuItem selectedMenuItem;
 
         public MenuItem SelectedMenuItem
         {
-            get
-            {
-                return this.selectedMenuItem;
-            }
+            get => this.selectedMenuItem;
 
             set
             {
-                if (this.selectedMenuItem != null)
+                if (this.SelectedSubMenuItem != null)
                 {
-                    this.selectedMenuItem.IsActive = false;
+                    this.SelectedSubMenuItem = null;
+                }
+
+                if (this.SelectedMenuItem != null)
+                {
+                    this.SelectedMenuItem.IsActive = false;
                 }
 
                 this.selectedMenuItem = value;
-                this.selectedMenuItem.IsActive = true;
+                this.SelectedMenuItem.IsActive = true;
+
+                if (this.SelectedMenuItem.Page != null)
+                {
+                    this.ActivePage = this.SelectedMenuItem.Page;
+                }
+                else
+                {
+                    if (this.SelectedMenuItem.HasSubMenuItems)
+                    {
+                        this.SelectedSubMenuItem = this.SelectedMenuItem.SubMenuItems[0];
+                    }
+                    else
+                    {
+                        this.ActivePage = null;
+                    }
+                }
+
                 this.NotifyPropertyChanged(nameof(this.SelectedMenuItem));
+            }
+        }
+
+        private SubMenuItem selectedSubMenuItem;
+
+        public SubMenuItem SelectedSubMenuItem
+        {
+            get => this.selectedSubMenuItem;
+
+            set
+            {
+                if (this.SelectedSubMenuItem != null)
+                {
+                    this.SelectedSubMenuItem.IsActive = false;
+                }
+
+                if (value != null)
+                {
+                    if (this.SelectedMenuItem != value.MenuItem)
+                    {
+                        this.SelectedMenuItem = value.MenuItem;
+                        this.SelectedSubMenuItem.IsActive = false;
+                    }
+
+                    this.selectedSubMenuItem = value;
+                    this.SelectedSubMenuItem.IsActive = true;
+
+                    this.ActivePage = this.SelectedSubMenuItem.Page;
+                }
+
+                this.NotifyPropertyChanged(nameof(this.SelectedSubMenuItem));
             }
         }
 

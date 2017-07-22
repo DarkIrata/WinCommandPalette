@@ -4,9 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WinCommandPalette.Controls"
+             Height="Auto"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    
+
     <UserControl.Resources>
+        <Style TargetType="{x:Type local:SubMenuItem}">
+            <Setter Property="Margin" Value="0 2 0 0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
         <Style x:Key="MenuTextBorder" TargetType="Border">
             <Setter Property="BorderThickness" Value="0 0 0 0"/>
             <Setter Property="BorderBrush" Value="#2faff1"/>
@@ -36,13 +43,26 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        
-        
+
+        <Style x:Key="SubItems" TargetType="ItemsControl">
+            <Setter Property="Visibility" Value="Visible" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding HasSubMenuItems}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
-    
-    <StackPanel HorizontalAlignment="Stretch">
-        <Border x:Name="TextBorder" Style="{StaticResource MenuTextBorder}">
-            <TextBlock Text="{Binding Text}" Style="{StaticResource MenuTextButton}"/>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"  Style="{StaticResource MenuTextBorder}">
+            <TextBlock x:Name="MenuText" Text="{Binding Text}" Style="{StaticResource MenuTextButton}"/>
         </Border>
-    </StackPanel>
+
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding SubMenuItems}" Style="{StaticResource SubItems}"/>
+    </Grid>
 </UserControl>
