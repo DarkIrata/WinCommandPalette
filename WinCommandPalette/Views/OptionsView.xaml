@@ -34,7 +34,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <ContentPresenter Content="{Binding SelectedMenuItem.Page}" Margin="5"
+            <ContentPresenter Content="{Binding SelectedMenuItem.Page}" Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>
