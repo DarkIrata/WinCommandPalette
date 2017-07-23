@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WinCommandPalette.ViewModels.Options;
 
 namespace WinCommandPalette.Views.Options
 {
@@ -20,9 +21,19 @@ namespace WinCommandPalette.Views.Options
     /// </summary>
     public partial class GeneralView : UserControl
     {
-        public GeneralView()
+        private GeneralViewModel viewModel;
+        private Config config;
+
+        public GeneralView(Config config)
         {
-            InitializeComponent();
+            this.config = config ??
+                throw new ArgumentNullException(nameof(config));
+
+            this.viewModel = new GeneralViewModel(this.config);
+
+            this.InitializeComponent();
+            this.DataContext = this.viewModel;
+            this.KeyBox.PreviewKeyDown += this.viewModel.KeyBox_PreviewKeyDown;
         }
     }
 }

@@ -6,7 +6,52 @@
              xmlns:local="clr-namespace:WinCommandPalette.Views.Options"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="FontFamily" Value="Calbri"/>
+            <Setter Property="MinHeight" Value="25"/>
+            <Setter Property="MinWidth" Value="50"/>
+        </Style>
+        
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Calbri"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        
+        <Style TargetType="TextBox">
+            <Setter Property="MinHeight" Value="25"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="MaxWidth" Value="350"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Calbri"/>
+        </Style>
+    </UserControl.Resources>
+    
     <Grid>
-        <TextBlock FontSize="30">WORK IN PROGRESS</TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Background="#2faff1" VerticalAlignment="Stretch">
+            <TextBlock Text="General" Foreground="White"  VerticalAlignment="Center"
+                       FontFamily="Calibri" FontSize="40" Margin="15 0 0 0"/>
+        </StackPanel>
+
+        <TextBlock Text="Set HotKey:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" />
+        <TextBox x:Name="KeyBox" Text="{Binding HotKey, Mode=OneWay}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" CaretBrush="Transparent"/>
+
+        <TextBlock Text="Set HotKey:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" />
+        <TextBox Text="" Grid.Row="2" Grid.Column="1" MinWidth="150" HorizontalAlignment="Left" CaretBrush="Transparent"/>
     </Grid>
 </UserControl>

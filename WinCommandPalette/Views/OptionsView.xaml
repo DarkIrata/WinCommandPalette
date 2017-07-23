@@ -35,7 +35,7 @@
         </Grid>
 
         <StackPanel Grid.Column="1">
-            <ContentPresenter Content="{Binding ActivePage}" Margin="5"/>
+            <ContentPresenter Content="{Binding ActivePage}"/>
         </StackPanel>
     </Grid>
 </Window>

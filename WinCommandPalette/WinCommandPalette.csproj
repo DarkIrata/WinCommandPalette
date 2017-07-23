@@ -99,6 +99,7 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Helper\Win32Helper.cs" />
     <Compile Include="Enums\ModifierKey.cs" />
+    <Compile Include="ViewModels\Options\GeneralViewModel.cs" />
     <Compile Include="Views\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>
     </Compile>

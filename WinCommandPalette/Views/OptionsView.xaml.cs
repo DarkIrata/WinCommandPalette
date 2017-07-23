@@ -7,9 +7,6 @@ using WinCommandPalette.ViewModels;
 
 namespace WinCommandPalette.Views
 {
-    /// <summary>
-    /// Interaktionslogik für OptionsView.xaml
-    /// </summary>
     public partial class OptionsView : Window
     {
         private Config config;
@@ -26,7 +23,6 @@ namespace WinCommandPalette.Views
             this.DataContext = this.viewModel;
 
             this.Closed += this.OptionsView_Closed;
-            //this.KeyBox.PreviewKeyDown += this.viewModel.KeyBox_PreviewKeyDown;
             Win32Helper.UnregisterHotKey();
         }
 
