@@ -77,12 +77,19 @@
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\ScrollIntoView.cs" />
     <Compile Include="Commands\QuitCommand.cs" />
+    <Compile Include="Controls\MenuItem.xaml.cs">
+      <DependentUpon>MenuItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SubMenuItem.xaml.cs">
+      <DependentUpon>SubMenuItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converter\DescriptionToVisibilityConverter.cs" />
     <Compile Include="Converter\InvertBoolToVisibilityConverter.cs" />
     <Compile Include="CreateCommandControls\ViewModel\CreateOpenFileCommandViewModel.cs" />
     <Compile Include="CreateCommandControls\View\CreateOpenFileCommandView.xaml.cs">
       <DependentUpon>CreateOpenFileCommandView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helper\DeepCopyByExpressionTrees.cs" />
     <Compile Include="Helper\ScreenHelper.cs" />
     <Compile Include="Commands\OpenFileCommand.cs" />
     <Compile Include="Commands\ShowOptionsCommand.cs" />
@@ -93,11 +100,27 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Helper\Win32Helper.cs" />
     <Compile Include="Enums\ModifierKey.cs" />
+    <Compile Include="ViewModels\Options\CreateNewCommandViewModel.cs" />
+    <Compile Include="ViewModels\Options\GeneralViewModel.cs" />
     <Compile Include="Views\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\OptionsViewModel.cs" />
     <Compile Include="ViewModelBase.cs" />
+    <Compile Include="Views\Options\CreateNewCommandView.xaml.cs">
+      <DependentUpon>CreateNewCommandView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Options\GeneralView.xaml.cs">
+      <DependentUpon>GeneralView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\MenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SubMenuItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="CreateCommandControls\View\CreateOpenFileCommandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -119,6 +142,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Options\CreateNewCommandView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Options\GeneralView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -177,6 +208,17 @@
       <Project>{A53238F7-DC6E-464E-BAAA-296BB8984373}</Project>
       <Name>WinCommandPalette.Plugin</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="IWshRuntimeLibrary">
+      <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

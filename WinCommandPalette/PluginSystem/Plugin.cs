@@ -6,13 +6,13 @@ using WinCommandPalette.Plugin.CreateCommand;
 
 namespace WinCommandPalette.PluginSystem
 {
-    internal struct Plugin
+    public struct Plugin
     {
-        internal Assembly Assembly { get; }
+        public Assembly Assembly { get; }
 
-        internal WCPPlugin WCPPlugin { get; }
+        public WCPPlugin WCPPlugin { get; }
 
-        internal Dictionary<string, ICreateCommand> Commands { get; }
+        public Dictionary<string, ICreateCommand> Commands { get; }
 
         public Plugin(Assembly pluginAssembly, WCPPlugin wcpPlugin, Dictionary<string, ICreateCommand> commands)
         {

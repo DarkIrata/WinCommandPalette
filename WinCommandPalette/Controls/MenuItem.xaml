@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="WinCommandPalette.Controls.MenuItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WinCommandPalette.Controls"
+             Height="Auto"
+             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <UserControl.Resources>
+        <Style TargetType="{x:Type local:SubMenuItem}">
+            <Setter Property="Margin" Value="0 2 0 0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="MenuTextBorder" TargetType="Border">
+            <Setter Property="BorderThickness" Value="0 0 0 0"/>
+            <Setter Property="BorderBrush" Value="#2faff1"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsActive}" Value="True">
+                    <Setter Property="Margin" Value="0 0 0 -2"/>
+                    <Setter Property="BorderThickness" Value="0 0 0 2"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+
+        <Style x:Key="MenuTextButton" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsActive}" Value="True">
+                    <Setter Property="Foreground" Value="#2faff1"/>
+                </DataTrigger>
+                <Trigger Property ="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#2faff1"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="SubItems" TargetType="ItemsControl">
+            <Setter Property="Visibility" Value="Visible" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding HasSubMenuItems}" Value="True">
+                    <Setter Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0"  Style="{StaticResource MenuTextBorder}">
+            <TextBlock x:Name="MenuText" Text="{Binding Text}" Style="{StaticResource MenuTextButton}"/>
+        </Border>
+
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding SubMenuItems}" Style="{StaticResource SubItems}"/>
+    </Grid>
+</UserControl>

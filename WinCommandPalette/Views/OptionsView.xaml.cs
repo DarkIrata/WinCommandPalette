@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
+using WinCommandPalette.Controls;
 using WinCommandPalette.Helper;
 using WinCommandPalette.ViewModels;
 
 namespace WinCommandPalette.Views
 {
-    /// <summary>
-    /// Interaktionslogik für OptionsView.xaml
-    /// </summary>
     public partial class OptionsView : Window
     {
         private Config config;
@@ -23,16 +22,28 @@ namespace WinCommandPalette.Views
             this.InitializeComponent();
             this.DataContext = this.viewModel;
 
-            this.Closed += this.OptionsView_Closed;
-            this.KeyBox.PreviewKeyDown += this.viewModel.KeyBox_PreviewKeyDown;
-
-            this.btnSaveNewCommand.Click += this.viewModel.BtnSaveNewCommand_Click;
-            this.btnReset.Click += this.viewModel.BtnReset_Click;
-
             this.btnSave.Click += this.BtnSave_Click;
             this.btnCancel.Click += this.BtnCancel_Click;
-
+            this.Closing += this.OptionsView_Closing;
+            this.Closed += this.OptionsView_Closed;
             Win32Helper.UnregisterHotKey();
+        }
+
+        private void OptionsView_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (this.viewModel.IsModified())
+            {
+                var msgBoxResult = MessageBox.Show("You have unsaved changes.\r\nDo you want to save the changes or discard them.", "WinCommand Palette - Options", MessageBoxButton.YesNoCancel, MessageBoxImage.Information);
+                if (msgBoxResult == MessageBoxResult.Yes)
+                {
+                    this.viewModel.Save();
+                }
+                else if (msgBoxResult == MessageBoxResult.Cancel)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
         }
 
         private void OptionsView_Closed(object sender, EventArgs e)
@@ -49,6 +60,18 @@ namespace WinCommandPalette.Views
         {
             this.viewModel.Save();
             this.Close();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (e.OriginalSource is MenuItem menuItem)
+            {
+                this.viewModel.SelectedMenuItem = menuItem;
+            }
+            else if (e.OriginalSource is SubMenuItem subMenuItem)
+            {
+                this.viewModel.SelectedSubMenuItem = subMenuItem;
+            }
         }
     }
 }

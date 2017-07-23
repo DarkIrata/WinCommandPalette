@@ -107,20 +107,10 @@ namespace WinCommandPalette.PluginSystem
 
             return autoRegisterCommands;
         }
-        
-        internal static List<ICreateCommand> GetAllCreateCommandViews()
+
+        internal static List<Plugin> GetPlugins()
         {
-            var createCommandViews = new List<ICreateCommand>();
-
-            foreach (var plugin in Plugins)
-            {
-                if (plugin.Value.Commands?.Values != null)
-                {
-                    createCommandViews.AddRange(plugin.Value.Commands.Values.Where(v => v != null));
-                }
-            }
-
-            return createCommandViews;
+            return Plugins.Values.ToList();
         }
 
         internal static Plugin? GetPlugin(string pluginName)
