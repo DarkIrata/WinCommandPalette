@@ -7,7 +7,7 @@ namespace CSharpScriptCommandsPlugin
 {
     public class CSharpScriptCommandsPlugin : WCPPlugin
     {
-        public override PluginMeta PluginMeta => throw new NotImplementedException();
+        public override PluginMeta PluginMeta => null;
 
         public override void OnLoad()
         {

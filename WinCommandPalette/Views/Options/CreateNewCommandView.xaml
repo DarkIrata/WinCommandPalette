@@ -3,10 +3,103 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ap="clr-namespace:WinCommandPalette.AttachedProperties"
              xmlns:local="clr-namespace:WinCommandPalette.Views.Options"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
+
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="FontFamily" Value="Calbri"/>
+            <Setter Property="MinHeight" Value="25"/>
+            <Setter Property="MinWidth" Value="50"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Calbri"/>
+            <Setter Property="Margin" Value="50 10 5 5"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="MinHeight" Value="25"/>
+            <Setter Property="MinWidth" Value="200"/>
+            <Setter Property="MaxWidth" Value="350"/>
+            <Setter Property="Margin" Value="5 10 5 5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Calbri"/>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
-        <TextBlock FontSize="30">MORE WORK IN PROGRESS</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="64*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox ap:ScrollIntoView.Enabled="True" BorderBrush="Silver" Margin="3 0 0 0" BorderThickness="1 1 1 0"
+                         Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
+                         ItemsSource="{Binding AvailableCommandCreators}"
+                         SelectedItem="{Binding Path=SelectedItem, Mode=OneWayToSource}"
+                         SelectionMode="Single">
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Height" Value="35" />
+                    <Setter Property="BorderThickness" Value="0" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Margin="0" Padding="5 0 5 0" Text="{Binding CommandTypeName}" 
+                               Background="Transparent" Foreground="Black"
+                               FontSize="18" FontFamily="Calibri">
+                    </TextBlock>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <DockPanel Grid.Row="0" Grid.Column="1" LastChildFill="True">
+            <Grid DockPanel.Dock="Bottom" Margin="15 0 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Text="Author:" VerticalAlignment="Center" Margin="0 5 0 0" />
+                <TextBlock Grid.Column="1" Text="{Binding SelectedPlugin.WCPPlugin.PluginMeta.Author, FallbackValue='Missing PluginMeta Information'}" VerticalAlignment="Center" Margin="0 5 0 0" />
+
+                <TextBlock Grid.Column="0" Grid.Row="1" Text="Description:" VerticalAlignment="Center" Margin="0 5 0 0" />
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding SelectedPlugin.WCPPlugin.PluginMeta.Description, FallbackValue='Missing PluginMeta Information'}" VerticalAlignment="Center" Margin="0 5 0 0" />
+            </Grid>
+
+            <StackPanel Background="#2faff1" VerticalAlignment="Stretch" Orientation="Horizontal" Height="35">
+                <Border VerticalAlignment="Center">
+                    <TextBlock Text="{Binding SelectedItem.CommandTypeName, StringFormat='Create new {0} command'}" Foreground="White"
+                       FontFamily="Calibri" FontSize="18" Margin="10 0 0 0"/>
+                </Border>
+            </StackPanel>
+        </DockPanel>
+
+
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Silver" BorderThickness="0 1 0 1" Margin="0 4 0 0">
+            <ContentPresenter Content="{Binding SelectedItem}" Margin="3 4 3 3"/>
+        </Border>
+
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 5 10 5" Height="25">
+            <Button x:Name="btnAddCommand" Content="Add" Width="65" Margin="0,0,5,0" IsEnabled="{Binding CanSave}" FontSize="12"/>
+            <Button x:Name="btnReset" Content="Reset" Width="65" Margin="5,0,0,0" FontSize="12"/>
+        </StackPanel>
     </Grid>
 </UserControl>

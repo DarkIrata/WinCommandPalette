@@ -1,9 +1,13 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using WinCommandPalette.Enums;
+using wsh = IWshRuntimeLibrary;
 using wf = System.Windows.Forms;
 
 
@@ -12,6 +16,49 @@ namespace WinCommandPalette.ViewModels.Options
     public class GeneralViewModel : ViewModelBase
     {
         public string HotKey => this.GetHotkeyString();
+
+        private string shortcutFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "WinCommandPalette.lnk");
+        public bool RunWinWindows
+        {
+            get => File.Exists(this.shortcutFilePath);
+            set
+            {
+                if (value)
+                {
+                    this.CreateShortcut();
+                }
+                else
+                {
+                    if (this.RunWinWindows)
+                    {
+                        try
+                        {
+                            File.Delete(this.shortcutFilePath);
+                        }
+                        catch { }
+                    }
+                }
+
+                this.NotifyPropertyChanged(nameof(this.RunWinWindows));
+            }
+        }
+
+        private void CreateShortcut()
+        {
+            try
+            {
+                var shell = new wsh.WshShell();
+                var shortcut = (wsh.IWshShortcut)shell.CreateShortcut(this.shortcutFilePath);
+                shortcut.TargetPath = Assembly.GetExecutingAssembly().Location;
+
+                shortcut.Save();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Error adding to startup.", "WinCommand Palette PluginLoader", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.RunWinWindows = false;
+            }
+        }
 
         private Config config;
         private wf.KeysConverter keyConverter = new wf.KeysConverter();
@@ -94,7 +141,6 @@ namespace WinCommandPalette.ViewModels.Options
 
             return hotkey;
         }
-
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetKeyboardLayout(uint idThread);

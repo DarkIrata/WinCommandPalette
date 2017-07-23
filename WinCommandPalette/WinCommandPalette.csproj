@@ -89,6 +89,7 @@
     <Compile Include="CreateCommandControls\View\CreateOpenFileCommandView.xaml.cs">
       <DependentUpon>CreateOpenFileCommandView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helper\DeepCopyByExpressionTrees.cs" />
     <Compile Include="Helper\ScreenHelper.cs" />
     <Compile Include="Commands\OpenFileCommand.cs" />
     <Compile Include="Commands\ShowOptionsCommand.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Helper\Win32Helper.cs" />
     <Compile Include="Enums\ModifierKey.cs" />
+    <Compile Include="ViewModels\Options\CreateNewCommandViewModel.cs" />
     <Compile Include="ViewModels\Options\GeneralViewModel.cs" />
     <Compile Include="Views\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>
@@ -206,6 +208,17 @@
       <Project>{A53238F7-DC6E-464E-BAAA-296BB8984373}</Project>
       <Name>WinCommandPalette.Plugin</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="IWshRuntimeLibrary">
+      <Guid>{F935DC20-1CF0-11D0-ADB9-00C04FD58A0B}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

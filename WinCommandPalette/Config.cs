@@ -10,10 +10,11 @@ using WinCommandPalette.Helper;
 using WinCommandPalette.PluginSystem;
 using WinCommandPalette.Plugin.CommandBase;
 using WinCommandPalette.Enums;
+using System.Linq;
 
 namespace WinCommandPalette
 {
-    public class Config : ICloneable
+    public class Config : IEquatable<Config>
     {
         private const string COMMANDS_TAG_NAME = "Commands";
         private const string PLUGIN_TYPE_ATTRIBUTE_NAME = "Type";
@@ -95,14 +96,6 @@ namespace WinCommandPalette
             return commandsSB.ToString();
         }
 
-        internal void UpdateConfig(Config newConfig)
-        {
-            this.KeyCode = newConfig.KeyCode;
-            this.ModifierKey = newConfig.ModifierKey;
-            this.Commands = newConfig.Commands;
-            this.UndeserializableCommands = newConfig.UndeserializableCommands;
-        }
-
         public static Config Load(string path)
         {
             var config = new Config();
@@ -165,9 +158,29 @@ namespace WinCommandPalette
             }
         }
 
-        public object Clone()
+        public void Update(Config other)
         {
-            return this.MemberwiseClone();
+            this.KeyCode = other.KeyCode;
+            this.ModifierKey = other.ModifierKey;
+            this.Commands = other.Commands;
+            this.UndeserializableCommands = other.UndeserializableCommands;
+        }
+
+        public Config DeepCopy()
+        {
+            return this.DeepCopyByExpressionTree();
+        }
+
+        public bool Equals(Config other)
+        {
+            return this.KeyCode == other.KeyCode &&
+                this.ModifierKey == other.ModifierKey &&
+
+                this.Commands.Count == other.Commands.Count &&
+                !this.Commands.Except(other.Commands).Any() &&
+
+                this.UndeserializableCommands.Count == other.UndeserializableCommands.Count &&
+                !this.UndeserializableCommands.Except(other.UndeserializableCommands).Any();
         }
     }
 }

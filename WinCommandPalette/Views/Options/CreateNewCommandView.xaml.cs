@@ -12,17 +12,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WinCommandPalette.ViewModels.Options;
 
 namespace WinCommandPalette.Views.Options
 {
-    /// <summary>
-    /// Interaktionslogik für CreateNewCommandView.xaml
-    /// </summary>
     public partial class CreateNewCommandView : UserControl
     {
-        public CreateNewCommandView()
+        private CreateNewCommandViewModel viewModel;
+        private Config config;
+
+        public CreateNewCommandView(Config config)
         {
-            InitializeComponent();
+            this.config = config ??
+                throw new ArgumentNullException(nameof(config));
+
+            this.viewModel = new CreateNewCommandViewModel(this.config);
+
+            this.InitializeComponent();
+            this.DataContext = this.viewModel;
+            this.btnAddCommand.Click += this.viewModel.AddCommand;
+            this.btnReset.Click += this.viewModel.Reset;
         }
     }
 }

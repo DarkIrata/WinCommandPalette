@@ -10,7 +10,7 @@ namespace WinCommandPalette.ViewModels
     public class OptionsViewModel : ViewModelBase
     {
         private Config config;
-        private Config BackupConfig;
+        private Config newConfig;
 
         private List<MenuItem> menuItems = null;
 
@@ -103,20 +103,20 @@ namespace WinCommandPalette.ViewModels
                 this.NotifyPropertyChanged(nameof(this.SelectedSubMenuItem));
             }
         }
-
+        
         public OptionsViewModel(Config config)
         {
             this.config = config ??
                 throw new ArgumentNullException(nameof(config));
 
-            this.BackupConfig = (Config)config.Clone();
+            this.newConfig = this.config.DeepCopy();
 
             this.MenuItems = new List<MenuItem>()
             {
-                new MenuItem("G E N E R A L", new GeneralView(config)),
+                new MenuItem("G E N E R A L", new GeneralView(this.newConfig)),
                 new MenuItem("C O M M A N D S", null,
-                    new SubMenuItem("CREATE NEW", new CreateNewCommandView()),
-                    new SubMenuItem("MANAGE", null)
+                    new SubMenuItem("CREATE NEW", new CreateNewCommandView(this.newConfig))
+                    // new SubMenuItem("MANAGE", null)
                     )
             };
 
@@ -125,6 +125,9 @@ namespace WinCommandPalette.ViewModels
 
         internal void Save()
         {
+            this.config.Update(this.newConfig);
         }
+
+        public bool IsModified() => !this.config.Equals(this.newConfig);
     }
 }
