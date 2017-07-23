@@ -102,6 +102,7 @@
     <Compile Include="Enums\ModifierKey.cs" />
     <Compile Include="ViewModels\Options\CreateNewCommandViewModel.cs" />
     <Compile Include="ViewModels\Options\GeneralViewModel.cs" />
+    <Compile Include="ViewModels\Options\ManageCommandViewModel.cs" />
     <Compile Include="Views\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>
     </Compile>
@@ -112,6 +113,9 @@
     </Compile>
     <Compile Include="Views\Options\GeneralView.xaml.cs">
       <DependentUpon>GeneralView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Options\ManageCommandView.xaml.cs">
+      <DependentUpon>ManageCommandView.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\MenuItem.xaml">
       <SubType>Designer</SubType>
@@ -150,6 +154,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Options\GeneralView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Options\ManageCommandView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

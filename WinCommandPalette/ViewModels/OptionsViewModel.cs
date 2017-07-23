@@ -115,8 +115,8 @@ namespace WinCommandPalette.ViewModels
             {
                 new MenuItem("G E N E R A L", new GeneralView(this.newConfig)),
                 new MenuItem("C O M M A N D S", null,
-                    new SubMenuItem("CREATE NEW", new CreateNewCommandView(this.newConfig))
-                    // new SubMenuItem("MANAGE", null)
+                    new SubMenuItem("CREATE NEW", new CreateNewCommandView(this.newConfig)),
+                    new SubMenuItem("MANAGE", new ManageCommandView(this.newConfig))
                     )
             };
 
