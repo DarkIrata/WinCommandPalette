@@ -135,7 +135,10 @@ namespace WinCommandPalette.PluginSystem
 
         private static void ShowErrorLoadingPluginMessage(string pluginName, string reason)
         {
-            MessageBox.Show($"Error loading plugin '{pluginName}'.\r\n\r\nReason: {reason}", "WinCommand Palette PluginLoader", MessageBoxButton.OK, MessageBoxImage.Error);
+            Task.Run(() => // Message Box is Threaded so it doesn't destroy the handler for the main Window. Needed to register the HotKey
+            {
+                MessageBox.Show($"Error loading plugin '{pluginName}'.\r\n\r\nReason: {reason}", "WinCommand Palette PluginLoader", MessageBoxButton.OK, MessageBoxImage.Error);
+            });
         }
 
         private static List<string> GetPluginFilePaths()
