@@ -102,6 +102,7 @@
     <Compile Include="Enums\ModifierKey.cs" />
     <Compile Include="ViewModels\Options\CreateNewCommandViewModel.cs" />
     <Compile Include="ViewModels\Options\GeneralViewModel.cs" />
+    <Compile Include="ViewModels\Options\IOptionsPage.cs" />
     <Compile Include="ViewModels\Options\ManageCommandViewModel.cs" />
     <Compile Include="Views\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>

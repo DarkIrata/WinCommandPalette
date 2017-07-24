@@ -7,7 +7,7 @@ namespace WinCommandPalette.Views.Options
     /// <summary>
     /// Interaktionslogik für ManageCommandView.xaml
     /// </summary>
-    public partial class ManageCommandView : UserControl
+    public partial class ManageCommandView : UserControl, IOptionsPage
     {
         private ManageCommandViewModel viewModel;
         private Config config;
@@ -24,6 +24,11 @@ namespace WinCommandPalette.Views.Options
             this.btnSaveChanges.Click += this.viewModel.SaveChanges;
             this.btnCancel.Click += this.viewModel.Reset;
             this.btnDelete.Click += this.viewModel.Delete;
+        }
+
+        public void Refresh()
+        {
+            this.viewModel.Refresh();
         }
     }
 }

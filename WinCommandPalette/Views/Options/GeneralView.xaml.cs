@@ -19,7 +19,7 @@ namespace WinCommandPalette.Views.Options
     /// <summary>
     /// Interaktionslogik für GeneralView.xaml
     /// </summary>
-    public partial class GeneralView : UserControl
+    public partial class GeneralView : UserControl, IOptionsPage
     {
         private GeneralViewModel viewModel;
         private Config config;
@@ -34,6 +34,10 @@ namespace WinCommandPalette.Views.Options
             this.InitializeComponent();
             this.DataContext = this.viewModel;
             this.KeyBox.PreviewKeyDown += this.viewModel.KeyBox_PreviewKeyDown;
+        }
+
+        public void Refresh()
+        {
         }
     }
 }

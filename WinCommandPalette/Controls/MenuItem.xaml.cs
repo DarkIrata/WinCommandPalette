@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using WinCommandPalette.ViewModels.Options;
 
 namespace WinCommandPalette.Controls
 {
@@ -45,7 +46,7 @@ namespace WinCommandPalette.Controls
             set => this.subMenuItems = value;
         }
         
-        public UserControl Page { get; set; }
+        public IOptionsPage Page { get; set; }
 
         private MenuItem()
         {
@@ -58,7 +59,7 @@ namespace WinCommandPalette.Controls
         {
         }
 
-        public MenuItem(string text, UserControl page, params SubMenuItem[] subMenuItems)
+        public MenuItem(string text, IOptionsPage page, params SubMenuItem[] subMenuItems)
             : this()
         {
             this.Text = text;

@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using WinCommandPalette.Helper;
+using WinCommandPalette.ViewModels.Options;
 
 namespace WinCommandPalette.Controls
 {
@@ -38,11 +39,11 @@ namespace WinCommandPalette.Controls
         public static readonly DependencyProperty IsActiveProperty =
             DependencyProperty.Register("IsActive", typeof(bool), typeof(SubMenuItem), new PropertyMetadata(false));
 
-        public UserControl Page { get; internal set; }
+        public IOptionsPage Page { get; internal set; }
 
         public MenuItem MenuItem{ get; internal set; }
 
-        public SubMenuItem(string text, UserControl page)
+        public SubMenuItem(string text, IOptionsPage page)
             : this()
         {
             this.Text = text;

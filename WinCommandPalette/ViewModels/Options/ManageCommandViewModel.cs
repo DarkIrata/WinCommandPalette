@@ -26,6 +26,20 @@ namespace WinCommandPalette.ViewModels.Options
             }
         }
 
+        private int selectedIndex = -1;
+
+        public int SelectedIndex
+        {
+            get => this.selectedIndex;
+
+            set
+            {
+                this.selectedIndex = value;
+                this.NotifyPropertyChanged(nameof(this.SelectedIndex));
+            }
+        }
+
+
         private ICommandBase selectedItem;
 
         public ICommandBase SelectedItem
@@ -84,6 +98,11 @@ namespace WinCommandPalette.ViewModels.Options
                 throw new ArgumentNullException(nameof(config));
         }
 
+        internal void Refresh()
+        {
+            this.NotifyPropertyChanged(nameof(this.Commands));
+        }
+
         internal void SaveChanges(object sender, RoutedEventArgs e)
         {
             var command = this.CommandCreator?.GetCommand();
@@ -94,7 +113,7 @@ namespace WinCommandPalette.ViewModels.Options
                 commandsCopy[index] = command;
 
                 this.Commands = commandsCopy;
-                this.CommandCreator.ShowCommand(command);
+                this.selectedIndex = index;
 
                 MessageBox.Show($"Command '{command.Name}' updated!", "WinCommand Palette - Options", MessageBoxButton.OK, MessageBoxImage.None);
             }
@@ -104,14 +123,22 @@ namespace WinCommandPalette.ViewModels.Options
         {
             if (MessageBox.Show("Are you sure you want reset all changes to this command?", "WinCommand Palette - Options", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                this.CommandCreator?.ClearAll();
+                this.CommandCreator?.ShowCommand(this.SelectedItem);
             }
         }
 
         internal void Delete(object sender, RoutedEventArgs e)
         {
-            var index = this.config.Commands.IndexOf(this.SelectedItem);
-            this.config.Commands.RemoveAt(index);
+            var commandsCopy = this.Commands;
+            var index = commandsCopy.IndexOf(this.SelectedItem);
+            commandsCopy.RemoveAt(index);
+            this.Commands = commandsCopy;
+
+            if (commandsCopy.Count > 0)
+            { 
+                this.SelectedIndex = -1;
+                this.SelectedIndex = index--;
+            }
         }
     }
 }

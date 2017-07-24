@@ -4,7 +4,7 @@ using WinCommandPalette.ViewModels.Options;
 
 namespace WinCommandPalette.Views.Options
 {
-    public partial class CreateNewCommandView : UserControl
+    public partial class CreateNewCommandView : UserControl, IOptionsPage
     {
         private CreateNewCommandViewModel viewModel;
         private Config config;
@@ -20,6 +20,10 @@ namespace WinCommandPalette.Views.Options
             this.DataContext = this.viewModel;
             this.btnAddCommand.Click += this.viewModel.AddCommand;
             this.btnReset.Click += this.viewModel.Reset;
+        }
+
+        public void Refresh()
+        {
         }
     }
 }

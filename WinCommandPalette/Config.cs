@@ -173,14 +173,21 @@ namespace WinCommandPalette
 
         public bool Equals(Config other)
         {
-            return this.KeyCode == other.KeyCode &&
-                this.ModifierKey == other.ModifierKey &&
+            var baseProperties = this.KeyCode == other.KeyCode &&
+                                 this.ModifierKey == other.ModifierKey;
 
-                this.Commands.Count == other.Commands.Count &&
-                !this.Commands.Except(other.Commands).Any() &&
-
-                this.UndeserializableCommands.Count == other.UndeserializableCommands.Count &&
-                !this.UndeserializableCommands.Except(other.UndeserializableCommands).Any();
+            var commands = false;
+            if (this.Commands.Count == 0 &&
+                other.Commands.Count == 0)
+            {
+                commands = true;
+            }
+            else
+            {
+                commands = this.Commands.Count == other.Commands.Count &&
+                           this.Commands.Except(other.Commands).Any();
+            }
+            return baseProperties && commands;
         }
     }
 }

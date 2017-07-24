@@ -4,6 +4,7 @@ using System.Linq;
 using WinCommandPalette.Controls;
 using wf = System.Windows.Forms;
 using WinCommandPalette.Views.Options;
+using WinCommandPalette.ViewModels.Options;
 
 namespace WinCommandPalette.ViewModels
 {
@@ -20,14 +21,15 @@ namespace WinCommandPalette.ViewModels
             set => this.menuItems = value;
         }
 
-        private System.Windows.Controls.UserControl activePage;
+        private IOptionsPage activePage;
 
-        public System.Windows.Controls.UserControl ActivePage
+        public IOptionsPage ActivePage
         {
             get => this.activePage;
             set
             {
                 this.activePage = value;
+                this.activePage.Refresh();
                 this.NotifyPropertyChanged(nameof(this.ActivePage));
             }
         }
