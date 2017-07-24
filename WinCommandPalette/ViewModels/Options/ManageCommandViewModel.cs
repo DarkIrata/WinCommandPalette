@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,16 @@ namespace WinCommandPalette.ViewModels.Options
     {
         private Config config;
 
-        public List<ICommandBase> Commands => this.config.Commands;
+        public ObservableCollection<ICommandBase> Commands
+        {
+            get => new ObservableCollection<ICommandBase>(this.config.Commands);
+
+            set
+            {
+                this.config.Commands = value.ToList();
+                this.NotifyPropertyChanged(nameof(this.Commands));
+            }
+        }
 
         private ICommandBase selectedItem;
 
@@ -79,10 +89,13 @@ namespace WinCommandPalette.ViewModels.Options
             var command = this.CommandCreator?.GetCommand();
             if (command != null)
             {
-                var index = this.config.Commands.IndexOf(this.SelectedItem);
-                this.config.Commands[index] = command;
+                var commandsCopy = this.Commands;
+                var index = commandsCopy.IndexOf(this.SelectedItem);
+                commandsCopy[index] = command;
+
+                this.Commands = commandsCopy;
                 this.CommandCreator.ShowCommand(command);
-                this.NotifyPropertyChanged(nameof(this.Commands));
+
                 MessageBox.Show($"Command '{command.Name}' updated!", "WinCommand Palette - Options", MessageBoxButton.OK, MessageBoxImage.None);
             }
         }
