@@ -105,7 +105,7 @@ namespace WinCommandPalette.ViewModels
                 this.NotifyPropertyChanged(nameof(this.SelectedSubMenuItem));
             }
         }
-        
+
         public OptionsViewModel(Config config)
         {
             this.config = config ??
@@ -128,8 +128,11 @@ namespace WinCommandPalette.ViewModels
         internal void Save()
         {
             this.config.Update(this.newConfig);
+            this.Saving = true;
         }
 
-        public bool IsModified() => !this.config.Equals(this.newConfig);
+        public bool Saving { get; private set; } = false;
+
+        public bool IsModified() => this.Saving ? true : !this.config.Equals(this.newConfig);
     }
 }

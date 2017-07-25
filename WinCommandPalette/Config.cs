@@ -187,6 +187,7 @@ namespace WinCommandPalette
                 commands = this.Commands.Count == other.Commands.Count &&
                            this.Commands.Except(other.Commands).Any();
             }
+
             return baseProperties && commands;
         }
     }
