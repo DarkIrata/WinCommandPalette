@@ -133,6 +133,6 @@ namespace WinCommandPalette.ViewModels
 
         public bool Saving { get; private set; } = false;
 
-        public bool IsModified() => this.Saving ? true : !this.config.Equals(this.newConfig);
+        public bool IsModified() => this.Saving ? false : !this.config.Equals(this.newConfig);
     }
 }
