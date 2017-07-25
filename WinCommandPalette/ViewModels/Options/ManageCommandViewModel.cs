@@ -136,6 +136,12 @@ namespace WinCommandPalette.ViewModels.Options
 
         internal void Delete(object sender, RoutedEventArgs e)
         {
+
+            if (MessageBox.Show($"Are you sure you want to delete '{this.SelectedItem?.Name}'?", "WinCommand Palette - Options", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
+            {
+                return;
+            }
+
             var commandsCopy = this.Commands;
             var index = commandsCopy.IndexOf(this.SelectedItem);
             commandsCopy.RemoveAt(index);
