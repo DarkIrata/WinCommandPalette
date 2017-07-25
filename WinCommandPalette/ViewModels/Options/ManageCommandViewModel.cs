@@ -135,9 +135,8 @@ namespace WinCommandPalette.ViewModels.Options
             this.Commands = commandsCopy;
 
             if (commandsCopy.Count > 0)
-            { 
-                this.SelectedIndex = -1;
-                this.SelectedIndex = index--;
+            {
+                this.SelectedIndex = --index;
             }
         }
     }
