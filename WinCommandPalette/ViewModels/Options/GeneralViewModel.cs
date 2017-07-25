@@ -49,7 +49,9 @@ namespace WinCommandPalette.ViewModels.Options
             {
                 var shell = new wsh.WshShell();
                 var shortcut = (wsh.IWshShortcut)shell.CreateShortcut(this.shortcutFilePath);
-                shortcut.TargetPath = Assembly.GetExecutingAssembly().Location;
+                var exePath = Assembly.GetExecutingAssembly().Location;
+                shortcut.TargetPath = exePath;
+                shortcut.WorkingDirectory = Path.GetDirectoryName(exePath);
 
                 shortcut.Save();
             }
@@ -150,7 +152,7 @@ namespace WinCommandPalette.ViewModels.Options
 
         public string KeyCodeToUnicode(wf.Keys key)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             ToUnicodeEx((uint)key, 0, new byte[256], result, 5, 0, GetKeyboardLayout(0));
             return result.ToString();
         }
