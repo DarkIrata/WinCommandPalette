@@ -153,7 +153,13 @@ namespace WinCommandPalette
                 var cmdSerializer = new XmlSerializer(type);
                 using (var fs = new StringReader(commandElement.ToString()))
                 {
-                    config.Commands.Add((ICommandBase)cmdSerializer.Deserialize(fs));
+                    var command = (ICommandBase)cmdSerializer.Deserialize(fs);
+                    if (string.IsNullOrEmpty(command.Name))
+                    {
+                        Console.WriteLine($"A Command from Plugin '{pluginName}' was found without a name");
+                        continue;
+                    }
+                    config.Commands.Add(command);
                 }
             }
         }

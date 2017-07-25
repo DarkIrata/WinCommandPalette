@@ -115,6 +115,12 @@ namespace WinCommandPalette.ViewModels.Options
             var command = this.CommandCreator?.GetCommand();
             if (command != null)
             {
+                if (string.IsNullOrEmpty(command.Name))
+                {
+                    MessageBox.Show($"Command Name cant be empty", "WinCommand Palette - Options", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
                 var commandsCopy = this.Commands;
                 var index = commandsCopy.IndexOf(this.SelectedItem);
                 commandsCopy[index] = command;

@@ -78,8 +78,15 @@ namespace WinCommandPalette.ViewModels.Options
         internal void AddCommand(object sender, RoutedEventArgs e)
         {
             var command = this.SelectedItem?.GetCommand();
+
             if (command != null)
             {
+                if (string.IsNullOrEmpty(command.Name))
+                {
+                    MessageBox.Show($"Command Name cant be empty", "WinCommand Palette - Options", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
                 this.config.Commands.Add(command);
                 this.SelectedItem.ClearAll();
                 MessageBox.Show($"Command '{command.Name}' added!", "WinCommand Palette - Options", MessageBoxButton.OK, MessageBoxImage.None);
