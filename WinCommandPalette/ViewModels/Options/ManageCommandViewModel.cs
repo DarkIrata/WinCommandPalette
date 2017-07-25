@@ -36,9 +36,12 @@ namespace WinCommandPalette.ViewModels.Options
             {
                 this.selectedIndex = value;
                 this.NotifyPropertyChanged(nameof(this.SelectedIndex));
+                this.NotifyPropertyChanged(nameof(this.SelectedItem));
+                this.NotifyPropertyChanged(nameof(this.CanManage));
             }
         }
 
+        public bool CanManage => this.SelectedIndex > -1;
 
         private ICommandBase selectedItem;
 
@@ -101,6 +104,10 @@ namespace WinCommandPalette.ViewModels.Options
         internal void Refresh()
         {
             this.NotifyPropertyChanged(nameof(this.Commands));
+            if (this.SelectedIndex == -1 && this.Commands.Count > 0)
+            {
+                this.SelectedIndex = 0;
+            }
         }
 
         internal void SaveChanges(object sender, RoutedEventArgs e)

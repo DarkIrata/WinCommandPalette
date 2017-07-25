@@ -24,6 +24,7 @@ namespace WinCommandPalette.Views.Options
 
         public void Refresh()
         {
+            this.viewModel.Refresh();
         }
     }
 }

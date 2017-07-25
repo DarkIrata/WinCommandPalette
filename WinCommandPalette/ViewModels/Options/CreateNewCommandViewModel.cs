@@ -30,6 +30,23 @@ namespace WinCommandPalette.ViewModels.Options
             }
         }
 
+        private int selectedIndex = -1;
+
+        public int SelectedIndex
+        {
+            get => this.selectedIndex;
+
+            set
+            {
+                this.selectedIndex = value;
+                this.NotifyPropertyChanged(nameof(this.SelectedIndex));
+                this.NotifyPropertyChanged(nameof(this.CanManage));
+                this.NotifyPropertyChanged(nameof(this.SelectedItem));
+            }
+        }
+
+        public bool CanManage => this.SelectedIndex > -1;
+
         private PluginSystem.Plugin selectedPlugin;
 
         public PluginSystem.Plugin SelectedPlugin
@@ -49,6 +66,15 @@ namespace WinCommandPalette.ViewModels.Options
                 throw new ArgumentNullException(nameof(config));
         }
 
+        internal void Refresh()
+        {
+            if (this.SelectedIndex == -1 && 
+                this.AvailableCommandCreators.Count > 0)
+            {
+                this.SelectedIndex = 0;
+            }
+        }
+
         internal void AddCommand(object sender, RoutedEventArgs e)
         {
             var command = this.SelectedItem?.GetCommand();
@@ -64,7 +90,7 @@ namespace WinCommandPalette.ViewModels.Options
         {
             if (MessageBox.Show("Are you sure you want reset all changes to this new command?", "WinCommand Palette - Options", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                this.SelectedItem.ClearAll();
+                this.SelectedItem?.ClearAll();
             }
         }
 
