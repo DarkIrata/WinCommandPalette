@@ -181,7 +181,7 @@ namespace WinCommandPalette.PluginSystem
             return wpcCommands;
         }
 
-        private static ICreateCommand GetCreateCommandInstance(Assembly assembly, string commandName)
+        public static ICreateCommand GetCreateCommandInstance(Assembly assembly, string commandName)
         {
             var createCommandType = typeof(ICreateCommand);
             var assemblyCreateCommandType = assembly.GetTypes()?.FirstOrDefault(p => createCommandType.IsAssignableFrom(p) &&

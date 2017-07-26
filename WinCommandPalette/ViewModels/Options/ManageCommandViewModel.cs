@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -80,7 +81,7 @@ namespace WinCommandPalette.ViewModels.Options
                 this.NotifyPropertyChanged(nameof(this.CommandCreator));
             }
         }
-
+        
         private PluginSystem.Plugin selectedPlugin;
 
         public PluginSystem.Plugin SelectedPlugin
@@ -96,7 +97,7 @@ namespace WinCommandPalette.ViewModels.Options
                 }
                 else
                 {
-                    this.CommandCreator = this.noCommandCreateView;
+                    this.CommandCreator = this.TryGetFromFromExecutingAssembly();
                 }
 
                 this.NotifyPropertyChanged(nameof(this.SelectedPlugin));
@@ -170,6 +171,27 @@ namespace WinCommandPalette.ViewModels.Options
             {
                 this.SelectedIndex = --index;
             }
+        }
+
+        // This Dictionary and Method will be removed if intern commands with a create dialog gets moved to their own plugins
+        private Dictionary<string, ICreateCommand> internCreateCommand = new Dictionary<string, ICreateCommand>();
+        private ICreateCommand TryGetFromFromExecutingAssembly()
+        {
+            var commandName = this.SelectedItem.GetType().Name;
+
+            if (this.internCreateCommand.ContainsKey(commandName))
+            {
+                return this.internCreateCommand[commandName];
+            }
+
+            var commandCreatorFromExecutingAssembly = PluginHelper.GetCreateCommandInstance(Assembly.GetExecutingAssembly(), commandName);
+            if (commandCreatorFromExecutingAssembly != null)
+            {
+                this.internCreateCommand.Add(commandName, commandCreatorFromExecutingAssembly);
+                return commandCreatorFromExecutingAssembly;
+            }
+
+            return this.noCommandCreateView;
         }
     }
 }

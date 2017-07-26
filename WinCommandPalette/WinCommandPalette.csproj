@@ -86,8 +86,8 @@
     <Compile Include="Converter\DescriptionToVisibilityConverter.cs" />
     <Compile Include="Converter\InvertBoolToVisibilityConverter.cs" />
     <Compile Include="CreateCommandControls\ViewModel\CreateOpenFileCommandViewModel.cs" />
-    <Compile Include="CreateCommandControls\View\CreateOpenFileCommandView.xaml.cs">
-      <DependentUpon>CreateOpenFileCommandView.xaml</DependentUpon>
+    <Compile Include="CreateCommandControls\View\CreateOpenFileCommand.xaml.cs">
+      <DependentUpon>CreateOpenFileCommand.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helper\DeepCopyByExpressionTrees.cs" />
     <Compile Include="Helper\ScreenHelper.cs" />
@@ -129,7 +129,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CreateCommandControls\View\CreateOpenFileCommandView.xaml">
+    <Page Include="CreateCommandControls\View\CreateOpenFileCommand.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

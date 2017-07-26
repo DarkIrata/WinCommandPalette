@@ -12,16 +12,16 @@ namespace WinCommandPalette.CreateCommandControls.View
     /// <summary>
     /// Interaktionslogik für CreateOpenFileCommand.xaml
     /// </summary>
-    public partial class CreateOpenFileCommandView : UserControl, ICreateCommand
+    public partial class CreateOpenFileCommand : UserControl, ICreateCommand
     {
         public string CommandTypeName => "OpenFile";
 
-        private CreateOpenFileCommandViewModel viewModel;
+        private CreateOpenFileCommandModel viewModel;
 
-        public CreateOpenFileCommandView()
+        public CreateOpenFileCommand()
         {
             this.InitializeComponent();
-            this.viewModel = new CreateOpenFileCommandViewModel();
+            this.viewModel = new CreateOpenFileCommandModel();
             this.DataContext = this.viewModel;
         }
 

@@ -9,7 +9,7 @@ using WinCommandPalette.PluginSystem;
 
 namespace WinCommandPalette.CreateCommandControls.ViewModel
 {
-    public class CreateOpenFileCommandViewModel : ViewModelBase
+    public class CreateOpenFileCommandModel : ViewModelBase
     {
         private OpenFileCommand openFileCommand = new OpenFileCommand();
 

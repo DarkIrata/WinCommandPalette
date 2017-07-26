@@ -113,7 +113,7 @@ namespace WinCommandPalette.ViewModels.Options
             commandCreators.AddRange(this.GetAllCreateCommandViews());
 
             // Internal
-            commandCreators.Add(new CreateOpenFileCommandView());
+            commandCreators.Add(new CreateOpenFileCommand());
 
             return commandCreators;
         }
