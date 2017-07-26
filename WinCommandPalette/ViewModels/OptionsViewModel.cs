@@ -29,7 +29,7 @@ namespace WinCommandPalette.ViewModels
             set
             {
                 this.activePage = value;
-                this.activePage.Refresh();
+                this.ActivePage?.Refresh();
                 this.NotifyPropertyChanged(nameof(this.ActivePage));
             }
         }
