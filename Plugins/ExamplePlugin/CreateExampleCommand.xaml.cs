@@ -18,6 +18,7 @@ namespace ExamplePlugin
 
         public void ClearAll()
         {
+            this.tbName.Text = string.Empty;
             this.tbText.Text = string.Empty;
         }
 
