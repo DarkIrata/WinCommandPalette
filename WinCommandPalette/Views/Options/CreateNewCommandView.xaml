@@ -48,7 +48,7 @@
         <ListBox ap:ScrollIntoView.Enabled="True" BorderBrush="Silver" Margin="3 0 0 0" BorderThickness="1 1 1 0"
                          Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
                          ItemsSource="{Binding AvailableCommandCreators}"
-                         SelectedItem="{Binding Path=SelectedItem, Mode=OneWayToSource}"
+                         SelectedItem="{Binding SelectedItem}"
                          SelectedIndex="{Binding SelectedIndex}"
                          SelectionMode="Single">
             <ListBox.ItemContainerStyle>
