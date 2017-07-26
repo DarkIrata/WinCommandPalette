@@ -185,6 +185,7 @@ namespace WinCommandPalette.ViewModels
         private void RegisterAutoRegisterCommands()
         {
             // Internal
+            this.AutoRegisterCommands.Add(new ShowAboutCommand(this.config));
             this.AutoRegisterCommands.Add(new ShowOptionsCommand(this.config));
             this.AutoRegisterCommands.Add(new QuitCommand());
 

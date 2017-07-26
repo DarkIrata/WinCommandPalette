@@ -29,15 +29,15 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Background="#2faff1" VerticalAlignment="Stretch" Orientation="Horizontal">
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Background="#2faff1" VerticalAlignment="Stretch" Orientation="Horizontal" Height="35">
             <Border VerticalAlignment="Center">
                 <TextBlock Text="General" Foreground="White"
-                       FontFamily="Calibri" FontSize="40" Margin="15 0 0 0"/>
+                       FontFamily="Calibri" FontSize="18" Margin="15 0 0 0"/>
             </Border>
         </StackPanel>
 
