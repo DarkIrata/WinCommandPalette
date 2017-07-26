@@ -8,12 +8,14 @@ using System.Windows;
 using WinCommandPalette.Plugin.CommandBase;
 using WinCommandPalette.Plugin.CreateCommand;
 using WinCommandPalette.PluginSystem;
+using WinCommandPalette.Views.Options;
 
 namespace WinCommandPalette.ViewModels.Options
 {
     public class ManageCommandViewModel : ViewModelBase
     {
         private Config config;
+        private ICreateCommand noCommandCreateView = new CreateCommandNotFound();
 
         public ObservableCollection<ICommandBase> Commands
         {
@@ -37,11 +39,12 @@ namespace WinCommandPalette.ViewModels.Options
                 this.selectedIndex = value;
                 this.NotifyPropertyChanged(nameof(this.SelectedIndex));
                 this.NotifyPropertyChanged(nameof(this.SelectedItem));
-                this.NotifyPropertyChanged(nameof(this.CanManage));
             }
         }
 
-        public bool CanManage => this.SelectedIndex > -1;
+        public bool CanManage => this.SelectedItem != null && this.CommandCreator != this.noCommandCreateView;
+
+        public bool CanDelete => this.SelectedItem != null;
 
         private ICommandBase selectedItem;
 
@@ -58,6 +61,8 @@ namespace WinCommandPalette.ViewModels.Options
                 }
 
                 this.NotifyPropertyChanged(nameof(this.SelectedItem));
+                this.NotifyPropertyChanged(nameof(this.CanManage));
+                this.NotifyPropertyChanged(nameof(this.CanDelete));
             }
         }
 
@@ -70,10 +75,8 @@ namespace WinCommandPalette.ViewModels.Options
             set
             {
                 this.commandCreator = value;
-                if (this.CommandCreator != null)
-                {
-                    this.CommandCreator.ShowCommand(this.SelectedItem);
-                }
+
+                this.CommandCreator?.ShowCommand(this.SelectedItem);
                 this.NotifyPropertyChanged(nameof(this.CommandCreator));
             }
         }
@@ -91,6 +94,11 @@ namespace WinCommandPalette.ViewModels.Options
                 {
                     this.CommandCreator = this.SelectedPlugin.Commands[this.SelectedItem.GetType().FullName];
                 }
+                else
+                {
+                    this.CommandCreator = this.noCommandCreateView;
+                }
+
                 this.NotifyPropertyChanged(nameof(this.SelectedPlugin));
             }
         }
@@ -104,10 +112,15 @@ namespace WinCommandPalette.ViewModels.Options
         internal void Refresh()
         {
             this.NotifyPropertyChanged(nameof(this.Commands));
-            if (this.SelectedIndex == -1 && this.Commands.Count > 0)
+            if (this.Commands.Count > 0)
             {
+                this.SelectedItem = null;
+                this.CommandCreator = null;
                 this.SelectedIndex = 0;
             }
+
+            this.CommandCreator?.ShowCommand(this.SelectedItem);
+            this.NotifyPropertyChanged(nameof(this.CommandCreator));
         }
 
         internal void SaveChanges(object sender, RoutedEventArgs e)
@@ -126,7 +139,7 @@ namespace WinCommandPalette.ViewModels.Options
                 commandsCopy[index] = command;
 
                 this.Commands = commandsCopy;
-                this.selectedIndex = index;
+                this.SelectedIndex = index;
 
                 MessageBox.Show($"Command '{command.Name}' updated!", "WinCommand Palette - Options", MessageBoxButton.OK, MessageBoxImage.None);
             }

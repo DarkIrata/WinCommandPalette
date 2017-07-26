@@ -49,7 +49,7 @@
                          Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
                          ItemsSource="{Binding Commands}"
                          SelectedIndex="{Binding SelectedIndex}"
-                         SelectedItem="{Binding Path=SelectedItem}"
+                         SelectedItem="{Binding SelectedItem}"
                          SelectionMode="Single">
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
@@ -101,7 +101,7 @@
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 5 10 5" Height="25">
             <Button x:Name="btnSaveChanges" Content="Save" Width="65" Margin="0,0,5,0" FontSize="12" IsEnabled="{Binding CanManage}"/>
             <Button x:Name="btnCancel" Content="Reset" Width="65" Margin="5,0,5,0" FontSize="12" IsEnabled="{Binding CanManage}"/>
-            <Button x:Name="btnDelete" Content="Delete" Width="65" Margin="5,0,0,0" FontSize="12" IsEnabled="{Binding CanManage}"/>
+            <Button x:Name="btnDelete" Content="Delete" Width="65" Margin="5,0,0,0" FontSize="12" IsEnabled="{Binding CanDelete}"/>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -25,8 +25,10 @@ namespace WinCommandPalette.ViewModels.Options
             set
             {
                 this.selectedItem = value;
+                this.SelectedItem?.ClearAll();
                 this.SelectedPlugin = PluginHelper.GetPlugins().Where(p => p.Commands.ContainsValue(this.SelectedItem)).FirstOrDefault();
                 this.NotifyPropertyChanged(nameof(this.SelectedItem));
+                this.NotifyPropertyChanged(nameof(this.CanManage));
             }
         }
 
@@ -40,12 +42,11 @@ namespace WinCommandPalette.ViewModels.Options
             {
                 this.selectedIndex = value;
                 this.NotifyPropertyChanged(nameof(this.SelectedIndex));
-                this.NotifyPropertyChanged(nameof(this.CanManage));
                 this.NotifyPropertyChanged(nameof(this.SelectedItem));
             }
         }
 
-        public bool CanManage => this.SelectedIndex > -1;
+        public bool CanManage => this.SelectedItem != null;
 
         private PluginSystem.Plugin selectedPlugin;
 
@@ -68,11 +69,14 @@ namespace WinCommandPalette.ViewModels.Options
 
         internal void Refresh()
         {
-            if (this.SelectedIndex == -1 && 
-                this.AvailableCommandCreators.Count > 0)
+            if (this.AvailableCommandCreators.Count > 0)
             {
+                this.SelectedItem = null;
                 this.SelectedIndex = 0;
             }
+
+            this.SelectedItem?.ClearAll();
+            this.NotifyPropertyChanged(nameof(this.SelectedItem));
         }
 
         internal void AddCommand(object sender, RoutedEventArgs e)
