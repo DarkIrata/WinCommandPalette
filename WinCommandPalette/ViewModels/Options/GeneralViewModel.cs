@@ -7,7 +7,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using WinCommandPalette.Enums;
-using wsh = IWshRuntimeLibrary;
 using wf = System.Windows.Forms;
 
 
@@ -17,48 +16,13 @@ namespace WinCommandPalette.ViewModels.Options
     {
         public string HotKey => this.GetHotkeyString();
 
-        private string shortcutFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "WinCommandPalette.lnk");
-        public bool RunWinWindows
+        public bool RunWithWindows
         {
-            get => File.Exists(this.shortcutFilePath);
+            get => this.config.RunWithWindows;
             set
             {
-                if (value)
-                {
-                    this.CreateShortcut();
-                }
-                else
-                {
-                    if (this.RunWinWindows)
-                    {
-                        try
-                        {
-                            File.Delete(this.shortcutFilePath);
-                        }
-                        catch { }
-                    }
-                }
-
-                this.NotifyPropertyChanged(nameof(this.RunWinWindows));
-            }
-        }
-
-        private void CreateShortcut()
-        {
-            try
-            {
-                var shell = new wsh.WshShell();
-                var shortcut = (wsh.IWshShortcut)shell.CreateShortcut(this.shortcutFilePath);
-                var exePath = Assembly.GetExecutingAssembly().Location;
-                shortcut.TargetPath = exePath;
-                shortcut.WorkingDirectory = Path.GetDirectoryName(exePath);
-
-                shortcut.Save();
-            }
-            catch (Exception)
-            {
-                MessageBox.Show($"Error adding to startup.", "WinCommand Palette PluginLoader", MessageBoxButton.OK, MessageBoxImage.Error);
-                this.RunWinWindows = false;
+                this.config.RunWithWindows = value;
+                this.NotifyPropertyChanged(nameof(this.RunWithWindows));
             }
         }
 

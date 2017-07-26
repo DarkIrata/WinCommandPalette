@@ -20,9 +20,14 @@ namespace WinCommandPalette
         private const string PLUGIN_TYPE_ATTRIBUTE_NAME = "Type";
         private const string PLUGIN_ASSEMBLY_ATTRIBUTE_NAME = "Plugin";
 
+        [XmlIgnore]
+        public string ShortcutFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "WinCommandPalette.lnk");
+
         public ModifierKey ModifierKey { get; set; }
 
         public uint KeyCode { get; set; }
+
+        public bool RunWithWindows { get; set; }
 
         [XmlIgnore]
         public List<ICommandBase> Commands { get; set; }
@@ -168,6 +173,7 @@ namespace WinCommandPalette
         {
             this.KeyCode = other.KeyCode;
             this.ModifierKey = other.ModifierKey;
+            this.RunWithWindows = other.RunWithWindows;
             this.Commands = other.Commands;
             this.UndeserializableCommands = other.UndeserializableCommands;
         }
@@ -180,7 +186,8 @@ namespace WinCommandPalette
         public bool Equals(Config other)
         {
             var baseProperties = this.KeyCode == other.KeyCode &&
-                                 this.ModifierKey == other.ModifierKey;
+                                 this.ModifierKey == other.ModifierKey &&
+                                 this.RunWithWindows == other.RunWithWindows;
 
             var commands = false;
             if (this.Commands.Count == 0 &&

@@ -46,6 +46,6 @@
 
         <TextBlock Grid.Row="2" Grid.Column="0"  Text="Start with Windows:" VerticalAlignment="Center" />
         <CheckBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="6 9 0 5"
-                  IsChecked="{Binding RunWinWindows}"/>
+                  IsChecked="{Binding RunWithWindows}"/>
     </Grid>
 </UserControl>

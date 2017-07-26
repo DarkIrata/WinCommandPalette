@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using WinCommandPalette.Controls;
+using wsh = IWshRuntimeLibrary;
 using wf = System.Windows.Forms;
 using WinCommandPalette.Views.Options;
 using WinCommandPalette.ViewModels.Options;
+using System.Windows;
+using System.IO;
+using System.Reflection;
 
 namespace WinCommandPalette.ViewModels
 {
@@ -128,7 +132,38 @@ namespace WinCommandPalette.ViewModels
         internal void Save()
         {
             this.config.Update(this.newConfig);
+            if (this.newConfig.RunWithWindows)
+            {
+                this.CreateShortcut(this.newConfig.ShortcutFilePath);
+            }
+            else
+            {
+                try
+                {
+                    File.Delete(this.newConfig.ShortcutFilePath);
+                }
+                catch { }
+            }
+
             this.Saving = true;
+        }
+
+        private void CreateShortcut(string shortcutPath)
+        {
+            try
+            {
+                var shell = new wsh.WshShell();
+                var shortcut = (wsh.IWshShortcut)shell.CreateShortcut(shortcutPath);
+                var exePath = Assembly.GetExecutingAssembly().Location;
+                shortcut.TargetPath = exePath;
+                shortcut.WorkingDirectory = Path.GetDirectoryName(exePath);
+
+                shortcut.Save();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Error adding to startup.", "WinCommand Palette PluginLoader", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         public bool Saving { get; private set; } = false;
