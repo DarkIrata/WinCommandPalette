@@ -51,7 +51,7 @@
                  SelectedIndex="{Binding SelectedIndex}"
                  SelectedItem="{Binding Path=SelectedItem, Mode=OneWayToSource}"
                  SelectionMode="Single"
-                 Background="Transparent" BorderThickness="0"
+                 Background="Transparent" BorderThickness="0" Margin="0 0 -1 0"
                  MaxHeight="300">
 
             <ListBox.ItemContainerStyle>
