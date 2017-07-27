@@ -33,7 +33,7 @@ namespace WinCommandPalette
                 Current.Shutdown(1);
             }
 
-            Directory.CreateDirectory(this.configDir);
+            Directory.CreateDirectory(Path.GetDirectoryName(this.configFilePath));
             PluginHelper.Load();
 
             this.config = new Config();
