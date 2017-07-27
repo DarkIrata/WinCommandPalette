@@ -78,6 +78,9 @@
     <Compile Include="AttachedProperties\ScrollIntoView.cs" />
     <Compile Include="Commands\QuitCommand.cs" />
     <Compile Include="Commands\ShowAboutCommand.cs" />
+    <Compile Include="Controls\LicenseInfo.xaml.cs">
+      <DependentUpon>LicenseInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MenuItem.xaml.cs">
       <DependentUpon>MenuItem.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,10 @@
     <Compile Include="Views\Options\ManageCommandView.xaml.cs">
       <DependentUpon>ManageCommandView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\LicenseInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\MenuItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

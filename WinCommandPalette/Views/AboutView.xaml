@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WinCommandPalette.Views"
+        xmlns:controls="clr-namespace:WinCommandPalette.Controls"
         Title="WinCommand Palette - About" Width="600"
         SizeToContent="Height"
         WindowStyle="None" WindowStartupLocation="CenterScreen"
@@ -78,16 +79,10 @@
                     <StackPanel HorizontalAlignment="Right" DockPanel.Dock="Right">
                         <TextBlock Text="License:" TextAlignment="Right" FontWeight="Bold"
                                TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="16"/>
-                        <StackPanel Margin="0 0 0 5">
-                            <TextBlock Text="Project: DeepCopyByExpressionTrees" FontWeight="SemiBold"  TextAlignment="Right" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
-                            <TextBlock Text="Copyright 2014 - 2016, Frantisek Konopecky"  TextAlignment="Right" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
-                            <TextBlock Text="License (MIT)"  TextAlignment="Right" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
-                        </StackPanel>
-                        <StackPanel Margin="0 0 0 5">
-                            <TextBlock Text="Project: AvalonEdit" FontWeight="SemiBold" TextAlignment="Right" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
-                            <TextBlock Text="Copyright 2016, Daniel Grunwald"  TextAlignment="Right" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
-                            <TextBlock Text="License (MIT)"  TextAlignment="Right" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
-                        </StackPanel>
+                        <controls:LicenseInfo Margin="0 0 3 5"
+                            Project="DeepCopyByExpressionTrees" Copyright="2014 - 2016, Frantisek Konopecky" License="(MIT)"/>
+                        <controls:LicenseInfo Margin="0 0 3 5"
+                            Project="AvalonEdit" Copyright="2016, Daniel Grunwald" License="(MIT)"/>
 
                     </StackPanel>
                 </DockPanel>
