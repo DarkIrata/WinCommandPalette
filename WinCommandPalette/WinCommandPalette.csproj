@@ -251,8 +251,6 @@
     <Resource Include="Resources\About\GitHubLogo.png" />
     <Resource Include="Resources\About\IPLogo.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="wsh\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
