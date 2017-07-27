@@ -64,7 +64,6 @@
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
         <Setter Property="Foreground" Value="#8C8C8C" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="Width"  Value="8" />
         <Setter Property="MinWidth" Value="8"/>
         <Setter Property="Template">
