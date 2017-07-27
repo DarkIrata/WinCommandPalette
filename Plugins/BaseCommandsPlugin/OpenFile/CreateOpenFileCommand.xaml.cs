@@ -6,7 +6,7 @@ namespace BaseCommandsPlugin.OpenFile
 {
     public partial class CreateOpenFileCommand : UserControl, ICreateCommand
     {
-        public string CommandTypeName => "OpenFile";
+        public string CommandTypeName => "Open Process";
 
         private CreateOpenFileCommandModel viewModel;
 
