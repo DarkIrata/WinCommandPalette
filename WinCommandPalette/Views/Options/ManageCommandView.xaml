@@ -9,28 +9,10 @@
              d:DesignHeight="300" d:DesignWidth="600">
 
     <UserControl.Resources>
-        <Style TargetType="Button">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="LightGray"/>
-            <Setter Property="FontFamily" Value="Calbri"/>
-            <Setter Property="MinHeight" Value="25"/>
-            <Setter Property="MinWidth" Value="50"/>
-        </Style>
-
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Calbri"/>
             <Setter Property="Margin" Value="50 10 5 5"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-        </Style>
-
-        <Style TargetType="TextBox">
-            <Setter Property="MinHeight" Value="25"/>
-            <Setter Property="MinWidth" Value="200"/>
-            <Setter Property="MaxWidth" Value="350"/>
-            <Setter Property="Margin" Value="5 10 5 5"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="FontFamily" Value="Calbri"/>
         </Style>
     </UserControl.Resources>
 
@@ -41,11 +23,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox ap:ScrollIntoView.Enabled="True" BorderBrush="Silver"
+        <ListBox ap:ScrollIntoView.Enabled="True" BorderBrush="Silver" BorderThickness="0 0 1 0"
                          Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
                          ItemsSource="{Binding Commands}"
                          SelectedIndex="{Binding SelectedIndex}"
