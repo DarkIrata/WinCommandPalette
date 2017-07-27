@@ -122,6 +122,8 @@ namespace CSharpScriptCommandsPlugin
 
         public string CommandTypeName => "C#-Script";
 
+        public string CommandDescription => "Execute a C# - Script";
+
         public void ClearAll()
         {
             this.tbName.Text = "New C#-Script command";

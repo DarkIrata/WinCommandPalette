@@ -6,6 +6,8 @@ namespace WinCommandPalette.Plugin.CreateCommand
     {
         string CommandTypeName { get; }
 
+        string CommandDescription { get; }
+
         ICommandBase GetCommand();
 
         void ShowCommand(ICommandBase command);

@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 using WinCommandPalette.Plugin.CommandBase;
 using WinCommandPalette.Plugin.CreateCommand;
 
@@ -7,6 +8,8 @@ namespace BaseCommandsPlugin.OpenFile
     public partial class CreateOpenFileCommand : UserControl, ICreateCommand
     {
         public string CommandTypeName => "Open Process";
+
+        public string CommandDescription => "Open applications, websites or folders with this command.";
 
         private CreateOpenFileCommandModel viewModel;
 

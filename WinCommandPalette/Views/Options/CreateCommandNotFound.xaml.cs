@@ -15,7 +15,9 @@ namespace WinCommandPalette.Views.Options
             this.InitializeComponent();
         }
 
-        public string CommandTypeName => throw new NotImplementedException();
+        public string CommandTypeName => string.Empty;
+
+        public string CommandDescription => string.Empty;
 
         public void ClearAll()
         {

@@ -45,7 +45,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <ListBox ap:ScrollIntoView.Enabled="True" BorderBrush="Silver" Margin="3 0 0 0" BorderThickness="1 1 1 0"
+        <ListBox ap:ScrollIntoView.Enabled="True" BorderBrush="Silver"
                          Grid.Row="0" Grid.RowSpan="3" Grid.Column="0"
                          ItemsSource="{Binding AvailableCommandCreators}"
                          SelectedItem="{Binding SelectedItem}"
@@ -82,7 +82,7 @@
                 <TextBlock Grid.Column="1" Text="{Binding SelectedPlugin.WCPPlugin.PluginMeta.Author, FallbackValue='Missing PluginMeta Information'}" VerticalAlignment="Center" Margin="0 5 0 0" />
 
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Description:" VerticalAlignment="Center" Margin="0 5 0 0" />
-                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding SelectedPlugin.WCPPlugin.PluginMeta.Description, FallbackValue='Missing PluginMeta Information'}" VerticalAlignment="Center" Margin="0 5 0 0" />
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding SelectedItem.CommandDescription, FallbackValue='No description'}" VerticalAlignment="Center" Margin="0 5 0 0" />
             </Grid>
 
             <StackPanel Background="#2faff1" VerticalAlignment="Stretch" Orientation="Horizontal" Height="35">
