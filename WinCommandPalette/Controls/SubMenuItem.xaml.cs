@@ -6,9 +6,6 @@ using WinCommandPalette.ViewModels.Options;
 
 namespace WinCommandPalette.Controls
 {
-    /// <summary>
-    /// Interaktionslogik für SubMenuItem.xaml
-    /// </summary>
     public partial class SubMenuItem : UserControl
     {
         public static readonly RoutedEvent ClickEvent = EventManager.RegisterRoutedEvent(

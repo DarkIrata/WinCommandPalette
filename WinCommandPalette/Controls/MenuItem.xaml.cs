@@ -5,9 +5,6 @@ using WinCommandPalette.ViewModels.Options;
 
 namespace WinCommandPalette.Controls
 {
-    /// <summary>
-    /// Interaktionslogik für MenuItem.xaml
-    /// </summary>
     public partial class MenuItem : UserControl
     {
         public static readonly RoutedEvent ClickEvent = EventManager.RegisterRoutedEvent(

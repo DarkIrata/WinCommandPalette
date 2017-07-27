@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WinCommandPalette.Commands;
-using WinCommandPalette.Plugin.CommandBase;
-using WinCommandPalette.PluginSystem;
+﻿using WinCommandPalette.Plugin.CommandBase;
 
-namespace WinCommandPalette.CreateCommandControls.ViewModel
+namespace BaseCommandsPlugin.OpenFile
 {
     public class CreateOpenFileCommandModel : ViewModelBase
     {

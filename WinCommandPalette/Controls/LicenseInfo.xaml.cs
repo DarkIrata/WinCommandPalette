@@ -4,9 +4,6 @@ using System.Windows.Controls;
 
 namespace WinCommandPalette.Controls
 {
-    /// <summary>
-    /// Interaktionslogik für LicenseInfo.xaml
-    /// </summary>
     public partial class LicenseInfo : UserControl
     {
         public static readonly DependencyProperty ProjectProperty =

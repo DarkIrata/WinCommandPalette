@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using WinCommandPalette.CreateCommandControls.View;
 using WinCommandPalette.Plugin.CreateCommand;
 using WinCommandPalette.PluginSystem;
 
@@ -108,12 +105,7 @@ namespace WinCommandPalette.ViewModels.Options
         private List<ICreateCommand> GetAvailableCommandCreators()
         {
             var commandCreators = new List<ICreateCommand>();
-
-            // Plugins
             commandCreators.AddRange(this.GetAllCreateCommandViews());
-
-            // Internal
-            commandCreators.Add(new CreateOpenFileCommand());
 
             return commandCreators;
         }

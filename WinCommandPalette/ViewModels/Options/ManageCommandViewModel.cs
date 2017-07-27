@@ -184,13 +184,6 @@ namespace WinCommandPalette.ViewModels.Options
                 return this.internCreateCommand[commandName];
             }
 
-            var commandCreatorFromExecutingAssembly = PluginHelper.GetCreateCommandInstance(Assembly.GetExecutingAssembly(), commandName);
-            if (commandCreatorFromExecutingAssembly != null)
-            {
-                this.internCreateCommand.Add(commandName, commandCreatorFromExecutingAssembly);
-                return commandCreatorFromExecutingAssembly;
-            }
-
             return this.noCommandCreateView;
         }
     }
