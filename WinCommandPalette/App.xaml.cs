@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using WinCommandPalette.Helper;
@@ -12,10 +13,19 @@ namespace WinCommandPalette
     /// </summary>
     public partial class App : Application
     {
+        private const string CONFIG_FILE_NAME = "config.xml";
+        private readonly string configDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "IrataProjects", "WinCommandPalette");
+        private readonly string configFilePath;
+
         private Config config;
 
         public App()
         {
+#if DEBUG
+            this.configFilePath = Path.Combine(this.configDir, "debug", CONFIG_FILE_NAME);
+#else
+            this.configFilePath = Path.Combine(this.configDir, CONFIG_FILE_NAME);
+#endif
 
             if (Process.GetProcessesByName(Process.GetCurrentProcess().ProcessName).Length > 1)
             {
@@ -23,12 +33,20 @@ namespace WinCommandPalette
                 Current.Shutdown(1);
             }
 
+            Directory.CreateDirectory(this.configDir);
             PluginHelper.Load();
 
             this.config = new Config();
-            if (File.Exists("config.xml"))
+
+            // This will be removed later
+            if (File.Exists(CONFIG_FILE_NAME))
             {
-                this.config = Config.Load("config.xml");
+                File.Move(CONFIG_FILE_NAME, this.configFilePath);
+            }
+
+            if (File.Exists(this.configFilePath))
+            {
+                this.config = Config.Load(this.configFilePath);
             }
             else
             {
