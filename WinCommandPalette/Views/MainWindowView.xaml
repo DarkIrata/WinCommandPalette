@@ -25,6 +25,7 @@
         </StackPanel>
 
         <ListBox ap:ScrollIntoView.Enabled="True"
+                 x:Name="SuggestionList"
                  ItemsSource="{Binding FilteredCommandList}"
                  SelectedIndex="{Binding SelectedIndex}"
                  SelectedItem="{Binding Path=SelectedItem, Mode=OneWayToSource}"

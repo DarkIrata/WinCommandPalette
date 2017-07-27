@@ -104,6 +104,10 @@ namespace WinCommandPalette.Views
         {
             Win32Helper.UnregisterHotKey();
             this.viewModel.ShowAllCommands();
+            if (this.viewModel.FilteredCommandList.Count > 0)
+            {
+                this.SuggestionList.ScrollIntoView(this.viewModel.FilteredCommandList[0]);
+            }
 
             this.Top = ScreenHelper.GetPrimaryScreen().Bounds.Height * 0.20;
             this.Left = ScreenHelper.GetAppCenterScreenWidth(this.Width);
