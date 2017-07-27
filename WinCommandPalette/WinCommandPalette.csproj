@@ -101,6 +101,7 @@
     <Compile Include="Helper\LevenshteinDistance.cs" />
     <Compile Include="PluginSystem\Plugin.cs" />
     <Compile Include="PluginSystem\PluginHelper.cs" />
+    <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Helper\Win32Helper.cs" />
     <Compile Include="Enums\ModifierKey.cs" />

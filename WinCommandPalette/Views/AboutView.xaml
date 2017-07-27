@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WinCommandPalette.Views"
         xmlns:controls="clr-namespace:WinCommandPalette.Controls"
-        Title="WinCommand Palette - About" Width="600"
-        SizeToContent="Height"
+        Title="WinCommand Palette - About"
+        SizeToContent="WidthAndHeight"
         WindowStyle="None" WindowStartupLocation="CenterScreen"
         AllowsTransparency="True" Background="Transparent">
+    
     <Border Margin="15" BorderThickness="1" BorderBrush="#2a2a2a">
         <Border.Effect>
             <DropShadowEffect BlurRadius="15" Direction="-90" RenderingBias="Quality" ShadowDepth="2"/>
@@ -16,7 +17,9 @@
         <Grid Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <DockPanel x:Name="topPanel" Grid.Row="0" Background="#2faff1" VerticalAlignment="Stretch" Height="35">
@@ -51,59 +54,69 @@
                 </Button>
             </DockPanel>
 
-            <DockPanel Grid.Row="1" Margin="0 15 0 0" LastChildFill="False">
-                <StackPanel HorizontalAlignment="Center" DockPanel.Dock="Top">
-                    <TextBlock Text="WinCommand Palette" Foreground="#2a2a2a" TextAlignment="Center"
+            <StackPanel HorizontalAlignment="Center" Grid.Row="1" Margin="30 5 30 0">
+                <TextBlock Text="WinCommand Palette" Foreground="#2a2a2a" TextAlignment="Center"
                        FontFamily="Calibri" FontSize="30"/>
 
-                    <TextBlock Text="is a free open source application, started by DarkIrata. We are happy about every contribution." 
+                <TextBlock Text="is a free open source application, started by DarkIrata. We are happy about every contribution." 
                                TextWrapping="Wrap" Width="450"
                                Foreground="#2a2a2a" TextAlignment="Center" FontFamily="Calibri" FontSize="20"/>
+            </StackPanel>
 
-                </StackPanel>
-                
-                <DockPanel DockPanel.Dock="Top" Margin="10 20 10 20" LastChildFill="False">
-                    <StackPanel HorizontalAlignment="Left" DockPanel.Dock="Left">
-                        <TextBlock Text="Special thanks to:" FontWeight="Bold"
+            <Grid Grid.Row="2" Margin="0 15 0 15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0"  HorizontalAlignment="Left" Margin="5 0 0 0">
+                    <TextBlock Text="Special thanks to:" FontWeight="Bold"
                                TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="16"/>
-                        <StackPanel x:Name="mMaier" Orientation="Horizontal" Margin="3 0 0 0">
-                            <TextBlock Text="maurice-maier - Contributor" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
-                            <Image VerticalAlignment="Top" Height="8" Margin="2" Source="pack://application:,,,/WinCommandPalette;component/Resources/external-link.png"/>
-                        </StackPanel>
-                        <StackPanel x:Name="gCookie" Orientation="Horizontal" Margin="3 3 0 0">
-                            <TextBlock Text="g0dsCookie - Tester" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
-                            <Image VerticalAlignment="Top" Height="8" Margin="2" Source="pack://application:,,,/WinCommandPalette;component/Resources/external-link.png"/>
-                        </StackPanel>
+                    <StackPanel x:Name="mMaier" Orientation="Horizontal" Margin="3 0 0 0">
+                        <TextBlock Text="maurice-maier - Contributor" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
+                        <Image VerticalAlignment="Top" Height="8" Margin="2" Source="pack://application:,,,/WinCommandPalette;component/Resources/external-link.png"/>
                     </StackPanel>
-                    
-                    <StackPanel HorizontalAlignment="Right" DockPanel.Dock="Right">
-                        <TextBlock Text="License:" TextAlignment="Right" FontWeight="Bold"
+                    <StackPanel x:Name="gCookie" Orientation="Horizontal" Margin="3 3 0 0">
+                        <TextBlock Text="g0dsCookie - Tester" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
+                        <Image VerticalAlignment="Top" Height="8" Margin="2" Source="pack://application:,,,/WinCommandPalette;component/Resources/external-link.png"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1"  Margin="50 0 50 0">
+                    <TextBlock Text="Information:"  FontWeight="Bold"
                                TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="16"/>
-                        <controls:LicenseInfo Margin="0 0 3 5"
+                    <TextBlock Margin="3 0 0 0" Text="{Binding PluginsLoadedCount, StringFormat='Loaded plugins: {0}'}" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
+                    <TextBlock Margin="3 0 0 0" Text="{Binding CommandsLoadedCount, StringFormat='Loaded commands: {0}'}" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
+                    <TextBlock Margin="3 0 0 0" Text="{Binding NotCommandsLoadedCount, StringFormat='Not loadable commands: {0}'}" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" HorizontalAlignment="Right" Margin="0 0 5 0">
+                    <TextBlock Text="License:"  FontWeight="Bold"
+                               TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="16"/>
+                    <controls:LicenseInfo Margin="3 0 0 5"
                             Project="DeepCopyByExpressionTrees" Copyright="2014 - 2016, Frantisek Konopecky" License="(MIT)"/>
-                        <controls:LicenseInfo Margin="0 0 3 5"
+                    <controls:LicenseInfo Margin="3 0 0 5"
                             Project="AvalonEdit" Copyright="2016, Daniel Grunwald" License="(MIT)"/>
-
-                    </StackPanel>
-                </DockPanel>
-
-                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Image x:Name="gitHubLogo" Source="pack://application:,,,/WinCommandPalette;component/Resources/About/GitHubLogo.png" Margin="10" Width="64" Height="64">
-                        <Image.ToolTip>
-                            <ToolTip Style="{StaticResource ToolTipStyle}">
-                                <TextBlock Text="Open source in GitHub" Margin="5" Foreground="Snow" FontSize="12" FontFamily="Calibri" MaxWidth="300" TextWrapping="Wrap"/>
-                            </ToolTip>
-                        </Image.ToolTip>
-                    </Image>
-                    <Image x:Name="ipLogo" Source="pack://application:,,,/WinCommandPalette;component/Resources/About/IPLogo.png" Margin="10" Width="64" Height="64">
-                        <Image.ToolTip>
-                            <ToolTip Style="{StaticResource ToolTipStyle}">
-                                <TextBlock Text="Open IPMix. German Blog" Margin="5" Foreground="Snow" FontSize="12" FontFamily="Calibri" MaxWidth="300" TextWrapping="Wrap"/>
-                            </ToolTip>
-                        </Image.ToolTip>
-                    </Image>
                 </StackPanel>
-            </DockPanel>
+            </Grid>
+
+            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Image x:Name="gitHubLogo" Source="pack://application:,,,/WinCommandPalette;component/Resources/About/GitHubLogo.png" Margin="10" Width="64" Height="64">
+                    <Image.ToolTip>
+                        <ToolTip Style="{StaticResource ToolTipStyle}">
+                            <TextBlock Text="Open source in GitHub" Margin="5" Foreground="Snow" FontSize="12" FontFamily="Calibri" MaxWidth="300" TextWrapping="Wrap"/>
+                        </ToolTip>
+                    </Image.ToolTip>
+                </Image>
+                <Image x:Name="ipLogo" Source="pack://application:,,,/WinCommandPalette;component/Resources/About/IPLogo.png" Margin="10" Width="64" Height="64">
+                    <Image.ToolTip>
+                        <ToolTip Style="{StaticResource ToolTipStyle}">
+                            <TextBlock Text="Open IPMix. German Blog" Margin="5" Foreground="Snow" FontSize="12" FontFamily="Calibri" MaxWidth="300" TextWrapping="Wrap"/>
+                        </ToolTip>
+                    </Image.ToolTip>
+                </Image>
+            </StackPanel>
         </Grid>
     </Border>
 </Window>

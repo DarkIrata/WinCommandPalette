@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:WinCommandPalette.Controls"
              DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <StackPanel>
-        <TextBlock x:Name="ProjectText" Text="{Binding Project, StringFormat='Project: {0}'}" FontWeight="SemiBold"  TextAlignment="Right" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
-        <TextBlock Text="{Binding Copyright, StringFormat='Copyright: {0}'}"   TextAlignment="Right" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
-        <TextBlock x:Name="LicenseText" Text="{Binding LicenseType, StringFormat='License {0}'}"  TextAlignment="Right" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
+        <TextBlock x:Name="ProjectText" Text="{Binding Project, StringFormat='Project: {0}'}" FontWeight="SemiBold" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
+        <TextBlock Text="{Binding Copyright, StringFormat='Copyright: {0}'}" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
+        <TextBlock x:Name="LicenseText" Text="{Binding LicenseType, StringFormat='License {0}'}" TextWrapping="Wrap" Foreground="#2a2a2a" FontFamily="Calibri" FontSize="14"/>
     </StackPanel>
 </UserControl>

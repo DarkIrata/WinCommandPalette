@@ -214,5 +214,7 @@ namespace WinCommandPalette.PluginSystem
 
             return list;
         }
+
+        internal static int PluginsCount() => Plugins.Count;
     }
 }

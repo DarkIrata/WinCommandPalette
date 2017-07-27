@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using WinCommandPalette.Helper;
+using WinCommandPalette.ViewModels;
 
 namespace WinCommandPalette.Views
 {
@@ -12,13 +13,17 @@ namespace WinCommandPalette.Views
     public partial class AboutView : Window
     {
         private Config config;
+        private AboutViewModel viewModel;
 
         public AboutView(Config config)
         {
             this.config = config ??
                 throw new ArgumentNullException(nameof(config));
 
+            this.viewModel = new AboutViewModel(this.config);
+
             this.InitializeComponent();
+            this.DataContext = this.viewModel;
             Win32Helper.UnregisterHotKey();
 
             this.Closing += this.AboutView_Closing;

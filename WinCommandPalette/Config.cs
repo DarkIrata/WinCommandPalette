@@ -32,7 +32,7 @@ namespace WinCommandPalette
         [XmlIgnore]
         public List<ICommandBase> Commands { get; set; }
 
-        private List<XElement> UndeserializableCommands = new List<XElement>();
+        internal List<XElement> UndeserializableCommands = new List<XElement>();
 
         public Config()
         {
