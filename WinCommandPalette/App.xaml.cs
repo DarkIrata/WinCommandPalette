@@ -62,7 +62,7 @@ namespace WinCommandPalette
 
         protected override void OnExit(ExitEventArgs e)
         {
-            this.config.Save("config.xml");
+            this.config.Save(this.configFilePath);
             Win32Helper.UnregisterHotKey();
             base.OnExit(e);
         }
