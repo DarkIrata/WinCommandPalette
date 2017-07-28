@@ -23,12 +23,9 @@ namespace CSharpScriptCommandsPlugin
         public string Code { get; set; }
 
         public Image Icon => null;
-        
+
         [XmlArrayItem("Reference")]
-        public List<string> References { get; set; } = new List<string>()
-        {
-            "System"
-        };
+        public List<string> References { get; set; } = new List<string>();
 
         public void Execute()
         {
