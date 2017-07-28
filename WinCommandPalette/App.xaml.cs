@@ -39,7 +39,7 @@ namespace WinCommandPalette
             this.config = new Config();
 
             // This will be removed later
-            if (File.Exists(CONFIG_FILE_NAME))
+            if (!File.Exists(CONFIG_FILE_NAME))
             {
                 File.Move(CONFIG_FILE_NAME, this.configFilePath);
             }
