@@ -37,13 +37,6 @@ namespace WinCommandPalette
             PluginHelper.Load();
 
             this.config = new Config();
-
-            // This will be removed later
-            if (File.Exists(CONFIG_FILE_NAME))
-            {
-                File.Move(CONFIG_FILE_NAME, this.configFilePath);
-            }
-
             if (File.Exists(this.configFilePath))
             {
                 this.config = Config.Load(this.configFilePath);
