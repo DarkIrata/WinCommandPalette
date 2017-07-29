@@ -11,6 +11,7 @@ using WinCommandPalette.Plugin.CommandBase;
 using WinCommandPalette.Enums;
 using System.Linq;
 using System.Reflection;
+using WinCommandPalette.Libs.Helper;
 
 namespace WinCommandPalette
 {

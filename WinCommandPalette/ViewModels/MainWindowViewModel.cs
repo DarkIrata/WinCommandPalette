@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows;
 using WinCommandPalette.Plugin.CommandBase;
+using WinCommandPalette.Libs.Helper;
 
 namespace WinCommandPalette.ViewModels
 {

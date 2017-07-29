@@ -92,11 +92,8 @@
     </Compile>
     <Compile Include="Converter\DescriptionToVisibilityConverter.cs" />
     <Compile Include="Converter\InvertBoolToVisibilityConverter.cs" />
-    <Compile Include="Helper\DeepCopyByExpressionTrees.cs" />
-    <Compile Include="Helper\ScreenHelper.cs" />
     <Compile Include="Commands\ShowOptionsCommand.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="Helper\LevenshteinDistance.cs" />
     <Compile Include="PluginSystem\Plugin.cs" />
     <Compile Include="PluginSystem\PluginHelper.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />

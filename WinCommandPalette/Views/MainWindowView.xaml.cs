@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using WinCommandPalette.Helper;
+using WinCommandPalette.Libs.Helper;
 using WinCommandPalette.Libs.Utilities;
 using WinCommandPalette.ViewModels;
 
