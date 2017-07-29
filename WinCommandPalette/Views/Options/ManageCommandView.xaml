@@ -81,7 +81,8 @@
         </Border>
 
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 5 10 5" Height="25">
-            <Button x:Name="btnSaveChanges" Content="Save" Width="65" Margin="0,0,5,0" FontSize="12" IsEnabled="{Binding CanManage}"/>
+            <Button x:Name="btnTest" Content="Test" Width="65" Margin="0,0,5,0" FontSize="12" IsEnabled="{Binding CanManage}"/>
+            <Button x:Name="btnSaveChanges" Content="Save" Width="65" Margin="5,0,5,0" FontSize="12" IsEnabled="{Binding CanManage}"/>
             <Button x:Name="btnCancel" Content="Reset" Width="65" Margin="5,0,5,0" FontSize="12" IsEnabled="{Binding CanManage}"/>
             <Button x:Name="btnDelete" Content="Delete" Width="65" Margin="5,0,0,0" FontSize="12" IsEnabled="{Binding CanDelete}"/>
         </StackPanel>

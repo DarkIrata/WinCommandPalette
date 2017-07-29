@@ -18,6 +18,7 @@ namespace WinCommandPalette.Views.Options
 
             this.InitializeComponent();
             this.DataContext = this.viewModel;
+            this.btnTest.Click += this.viewModel.TestCommand;
             this.btnAddCommand.Click += this.viewModel.AddCommand;
             this.btnReset.Click += this.viewModel.Reset;
         }

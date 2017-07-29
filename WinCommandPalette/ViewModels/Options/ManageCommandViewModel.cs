@@ -124,6 +124,22 @@ namespace WinCommandPalette.ViewModels.Options
             this.NotifyPropertyChanged(nameof(this.CommandCreator));
         }
 
+        internal void TestCommand(object sender, RoutedEventArgs e)
+        {
+            var command = this.CommandCreator?.GetCommand();
+            if (command != null)
+            {
+                try
+                {
+                    command.Execute();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error while executing command.\r\n\r\n{ex.Message}", "WinCommand Palette", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
         internal void SaveChanges(object sender, RoutedEventArgs e)
         {
             var command = this.CommandCreator?.GetCommand();

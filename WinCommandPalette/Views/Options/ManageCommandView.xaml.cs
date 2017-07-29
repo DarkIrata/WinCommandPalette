@@ -21,6 +21,7 @@ namespace WinCommandPalette.Views.Options
 
             this.InitializeComponent();
             this.DataContext = this.viewModel;
+            this.btnTest.Click += this.viewModel.TestCommand;
             this.btnSaveChanges.Click += this.viewModel.SaveChanges;
             this.btnCancel.Click += this.viewModel.Reset;
             this.btnDelete.Click += this.viewModel.Delete;
