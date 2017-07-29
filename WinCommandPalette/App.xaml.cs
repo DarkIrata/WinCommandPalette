@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using Microsoft.Win32;
 using WinCommandPalette.Helper;
 using WinCommandPalette.PluginSystem;
 using WinCommandPalette.Views;
@@ -45,6 +46,8 @@ namespace WinCommandPalette
             {
                 new OptionsView(this.config).Show();
             }
+
+            SystemEvents.SessionEnding += this.SystemEvents_SessionEnding;
         }
 
         private void Application_Startup(object sender, StartupEventArgs e)
@@ -53,11 +56,21 @@ namespace WinCommandPalette
             mainWindow.Show();
         }
 
+        private void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+        {
+            this.StopWorking();
+        }
+
         protected override void OnExit(ExitEventArgs e)
+        {
+            this.StopWorking();
+            base.OnExit(e);
+        }
+
+        private void StopWorking()
         {
             this.config.Save(this.configFilePath);
             HotKeyHelper.UnregisterHotKey();
-            base.OnExit(e);
         }
     }
 }
