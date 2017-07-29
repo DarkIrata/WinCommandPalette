@@ -54,7 +54,6 @@
 
         <TextBlock Grid.Row="2" Text="File name:"/>
         <DockPanel Grid.Row="2" Grid.Column="1" LastChildFill="True" VerticalAlignment="Top">
-            <Button Content="..." DockPanel.Dock="Right"  Margin="5,0,0,0" Height="25" IsEnabled="False"/>
             <TextBox HorizontalAlignment="Stretch" Text="{Binding OpenFileCommand.FileName}"/>
         </DockPanel>
 
@@ -65,7 +64,6 @@
 
         <TextBlock Grid.Row="4" Text="Working directory:"/>
         <DockPanel Grid.Row="4" Grid.Column="1" LastChildFill="True" VerticalAlignment="Top">
-            <Button Content="..." DockPanel.Dock="Right"  Margin="5,0,0,0" Height="25" IsEnabled="False"/>
             <TextBox HorizontalAlignment="Stretch" Text="{Binding OpenFileCommand.WorkingDirectory}"/>
         </DockPanel>
 
