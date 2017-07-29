@@ -199,7 +199,8 @@ namespace WinCommandPalette
 
                 var value = property.GetValue(this);
                 var newValue = other.GetType().GetProperty(property.Name)?.GetValue(other);
-                if (newValue.GetHashCode() != value.GetHashCode())
+
+                if (newValue?.GetHashCode() != value?.GetHashCode())
                 {
                     baseProperties = false;
                     break;
