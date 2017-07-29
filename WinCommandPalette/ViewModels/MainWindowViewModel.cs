@@ -103,29 +103,8 @@ namespace WinCommandPalette.ViewModels
             this.FilteredCommandList.Clear();
 
             var diffedCommands = new Dictionary<ICommandBase, int>();
-            foreach (var command in this.config.Commands)
-            {
-                var commandName = this.GetSearchString(command.Name);
-                var dif = LevenshteinDistance.Compute(searchText, commandName);
-                if (dif > (commandName.Length - searchText.Length))
-                {
-                    continue;
-                }
-
-                diffedCommands.Add(command, dif);
-            }
-
-            foreach (var command in this.AutoRegisterCommands)
-            {
-                var commandName = this.GetSearchString(command.Name);
-                var dif = LevenshteinDistance.Compute(searchText, commandName);
-                if (dif > (commandName.Length - searchText.Length))
-                {
-                    continue;
-                }
-
-                diffedCommands.Add(command, dif);
-            }
+            this.GetCommandsWithDif(diffedCommands, this.config.Commands, searchText);
+            this.GetCommandsWithDif(diffedCommands, this.AutoRegisterCommands, searchText);
 
             var sortedDiffedCommands = diffedCommands.OrderBy(c => c.Value);
             foreach (var item in sortedDiffedCommands)
@@ -141,6 +120,26 @@ namespace WinCommandPalette.ViewModels
             }
 
             this.lastSearchText = searchText;
+        }
+
+        private void GetCommandsWithDif(Dictionary<ICommandBase, int> diffedCommands, List<ICommandBase> commands, string searchText)
+        {
+            foreach (var command in commands)
+            {
+                var commandName = this.GetSearchString(command.Name);
+                var dif = LevenshteinDistance.Compute(searchText, commandName);
+                if (dif > (commandName.Length - searchText.Length))
+                {
+                    continue;
+                }
+
+                if (commandName.IndexOf(searchText) > -1)
+                {
+                    dif--;
+                }
+
+                diffedCommands.Add(command, dif);
+            }
         }
 
         private string GetSearchString(string input)
