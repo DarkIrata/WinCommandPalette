@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using WinCommandPalette.Helper;
+using WinCommandPalette.Libs.Utilities;
 using WinCommandPalette.ViewModels;
 
 namespace WinCommandPalette.Views
@@ -19,12 +20,22 @@ namespace WinCommandPalette.Views
         {
             this.InitializeComponent();
 
-            this.Loaded += this.HideWindow;
+            this.Loaded += this.MainWindow_Loaded;
             this.GotKeyboardFocus += this.MainWindow_GotKeyboardFocus;
             this.Deactivated += this.HideWindow;
 
             this.SearchBox.PreviewKeyDown += this.SearchBox_PreviewKeyDown;
             this.SearchBox.LostKeyboardFocus += this.HideWindow;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (this.config.BlurryWindow)
+            {
+                BlurryWindow.EnableBlur(this);
+            }
+
+            this.HideWindow(sender, e);
         }
 
         public MainWindow(Config config)

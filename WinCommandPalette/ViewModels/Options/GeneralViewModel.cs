@@ -26,6 +26,16 @@ namespace WinCommandPalette.ViewModels.Options
             }
         }
 
+        public bool BlurryWindow
+        {
+            get => this.config.BlurryWindow;
+            set
+            {
+                this.config.BlurryWindow = value;
+                this.NotifyPropertyChanged(nameof(this.BlurryWindow));
+            }
+        }
+
         private Config config;
         private wf.KeysConverter keyConverter = new wf.KeysConverter();
 

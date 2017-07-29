@@ -78,6 +78,9 @@
     <Compile Include="AttachedProperties\ScrollIntoView.cs" />
     <Compile Include="Commands\QuitCommand.cs" />
     <Compile Include="Commands\ShowAboutCommand.cs" />
+    <Compile Include="Controls\InfoToolTip.xaml.cs">
+      <DependentUpon>InfoToolTip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LicenseInfo.xaml.cs">
       <DependentUpon>LicenseInfo.xaml</DependentUpon>
     </Compile>
@@ -124,6 +127,10 @@
     <Compile Include="Views\Options\ManageCommandView.xaml.cs">
       <DependentUpon>ManageCommandView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\InfoToolTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\LicenseInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -219,14 +226,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Threading.png" />
-    <Resource Include="Resources\UAC.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Options\Commands.png" />
     <Resource Include="Resources\Options\Gear.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WinCommandPalette.Libs\WinCommandPalette.Libs.csproj">
+      <Project>{BCF42EF6-5D12-4826-AD41-09127B304144}</Project>
+      <Name>WinCommandPalette.Libs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WinCommandPalette.Plugin\WinCommandPalette.Plugin.csproj">
       <Project>{A53238F7-DC6E-464E-BAAA-296BB8984373}</Project>
       <Name>WinCommandPalette.Plugin</Name>
@@ -250,6 +257,8 @@
     <Resource Include="Resources\About\GitHubLogo.png" />
     <Resource Include="Resources\About\IPLogo.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Info.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

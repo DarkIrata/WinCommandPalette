@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:WinCommandPalette.Controls"
              xmlns:local="clr-namespace:WinCommandPalette.Views.Options"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="600">
     <UserControl.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Calbri"/>
@@ -25,10 +26,12 @@
     
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -47,5 +50,14 @@
         <TextBlock Grid.Row="2" Grid.Column="0"  Text="Start with Windows:" VerticalAlignment="Center" />
         <CheckBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalContentAlignment="Center" Margin="6 9 0 5"
                   IsChecked="{Binding RunWithWindows}"/>
+        
+        <TextBlock Grid.Row="3" Grid.Column="0"  Text="Enable Blurry background:" VerticalAlignment="Center" />
+        <StackPanel Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left"  Margin="6 9 0 5" Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding BlurryWindow}"/>
+            <controls:InfoToolTip Margin="10 0 0 0" xml:space="preserve">Application Restart required!
+                
+Only works on Windows 7 and Windows 10.
+Needs Aero Design to be enabled.</controls:InfoToolTip>
+        </StackPanel>
     </Grid>
 </UserControl>
