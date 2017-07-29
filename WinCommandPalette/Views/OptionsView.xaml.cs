@@ -21,7 +21,7 @@ namespace WinCommandPalette.Views
             this.viewModel = new OptionsViewModel(this.config);
 
             this.InitializeComponent();
-            this.SourceInitialized += this.OptionsView_SourceInitialized; ;
+            this.SourceInitialized += this.OptionsView_SourceInitialized;
             this.DataContext = this.viewModel;
 
             this.btnSave.Click += this.BtnSave_Click;

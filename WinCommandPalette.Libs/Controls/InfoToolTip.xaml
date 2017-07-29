@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:WinCommandPalette.Libs.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="16" d:DesignWidth="16"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}">
+             DataContext="{Binding RelativeSource={RelativeSource Self}}"
+             SnapsToDevicePixels="True">
     <Image x:Name="gitHubLogo" Source="pack://application:,,,/WinCommandPalette.Libs;component/Resources/Info.png" Width="16" Height="16">
         <Image.ToolTip>
             <ToolTip Style="{StaticResource InfoToolTipStyle}">

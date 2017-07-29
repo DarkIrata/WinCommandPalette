@@ -107,6 +107,11 @@ namespace WinCommandPalette.ViewModels.Options
             if (Enum.TryParse(this.config.KeyCode.ToString(), true, out wf.Keys keyCode))
             {
                 var keyCodeString = this.KeyCodeToUnicode(keyCode);
+                if (keyCodeString == "\t")
+                {
+                    keyCodeString = "TAB";
+                }
+
                 hotkey += keyCodeString.ToUpper();
             }
 

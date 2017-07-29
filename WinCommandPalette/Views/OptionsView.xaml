@@ -9,7 +9,7 @@
         Title="WinCommand Palette Options"
         MinWidth="850" MinHeight="550"
         WindowStartupLocation="CenterScreen"
-        Background="White"
+        Background="White" SnapsToDevicePixels="True"
         controls:SubMenuItem.Click="MenuItem_Click">
     
     <Window.Resources>

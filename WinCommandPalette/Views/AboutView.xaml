@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:WinCommandPalette.Controls"
         Title="WinCommand Palette - About"
         SizeToContent="WidthAndHeight"
-        WindowStyle="None" WindowStartupLocation="CenterScreen"
+        WindowStyle="None" WindowStartupLocation="CenterScreen" SnapsToDevicePixels="True"
         AllowsTransparency="True" Background="Transparent">
     
     <Border Margin="15" BorderThickness="1" BorderBrush="#2a2a2a">

@@ -4,7 +4,7 @@
         xmlns:ap="clr-namespace:WinCommandPalette.AttachedProperties"
         xmlns:conv="clr-namespace:WinCommandPalette.Converter"
         Title="WinCommand Palette"
-        Width="550" ResizeMode="NoResize" 
+        Width="550" ResizeMode="NoResize" SnapsToDevicePixels="True"
         ShowInTaskbar="False" WindowStartupLocation="CenterScreen" WindowStyle="None"
         Background="#BB2B2B2B" AllowsTransparency="True" 
         Topmost="True">
