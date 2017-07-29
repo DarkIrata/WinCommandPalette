@@ -7,9 +7,9 @@ namespace WinCommandPalette.Enums
     public enum ModifierKey
     {
         None = 0,
-        ALT = Win32Helper.MOD_ALT,
-        LeftCTRL = Win32Helper.MOD_CONTROL,
-        LeftShift = Win32Helper.MOD_SHIFT,
-        Win = Win32Helper.MOD_WIN
+        ALT = HotKeyHelper.MOD_ALT,
+        LeftCTRL = HotKeyHelper.MOD_CONTROL,
+        LeftShift = HotKeyHelper.MOD_SHIFT,
+        Win = HotKeyHelper.MOD_WIN
     }
 }

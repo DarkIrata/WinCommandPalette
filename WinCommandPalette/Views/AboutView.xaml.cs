@@ -24,7 +24,7 @@ namespace WinCommandPalette.Views
 
             this.InitializeComponent();
             this.DataContext = this.viewModel;
-            Win32Helper.UnregisterHotKey();
+            HotKeyHelper.UnregisterHotKey();
 
             this.Closing += this.AboutView_Closing;
             this.topPanel.MouseDown += this.TopPanel_MouseDown;
@@ -59,7 +59,7 @@ namespace WinCommandPalette.Views
 
         private void AboutView_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Win32Helper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode);
+            HotKeyHelper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode);
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)

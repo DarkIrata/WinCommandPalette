@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace WinCommandPalette.Helper
 {
-    internal static class Win32Helper
+    internal static class HotKeyHelper
     {
         public const int MOD_ALT = 1;
 

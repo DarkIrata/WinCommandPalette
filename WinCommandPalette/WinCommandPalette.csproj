@@ -98,7 +98,7 @@
     <Compile Include="PluginSystem\PluginHelper.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
-    <Compile Include="Helper\Win32Helper.cs" />
+    <Compile Include="Helper\HotKeyHelper.cs" />
     <Compile Include="Enums\ModifierKey.cs" />
     <Compile Include="ViewModels\Options\CreateNewCommandViewModel.cs" />
     <Compile Include="ViewModels\Options\GeneralViewModel.cs" />

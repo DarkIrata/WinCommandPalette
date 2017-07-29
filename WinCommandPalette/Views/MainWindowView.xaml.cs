@@ -114,7 +114,7 @@ namespace WinCommandPalette.Views
 
         private void ActivateContent()
         {
-            Win32Helper.UnregisterHotKey();
+            HotKeyHelper.UnregisterHotKey();
             this.viewModel.ShowAllCommands();
             if (this.viewModel.FilteredCommandList.Count > 0)
             {
@@ -126,7 +126,7 @@ namespace WinCommandPalette.Views
             this.Visibility = Visibility.Visible;
             this.SizeToContent = SizeToContent.Height;
 
-            Win32Helper.SetForegroundWindow(Win32Helper.applicationHandle);
+            HotKeyHelper.SetForegroundWindow(HotKeyHelper.applicationHandle);
         }
 
         private void DisableContent()
@@ -136,9 +136,9 @@ namespace WinCommandPalette.Views
                 return;
             }
 
-            if (!Win32Helper.keyRegistered)
+            if (!HotKeyHelper.keyRegistered)
             {
-                if (!Win32Helper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode))
+                if (!HotKeyHelper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode))
                 {
                     MessageBox.Show("Couldn't register configured HotKey. Maybe something is already registered on this combination.\r\nClosing myself.", this.Title, MessageBoxButton.OK, MessageBoxImage.Error);
                     this.calledClosing = true;
@@ -166,8 +166,8 @@ namespace WinCommandPalette.Views
         {
             base.OnSourceInitialized(e);
 
-            Win32Helper.applicationHandle = new WindowInteropHelper(this).Handle;
-            if (Win32Helper.applicationHandle == IntPtr.Zero)
+            HotKeyHelper.applicationHandle = new WindowInteropHelper(this).Handle;
+            if (HotKeyHelper.applicationHandle == IntPtr.Zero)
             {
                 throw new Exception("Couldn't create Handle");
             }
@@ -178,7 +178,7 @@ namespace WinCommandPalette.Views
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == Win32Helper.WM_HOTKEY)
+            if (msg == HotKeyHelper.WM_HOTKEY)
             {
                 this.ActivateContent();
             }

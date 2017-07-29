@@ -28,7 +28,7 @@ namespace WinCommandPalette.Views
             this.btnCancel.Click += this.BtnCancel_Click;
             this.Closing += this.OptionsView_Closing;
             this.Closed += this.OptionsView_Closed;
-            Win32Helper.UnregisterHotKey();
+            HotKeyHelper.UnregisterHotKey();
         }
 
         private void OptionsView_SourceInitialized(object sender, EventArgs e)
@@ -55,7 +55,7 @@ namespace WinCommandPalette.Views
 
         private void OptionsView_Closed(object sender, EventArgs e)
         {
-            Win32Helper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode);
+            HotKeyHelper.RegisterHotKey((uint)this.config.ModifierKey, this.config.KeyCode);
         }
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)

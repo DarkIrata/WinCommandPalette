@@ -56,7 +56,7 @@ namespace WinCommandPalette
         protected override void OnExit(ExitEventArgs e)
         {
             this.config.Save(this.configFilePath);
-            Win32Helper.UnregisterHotKey();
+            HotKeyHelper.UnregisterHotKey();
             base.OnExit(e);
         }
     }
