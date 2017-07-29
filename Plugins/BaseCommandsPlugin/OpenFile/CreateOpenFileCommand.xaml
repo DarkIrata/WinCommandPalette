@@ -16,29 +16,20 @@
 
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Calbri"/>
-            <Setter Property="Margin" Value="50 10 5 5"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
         <Style TargetType="TextBox">
             <Setter Property="MinHeight" Value="25"/>
             <Setter Property="MinWidth" Value="200"/>
-            <Setter Property="Margin" Value="5 10 5 5"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="FontFamily" Value="Calbri"/>
         </Style>
     </UserControl.Resources>
     
     <Grid>
-        <Grid.Resources>
-            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
-                <Setter Property="Margin" Value="0,5,0,5"/>
-            </Style>
-
-            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
-                <Setter Property="Margin" Value="0,5,0,5"/>
-            </Style>
-        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="120" Width="Auto"/>
             <ColumnDefinition MinWidth="250" Width="*"/>
