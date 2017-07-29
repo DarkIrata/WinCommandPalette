@@ -178,7 +178,7 @@ namespace WinCommandPalette.ViewModels
             {
                 // TODO: LOG EXCEPTION
                 Console.WriteLine(ex.Message);
-                MessageBox.Show($"Unkown error while executing command '{command.Name}'", "WinCommand Palette", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Unhandled error while executing command '{command.Name}'.\r\n\r\n{ex.Message}", "WinCommand Palette", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
