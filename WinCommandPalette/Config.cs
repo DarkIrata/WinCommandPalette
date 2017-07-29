@@ -10,6 +10,7 @@ using WinCommandPalette.PluginSystem;
 using WinCommandPalette.Plugin.CommandBase;
 using WinCommandPalette.Enums;
 using System.Linq;
+using System.Reflection;
 
 namespace WinCommandPalette
 {
@@ -18,15 +19,14 @@ namespace WinCommandPalette
         private const string COMMANDS_TAG_NAME = "Commands";
         private const string PLUGIN_TYPE_ATTRIBUTE_NAME = "Type";
         private const string PLUGIN_ASSEMBLY_ATTRIBUTE_NAME = "Plugin";
-
-        [XmlIgnore]
-        public string ShortcutFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "WinCommandPalette.lnk");
-
+        
         public ModifierKey ModifierKey { get; set; }
 
         public uint KeyCode { get; set; }
 
         public bool RunWithWindows { get; set; }
+
+        public bool BlurryWindow { get; set; }
 
         [XmlIgnore]
         public List<ICommandBase> Commands { get; set; }
@@ -170,11 +170,15 @@ namespace WinCommandPalette
 
         public void Update(Config other)
         {
-            this.KeyCode = other.KeyCode;
-            this.ModifierKey = other.ModifierKey;
-            this.RunWithWindows = other.RunWithWindows;
-            this.Commands = other.Commands;
-            this.UndeserializableCommands = other.UndeserializableCommands;
+            var configProperties = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (var property in configProperties)
+            {
+                var newValue = other.GetType().GetProperty(property.Name)?.GetValue(other);
+                if (newValue != null)
+                {
+                    property.SetValue(this, newValue);
+                }
+            }
         }
 
         public Config DeepCopy()
@@ -184,13 +188,26 @@ namespace WinCommandPalette
 
         public bool Equals(Config other)
         {
-            var baseProperties = this.KeyCode == other.KeyCode &&
-                                 this.ModifierKey == other.ModifierKey &&
-                                 this.RunWithWindows == other.RunWithWindows;
+            var baseProperties = true;
+            var configProperties = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            foreach (var property in configProperties)
+            {
+                if (property.Name == nameof(this.Commands))
+                {
+                    continue;
+                }
+
+                var value = property.GetValue(this);
+                var newValue = other.GetType().GetProperty(property.Name)?.GetValue(other);
+                if (newValue.GetHashCode() != value.GetHashCode())
+                {
+                    baseProperties = false;
+                    break;
+                }
+            }
 
             var commands = false;
-            if (this.Commands.Count == 0 &&
-                other.Commands.Count == 0)
+            if (this.Commands.Count == 0 && other.Commands.Count == 0)
             {
                 commands = true;
             }

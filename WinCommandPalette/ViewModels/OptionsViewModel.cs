@@ -14,6 +14,8 @@ namespace WinCommandPalette.ViewModels
 {
     public class OptionsViewModel : ViewModelBase
     {
+        private string ShortcutFilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "WinCommandPalette.lnk");
+
         private Config config;
         private Config newConfig;
 
@@ -134,13 +136,13 @@ namespace WinCommandPalette.ViewModels
             this.config.Update(this.newConfig);
             if (this.newConfig.RunWithWindows)
             {
-                this.CreateShortcut(this.newConfig.ShortcutFilePath);
+                this.CreateShortcut(this.ShortcutFilePath);
             }
             else
             {
                 try
                 {
-                    File.Delete(this.newConfig.ShortcutFilePath);
+                    File.Delete(this.ShortcutFilePath);
                 }
                 catch { }
             }
