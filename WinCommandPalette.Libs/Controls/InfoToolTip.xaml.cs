@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Markup;
 
-namespace WinCommandPalette.Controls
+namespace WinCommandPalette.Libs.Controls
 {
     [ContentProperty("Text")]
     public partial class InfoToolTip : UserControl
