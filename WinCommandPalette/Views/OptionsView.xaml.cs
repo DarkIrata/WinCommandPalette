@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using WinCommandPalette.Controls;
 using WinCommandPalette.Helper;
+using WinCommandPalette.Libs.Helper;
 using WinCommandPalette.ViewModels;
 
 namespace WinCommandPalette.Views
@@ -20,6 +21,7 @@ namespace WinCommandPalette.Views
             this.viewModel = new OptionsViewModel(this.config);
 
             this.InitializeComponent();
+            this.SourceInitialized += this.OptionsView_SourceInitialized; ;
             this.DataContext = this.viewModel;
 
             this.btnSave.Click += this.BtnSave_Click;
@@ -27,6 +29,11 @@ namespace WinCommandPalette.Views
             this.Closing += this.OptionsView_Closing;
             this.Closed += this.OptionsView_Closed;
             Win32Helper.UnregisterHotKey();
+        }
+
+        private void OptionsView_SourceInitialized(object sender, EventArgs e)
+        {
+            WPFWinHelper.DisableTitleBarButtons(this, WPFWinHelper.TitleBarButtons.Maximaze);
         }
 
         private void OptionsView_Closing(object sender, System.ComponentModel.CancelEventArgs e)
