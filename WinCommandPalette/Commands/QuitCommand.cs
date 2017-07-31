@@ -18,7 +18,10 @@ namespace WinCommandPalette.Commands
 
         public void Execute()
         {
-            Application.Current.Shutdown(0);
+            if (MessageBox.Show("Are you sure you want to quit?", "WinCommand Palette", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown(0);
+            }
         }
     }
 }
