@@ -11,6 +11,7 @@ namespace WinCommandPalette.Libs.Controls
     {
         public enum NotificationType
         {
+            None,
             Info,
             Success,
             Error,
@@ -26,8 +27,17 @@ namespace WinCommandPalette.Libs.Controls
             set => this.SetValue(TextProperty, value);
         }
 
+        public static readonly DependencyProperty FullyRoundedProperty =
+            DependencyProperty.Register("FullyRounded", typeof(bool), typeof(InAppNotification), new PropertyMetadata(false));
+
+        public bool FullyRounded
+        {
+            get => (bool)this.GetValue(FullyRoundedProperty);
+            set => this.SetValue(FullyRoundedProperty, value);
+        }
+
         public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(NotificationType), typeof(InAppNotification), new PropertyMetadata(NotificationType.Success, new PropertyChangedCallback(OnTypeChanged)));
+            DependencyProperty.Register("Type", typeof(NotificationType), typeof(InAppNotification), new PropertyMetadata(NotificationType.None, new PropertyChangedCallback(OnTypeChanged)));
 
         private static void OnTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -55,19 +65,22 @@ namespace WinCommandPalette.Libs.Controls
         {
             switch (this.Type)
             {
+                default:
                 case NotificationType.Info:
-                    this.BaseControl.Background = new SolidColorBrush(Color.FromArgb(255, 0xFC, 0xFC, 0xFC));
-                    this.BaseControl.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 0xAA, 0xB8, 0xC6));
+                    this.BaseControl.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFC, 0xFC, 0xFC));
+                    this.BaseControl.BorderBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xAA, 0xB8, 0xC6));
                     break;
                 case NotificationType.Success:
-                    this.BaseControl.Background = new SolidColorBrush(Color.FromArgb(255, 0xF3, 0xF9, 0xF4));
-                    this.BaseControl.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 0x91, 0xC8, 0x9C));
+                    this.BaseControl.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0xF9, 0xF4));
+                    this.BaseControl.BorderBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x91, 0xC8, 0x9C));
                     break;
                 case NotificationType.Error:
+                    this.BaseControl.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xF8, 0xF7));
+                    this.BaseControl.BorderBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xD0, 0x44, 0x37));
                     break;
                 case NotificationType.Warning:
-                    break;
-                default:
+                    this.BaseControl.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFD, 0xF6));
+                    this.BaseControl.BorderBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xEA, 0xAE));
                     break;
             }
         }

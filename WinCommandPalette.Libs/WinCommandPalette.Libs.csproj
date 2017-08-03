@@ -76,5 +76,11 @@
   <ItemGroup>
     <Resource Include="Resources\Info.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\InAppNotifyIcons\Error.png" />
+    <Resource Include="Resources\InAppNotifyIcons\Info.png" />
+    <Resource Include="Resources\InAppNotifyIcons\Success.png" />
+    <Resource Include="Resources\InAppNotifyIcons\Warn.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

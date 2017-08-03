@@ -8,7 +8,124 @@
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              SnapsToDevicePixels="True">
 
-    <Border x:Name="BaseControl" BorderThickness="1 1 1 0" Padding="20 10 20 10" CornerRadius="1 1 0 0">
-        <TextBlock Text="{Binding Text}" FontSize="12" FontFamily="Calibri" TextAlignment="Center"/>
+    <Border x:Name="BaseControl">
+        <Border.Style>
+            <Style TargetType="{x:Type Border}">
+                <Style.Setters>
+                    <Setter Property="BorderThickness" Value="1 1 1 0" />
+                    <Setter Property="CornerRadius" Value="3 3 0 0" />
+                </Style.Setters>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding FullyRounded}" Value="True">
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="CornerRadius" Value="3" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Border.Style>
+        
+        <Grid>
+            <Image Width="18" Height="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 10 0 0">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Type}" Value="Success">
+                                <Setter Property="Source" Value="pack://application:,,,/WinCommandPalette.Libs;component/Resources/InAppNotifyIcons/Success.png" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="Info">
+                                <Setter Property="Source" Value="pack://application:,,,/WinCommandPalette.Libs;component/Resources/InAppNotifyIcons/Info.png" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="Error">
+                                <Setter Property="Source" Value="pack://application:,,,/WinCommandPalette.Libs;component/Resources/InAppNotifyIcons/Error.png" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type}" Value="Warning">
+                                <Setter Property="Source" Value="pack://application:,,,/WinCommandPalette.Libs;component/Resources/InAppNotifyIcons/Warn.png" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            
+            <TextBlock  Text="{Binding Text}" FontSize="13" FontFamily="Calibri" TextAlignment="Center"/>
+
+            <Button x:Name="btnClose" Content="X" Width="16" Height="16"
+                        BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                       FontFamily="Calibri" FontSize="12" Margin="0 8 8 0">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="50">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Type}" Value="Success">
+                                <Setter Property="Foreground" Value="#82b48c" />
+                            </DataTrigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Type}" Value="Success"/>
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Background" Value="#d3e9d7"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+
+
+                            <DataTrigger Binding="{Binding Type}" Value="Info">
+                                <Setter Property="Foreground" Value="#88939e" />
+                            </DataTrigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Type}" Value="Info"/>
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Background" Value="#e5e9ed"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+
+
+                            <DataTrigger Binding="{Binding Type}" Value="Error">
+                                <Setter Property="Foreground" Value="#d04437" />
+                            </DataTrigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Type}" Value="Error"/>
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Background" Value="#f5d9d7"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+
+
+                            <DataTrigger Binding="{Binding Type}" Value="Warning">
+                                <Setter Property="Foreground" Value="#ccbb8b" />
+                            </DataTrigger>
+
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding Type}" Value="Warning"/>
+                                    <Condition Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsMouseOver}" Value="True"/>
+                                </MultiDataTrigger.Conditions>
+                                <MultiDataTrigger.Setters>
+                                    <Setter Property="Background" Value="#ffeebe"/>
+                                </MultiDataTrigger.Setters>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </Grid>
     </Border>
 </UserControl>

@@ -121,7 +121,12 @@ namespace WinCommandPalette.ViewModels
 
             this.MenuItems = new List<MenuItem>()
             {
+#if DEBUG
+                new MenuItem("G E N E R A L", new GeneralView(this.newConfig),
+                    new SubMenuItem("DEBUG", new DebugView())),
+#else
                 new MenuItem("G E N E R A L", new GeneralView(this.newConfig)),
+#endif
                 new MenuItem("C O M M A N D S", null,
                     new SubMenuItem("CREATE NEW", new CreateNewCommandView(this.newConfig)),
                     new SubMenuItem("MANAGE", new ManageCommandView(this.newConfig))

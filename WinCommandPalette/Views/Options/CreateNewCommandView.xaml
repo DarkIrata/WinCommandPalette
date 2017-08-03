@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ap="clr-namespace:WinCommandPalette.AttachedProperties"
-             xmlns:controls="clr-namespace:WinCommandPalette.Libs.Controls;assembly=WinCommandPalette.Libs"
              xmlns:local="clr-namespace:WinCommandPalette.Views.Options"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="600">
@@ -82,8 +81,6 @@
         </Border>
 
         <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="5 5 10 5" Height="25">
-            <controls:InAppNotification Text="Baz" Type="Success"/>
-            <controls:InAppNotification Text="Foo" Type="Info"/>
             <Button x:Name="btnTest" Content="Test" Width="65" Margin="0,0,5,0" FontSize="12" IsEnabled="{Binding CanManage}"/>
             <Button x:Name="btnAddCommand" Content="Add" Width="65" Margin="5,0,5,0" FontSize="12" IsEnabled="{Binding CanManage}"/>
             <Button x:Name="btnReset" Content="Reset" Width="65" Margin="5,0,0,0" FontSize="12" IsEnabled="{Binding CanManage}"/>
