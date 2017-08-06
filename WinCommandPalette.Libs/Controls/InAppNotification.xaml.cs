@@ -11,6 +11,8 @@ namespace WinCommandPalette.Libs.Controls
     [ContentProperty("Text")]
     public partial class InAppNotification : UserControl
     {
+        public event RoutedEventHandler CloseClick;
+
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(InAppNotification), new PropertyMetadata("Missing Infotext"));
 
@@ -56,13 +58,50 @@ namespace WinCommandPalette.Libs.Controls
         public InAppNotification()
         {
             this.InitializeComponent();
+            this.MouseEnter += this.InAppNotification_MouseEnter;
+            this.MouseLeave += this.InAppNotification_MouseLeave;
             this.btnClose.Click += this.BtnClose_Click;
+        }
 
-            this.Measure(new Size(Double.MaxValue, Double.MaxValue));
-            var size = this.DesiredSize;
-            this.Arrange(new Rect(new Point(0, 0), size));
-            this.UpdateLayout();
+        private void InAppNotification_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            this.slideStoryboard.Pause();
+        }
 
+        private void InAppNotification_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            this.slideStoryboard.Resume();
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.slideStoryboard.Stop();
+            this.UpdateSlideStory();
+        }
+
+        public void ShowNotification(NoticeType noticeType, string text)
+        {
+            this.ShowNotification(noticeType, text, this.SlideSpeed);
+        }
+
+        public void ShowNotification(NoticeType noticeType, string text, double slideSpeed)
+        {
+            this.ShowNotification(noticeType, text, slideSpeed, this.SlideDuration);
+        }
+
+        public void ShowNotification(NoticeType noticeType, string text, double slideSpeed, Duration slideDuration)
+        {
+            this.NoticeType = noticeType;
+            this.Text = text;
+            this.SlideSpeed = slideSpeed;
+            this.SlideDuration = slideDuration;
+
+            this.slideStoryboard.Begin();
+        }
+
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        {
+            base.OnRenderSizeChanged(sizeInfo);
             this.RenderTransform = new TranslateTransform()
             {
                 X = 0,
@@ -119,11 +158,6 @@ namespace WinCommandPalette.Libs.Controls
             this.slideStoryboard = new Storyboard();
             this.slideStoryboard.Children.Add(this.GetDoubleAnimation(0));
             this.slideStoryboard.Children.Add(this.GetDoubleAnimation(this.ActualHeight, true));
-        }
-
-        private void BtnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.slideStoryboard.Begin();
         }
     }
 }

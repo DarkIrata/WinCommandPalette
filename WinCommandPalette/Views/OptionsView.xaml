@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WinCommandPalette"
         xmlns:controls="clr-namespace:WinCommandPalette.Controls"
+        xmlns:libcontrols="clr-namespace:WinCommandPalette.Libs.Controls;assembly=WinCommandPalette.Libs"
         mc:Ignorable="d"
         Title="WinCommand Palette Options"
         MinWidth="850" MinHeight="550"
@@ -51,5 +52,7 @@
             </Border>
             <ContentPresenter Content="{Binding ActivePage}"/>
         </DockPanel>
+
+        <libcontrols:InAppNotification VerticalAlignment="Bottom" HorizontalAlignment="Center" Grid.ColumnSpan="2" MaxWidth="400" x:Name="NotifyBar"/>
     </Grid>
 </Window>
