@@ -1,23 +1,16 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace WinCommandPalette.Libs.Controls
 {
     [ContentProperty("Text")]
     public partial class InAppNotification : UserControl
     {
-        public enum NotificationType
-        {
-            None,
-            Info,
-            Success,
-            Error,
-            Warning
-        }
-
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(InAppNotification), new PropertyMetadata("Missing Infotext"));
 
@@ -27,62 +20,110 @@ namespace WinCommandPalette.Libs.Controls
             set => this.SetValue(TextProperty, value);
         }
 
-        public static readonly DependencyProperty FullyRoundedProperty =
-            DependencyProperty.Register("FullyRounded", typeof(bool), typeof(InAppNotification), new PropertyMetadata(false));
+        public static readonly DependencyProperty SlideDurationProperty =
+            DependencyProperty.Register("SlideDuration", typeof(Duration), typeof(InAppNotification), new PropertyMetadata(new Duration(new TimeSpan(0,0,10)), OnSlideDurationChanged));
 
-        public bool FullyRounded
+        public Duration SlideDuration
         {
-            get => (bool)this.GetValue(FullyRoundedProperty);
-            set => this.SetValue(FullyRoundedProperty, value);
+            get => (Duration)this.GetValue(SlideDurationProperty);
+            set => this.SetValue(SlideDurationProperty, value);
         }
 
-        public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(NotificationType), typeof(InAppNotification), new PropertyMetadata(NotificationType.None, new PropertyChangedCallback(OnTypeChanged)));
+        public static readonly DependencyProperty SlideSpeedProperty =
+            DependencyProperty.Register("SlideSpeed", typeof(double), typeof(InAppNotification), new PropertyMetadata(3.0, OnSlideSpeedChanged));
 
-        private static void OnTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public double SlideSpeed
         {
-            if (d is InAppNotification notification)
-            {
-                notification.SetBaseControlColor();
-            }
+            get => (double)this.GetValue(SlideSpeedProperty);
+            set => this.SetValue(SlideSpeedProperty, value);
         }
 
-        public NotificationType Type
+        public static readonly DependencyProperty NoticeTypeProperty =
+            DependencyProperty.Register("NoticeType", typeof(NoticeType), typeof(InAppNotification), new PropertyMetadata(NoticeType.None, new PropertyChangedCallback(OnNoticeTypeChanged)));
+
+
+        public NoticeType NoticeType
         {
-            get => (NotificationType)this.GetValue(TypeProperty);
+            get => (NoticeType)this.GetValue(NoticeTypeProperty);
             set
             {
-                this.SetValue(TypeProperty, value);
+                this.SetValue(NoticeTypeProperty, value);
             }
         }
+
+        private Storyboard slideStoryboard = null;
 
         public InAppNotification()
         {
             this.InitializeComponent();
+            this.btnClose.Click += this.BtnClose_Click;
+
+            this.Measure(new Size(Double.MaxValue, Double.MaxValue));
+            var size = this.DesiredSize;
+            this.Arrange(new Rect(new Point(0, 0), size));
+            this.UpdateLayout();
+
+            this.RenderTransform = new TranslateTransform()
+            {
+                X = 0,
+                Y = this.ActualHeight
+            };
+
+            this.UpdateSlideStory();
         }
 
-        private void SetBaseControlColor()
+        private DoubleAnimation GetDoubleAnimation(double toValue, bool setBeginTime = false)
         {
-            switch (this.Type)
+            var doubleAnimation = new DoubleAnimation(toValue, this.SlideDuration)
             {
-                default:
-                case NotificationType.Info:
-                    this.BaseControl.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFC, 0xFC, 0xFC));
-                    this.BaseControl.BorderBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xAA, 0xB8, 0xC6));
-                    break;
-                case NotificationType.Success:
-                    this.BaseControl.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xF3, 0xF9, 0xF4));
-                    this.BaseControl.BorderBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x91, 0xC8, 0x9C));
-                    break;
-                case NotificationType.Error:
-                    this.BaseControl.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xF8, 0xF7));
-                    this.BaseControl.BorderBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xD0, 0x44, 0x37));
-                    break;
-                case NotificationType.Warning:
-                    this.BaseControl.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xFD, 0xF6));
-                    this.BaseControl.BorderBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFF, 0xEA, 0xAE));
-                    break;
+                SpeedRatio = this.SlideSpeed,
+            };
+
+            if (setBeginTime)
+            {
+                doubleAnimation.BeginTime = this.SlideDuration.TimeSpan;
             }
+
+            Storyboard.SetTarget(doubleAnimation, this);
+            Storyboard.SetTargetProperty(doubleAnimation, new PropertyPath("RenderTransform.(TranslateTransform.Y)"));
+
+            return doubleAnimation;
+        }
+
+        private static void OnNoticeTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is InAppNotification notification)
+            {
+                notification.BaseControl.SetColorByNoticeType(notification.NoticeType);
+            }
+        }
+
+        private static void OnSlideDurationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is InAppNotification inAppNotification)
+            {
+                inAppNotification.UpdateSlideStory();
+            }
+        }
+
+        private static void OnSlideSpeedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is InAppNotification inAppNotification)
+            {
+                inAppNotification.UpdateSlideStory();
+            }
+        }
+
+        private void UpdateSlideStory()
+        {
+            this.slideStoryboard = new Storyboard();
+            this.slideStoryboard.Children.Add(this.GetDoubleAnimation(0));
+            this.slideStoryboard.Children.Add(this.GetDoubleAnimation(this.ActualHeight, true));
+        }
+
+        private void BtnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.slideStoryboard.Begin();
         }
     }
 }

@@ -52,6 +52,10 @@
     <Compile Include="Controls\InfoToolTip.xaml.cs">
       <DependentUpon>InfoToolTip.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Notice.xaml.cs">
+      <DependentUpon>Notice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NoticeType.cs" />
     <Compile Include="Helper\DeepCopyByExpressionTrees.cs" />
     <Compile Include="Helper\LevenshteinDistance.cs" />
     <Compile Include="Helper\ScreenHelper.cs" />
@@ -67,6 +71,10 @@
     <Page Include="Controls\InfoToolTip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\Notice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles.xaml">
       <Generator>MSBuild:Compile</Generator>

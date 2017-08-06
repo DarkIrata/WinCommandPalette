@@ -13,10 +13,11 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <controls:InAppNotification Grid.Row="0" Text="Foo" Type="Success" Margin="50"/>
-        <controls:InAppNotification Grid.Row="1" Text="Bar" Type="Info" Margin="50"/>
-        <controls:InAppNotification Grid.Row="2" Text="Baz" Type="Error" FullyRounded="True" Margin="50"/>
-        <controls:InAppNotification Grid.Row="3" Text="FooBarBaz" Type="Warning" FullyRounded="True" Margin="50"/>
+        <controls:InAppNotification Grid.Row="0" Text="Foo" NoticeType="Success" Margin="50" SlideSpeed="1"/>
+        <controls:InAppNotification Grid.Row="1" Text="Bar" NoticeType="Info" Margin="50" SlideSpeed="0.1"/>
+        <controls:Notice Grid.Row="2" Text="Baz" NoticeType="Error" Margin="50"/>
+        <controls:Notice Grid.Row="3" Text="FooBarBaz" NoticeType="Warning" Margin="50"/>
     </Grid>
 </UserControl>

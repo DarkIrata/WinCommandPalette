@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WinCommandPalette.Libs.Controls.InAppNotification"
+﻿<UserControl x:Class="WinCommandPalette.Libs.Controls.Notice"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,7 +9,7 @@
              DataContext="{Binding RelativeSource={RelativeSource Self}}"
              SnapsToDevicePixels="True">
 
-    <Border x:Name="BaseControl" CornerRadius="3 3 0 0" BorderThickness="1 1 1 0">
+    <Border x:Name="BaseControl" CornerRadius="3" BorderThickness="1">
         <Grid>
             <Image Width="18" Height="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10 10 0 0">
                 <Image.Style>
@@ -31,7 +31,7 @@
                     </Style>
                 </Image.Style>
             </Image>
-            
+
             <TextBlock  Text="{Binding Text}" FontSize="13" FontFamily="Calibri" TextAlignment="Center" TextWrapping="Wrap" Padding="40 20 40 20"/>
 
             <Button x:Name="btnClose" Content="X" Width="16" Height="16"
