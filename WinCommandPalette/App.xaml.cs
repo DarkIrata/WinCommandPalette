@@ -37,6 +37,12 @@ namespace WinCommandPalette
             Directory.CreateDirectory(Path.GetDirectoryName(this.configFilePath));
             PluginHelper.Load();
 
+            var resourceDictionary = new ResourceDictionary()
+            {
+                Source = new Uri("pack://application:,,,/WinCommandPalette.Libs;component/Styles.xaml", UriKind.Absolute)
+            };
+            Current.Resources.MergedDictionaries.Add(resourceDictionary);
+
             this.config = new Config();
             if (File.Exists(this.configFilePath))
             {
